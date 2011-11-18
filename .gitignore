@@ -1,3 +1,17 @@
+.*
+!.gitignore
+
 bin/*
+
 classes/*
+!classes/README.md
+
 reports/*
+!reports/README.md
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
