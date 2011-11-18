@@ -13,7 +13,7 @@
 	</path>
 	
 	<target name="clean" description="Remove all files created by the build/test process.">
-		<delete dir="${classes.dir}" />
+		<delete dir="${classes.dir}" includes="${classes.dir}/*" excludesfile="${classes.dir}/README.md"/>
 	</target>
 	
 	<target name="init" depends="clean" description="Prepare needed directories">

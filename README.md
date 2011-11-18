@@ -5,7 +5,7 @@ This is an empty Java project. This can be used to create a clean Java project i
 This includes:
 
 - predefined folder structure for: source code, libraries, testing, reports and classes
-- [Apache Ant](http://ant.apache.org/) buildfile including: Generating of JavaDoc, Compiling via `javac`, Creating Test reports
+- [Apache Ant](http://ant.apache.org/) buildfile including: Compiling via `javac`, Creating JUnitTests and reports
 
 Usage
 ===
