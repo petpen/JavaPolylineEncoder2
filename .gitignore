@@ -1,5 +1,8 @@
 .*
 !.gitignore
+!.settings
+!.classpath
+!.project
 
 bin/*
 
@@ -8,6 +11,11 @@ classes/*
 
 reports/*
 !reports/README.md
+cob-instr/*
+cob-rep/*
+cobertura.ser
+TEST-*
+TESTS-*
 
 # OS generated files #
 ######################

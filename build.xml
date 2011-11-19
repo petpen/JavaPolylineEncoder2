@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="ProjectName" default="test" basedir=".">
-    <description>
-    	Descriptiontext
-    </description>
-
+<project name="TwitterBot" default="check" basedir=".">
+    <description>Twitter auf Twitter.</description>
+	
 	<property file="build.properties" />
-
+	
 	<path id="junit.classpath">
 		<fileset dir="${lib.dir}">
 			<include name="*.jar" />
@@ -13,15 +11,26 @@
 	</path>
 	
 	<target name="clean" description="Remove all files created by the build/test process.">
-		<delete dir="${classes.dir}" includes="${classes.dir}/*" excludesfile="${classes.dir}/README.md"/>
+		<delete dir="${classes.dir}" />
+		<delete dir="${reports.dir}" />
+
+		<delete file="${cobdata}" />
+		<delete dir="${inst.dir}" />
+		<delete dir="${cob.rep}" />
 	</target>
 	
-	<target name="init" depends="clean" description="Prepare needed directories">
+	<target name="init" description="Prepare needed directories">
 		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${reports.dir}" />
 		<mkdir dir="${reports.xml.dir}" />
 		<mkdir dir="${reports.html.dir}" />
-	</target>
 
+		<mkdir dir="${inst.dir}" />
+		<mkdir dir="${cob.rep.html}" />
+		<mkdir dir="${cob.rep.xml}" />
+	</target>
+	
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes">
 			<classpath refid="junit.classpath" />
@@ -33,22 +42,43 @@
 	
 	<target name="test" depends="compile">
 		 <junit>
-			<classpath location="${classes.dir}" />
+		 	<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobdata}" />
+		 	<classpath location="${inst.dir}" />
+		 	<classpath location="${classes.dir}" />
 			<classpath refid="junit.classpath" />
 		 	
+		 	<formatter type="brief" usefile="false" />
+			
 		 	<formatter type="xml" />
 		 	<batchtest fork="yes" todir="${reports.xml.dir}">
-		 		<fileset dir="${test.dir}">
-		 			<include name="**/*Test.java" />
-		 		</fileset>
-		 	</batchtest>
-		</junit>
-		
-	 	<junitreport todir="${reports.xml.dir}">
+				<fileset dir="${test.dir}">
+					<include name="**/*Test.java" />
+				</fileset>
+			</batchtest>
+		 </junit>
+		<junitreport>
 			<fileset dir="${reports.xml.dir}">
 				<include name="TEST*.xml" />
 			</fileset>
 			<report format="frames" todir="${reports.html.dir}" />
 		</junitreport>
 	</target>
+	
+	<taskdef classpathref="junit.classpath" resource="tasks.properties" />
+		<target name="cob-instr" depends="compile">
+			<cobertura-instrument todir="${inst.dir}" datafile="${cobdata}">
+			    <fileset dir="${classes.dir}">
+			        <include name="**/*.class" />
+			        <exclude name="**/*Test.class" />
+			        <exclude name="**/*Suite.class" />
+			    </fileset>
+			</cobertura-instrument>
+		</target>
+
+		<target name="cob-rep" depends="cob-instr, test" description="erzeugt Cobertura Reports">
+			<cobertura-report format="html" datafile="${cobdata}" destdir="${cob.rep.html}" srcdir="${src.dir}" />
+		</target>
+		
+		<target name="check" depends="clean, cob-rep" description="Aufräumen und Cobertura Reports erstellen">
+		</target>
 </project>
