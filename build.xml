@@ -12,10 +12,10 @@
 	
 	<target name="clean" description="Remove all files created by the build/test process.">
 		<delete dir="${classes.dir}">
-			<exclude name="README"/>
+			<exclude name="README.md"/>
 		</delete>
 		<delete dir="${reports.dir}">
-			<exclude name="README"/>
+			<exclude name="README.md"/>
 		</delete>
 
 		<delete file="${cobdata}" />
