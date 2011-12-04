@@ -11,8 +11,12 @@
 	</path>
 	
 	<target name="clean" description="Remove all files created by the build/test process.">
-		<delete dir="${classes.dir}" />
-		<delete dir="${reports.dir}" />
+		<delete dir="${classes.dir}">
+			<exclude name="README"/>
+		</delete>
+		<delete dir="${reports.dir}">
+			<exclude name="README"/>
+		</delete>
 
 		<delete file="${cobdata}" />
 		<delete dir="${inst.dir}" />
@@ -77,6 +81,7 @@
 
 		<target name="cob-rep" depends="cob-instr, test" description="erzeugt Cobertura Reports">
 			<cobertura-report format="html" datafile="${cobdata}" destdir="${cob.rep.html}" srcdir="${src.dir}" />
+			<cobertura-report format="xml" datafile="${cobdata}" destdir="${cob.rep.xml}" srcdir="${src.dir}" />
 		</target>
 		
 		<target name="check" depends="clean, cob-rep" description="Aufräumen und Cobertura Reports erstellen">
