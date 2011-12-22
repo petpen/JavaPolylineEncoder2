@@ -4,5 +4,10 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="lib/junit-4.5.jar"/>
+	<classpathentry kind="lib" path="lib/jsr311-api-0.9.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-servlet-webserver-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-core-0.9-ea.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-server-0.9-ea.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

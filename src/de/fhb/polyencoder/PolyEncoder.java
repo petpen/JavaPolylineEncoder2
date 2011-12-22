@@ -1,15 +1,19 @@
 package de.fhb.polyencoder;
 
+import java.io.IOException;
+
 public class PolyEncoder {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.out.println(work("yes"));
-	}
+  /**
+   * @param args
+   * @throws IOException 
+   */
+  public static void main(String[] args) throws IOException {
+    System.out.println(work("yes"));
+    RunServer.RunServer();
+  }
 
-	static String work(String str) {
-		return str;
-	}
+  static String work(String str) {
+    return str;
+  }
 }
