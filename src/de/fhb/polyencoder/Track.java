@@ -1,31 +1,46 @@
 package de.fhb.polyencoder;
 
-/**
- * Porting of Mark McClures Javascript PolylineEncoder
- * All the mathematical logic is more or less copied from McClure
- *  
- * @author Mark Rambow
- * @e-mail markrambow[at]gmail[dot]com
- * @version 0.1
- * 
- */
-
 import java.util.ArrayList;
 
+/**
+ * Holds a List of {@link Trackpoint}s.
+ * 
+ * Porting of Mark McClures Javascript PolylineEncoder
+ * 
+ * @author Mark Rambow (markrambow[at]gmail[dot]com)
+ * @author Peter Pensold
+ * @version 1
+ */
 public class Track {
+  private ArrayList<Trackpoint> points;
 
-    private ArrayList<Trackpoint> trackpoints = new ArrayList<Trackpoint>();
 
-    public ArrayList<Trackpoint> getTrackpoints() {
-        return this.trackpoints;
-    }
 
-    public void setTrackpoints(ArrayList<Trackpoint> trackpoints) {
-        this.trackpoints = trackpoints;
-    }
+  public Track() {
+    points = new ArrayList<Trackpoint>();
+  }
 
-    public void addTrackpoint(Trackpoint trkpt) {
-        this.trackpoints.add(trkpt);
-    }
 
+
+  public ArrayList<Trackpoint> getPoints() {
+    return this.points;
+  }
+
+
+
+  public void setPoints(ArrayList<Trackpoint> points) {
+    this.points = points;
+  }
+
+
+
+  public Trackpoint getPoint(int index) {
+    return this.points.get(index);
+  }
+
+
+
+  public void addPoint(Trackpoint point) {
+    this.points.add(point);
+  }
 }
