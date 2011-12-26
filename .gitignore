@@ -1,10 +1,10 @@
 .*
 !.gitignore
-!.settings
 !.classpath
 !.project
 
 bin/*
+.settings/*
 
 classes/*
 !classes/README.md
