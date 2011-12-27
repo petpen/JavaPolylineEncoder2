@@ -6,12 +6,14 @@ public class PolyEncoder {
 
   /**
    * @param args
-   * @throws IOException 
+   * @throws IOException
    */
   public static void main(String[] args) throws IOException {
     System.out.println(work("yes"));
     RunServer.RunServer();
   }
+
+
 
   static String work(String str) {
     return str;

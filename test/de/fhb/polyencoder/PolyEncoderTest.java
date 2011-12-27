@@ -7,8 +7,8 @@ import org.junit.Test;
 
 public class PolyEncoderTest {
 
-	@Test
-	public void work() {
-		assertEquals("Der gelesene Token ist nicht gleich dem geschriebenen Token.", "hello world", PolyEncoder.work("hello world"));
-	}
+  @Test
+  public void work() {
+    assertEquals("Der gelesene Token ist nicht gleich dem geschriebenen Token.", "hello world", PolyEncoder.work("hello world"));
+  }
 }
