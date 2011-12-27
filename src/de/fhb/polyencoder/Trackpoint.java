@@ -65,13 +65,13 @@ public class Trackpoint {
     long temp;
 
     temp = Double.doubleToLongBits(altitude);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime*result + (int) (temp ^ (temp >>> 32));
 
     temp = Double.doubleToLongBits(latitude);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime*result + (int) (temp ^ (temp >>> 32));
 
     temp = Double.doubleToLongBits(longitude);
-    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime*result + (int) (temp ^ (temp >>> 32));
 
     return result;
   }
