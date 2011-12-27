@@ -24,12 +24,37 @@ public class PolylineEncoder {
 
 
 
+  /**
+   * Creates a PolylinEncoder with the following default values:
+   * <ul>
+   * <li>numLevels = 18</li>
+   * <li>zoomFactor = 2</li>
+   * <li>verySmall = 0.00001</li>
+   * <li>forceEndpoints = true</li>
+   * </ul>
+   * 
+   * @see #PolylineEncoder(int, int, double, boolean)
+   */
   public PolylineEncoder() {
     createZoomLevelBreaks();
   }
 
 
 
+  /**
+   * 
+   * @param numLevels
+   *          indicates how many different levels of magnification the polyline
+   *          has
+   * @param zoomFactor
+   *          the change in magnification between numLevels
+   * @param verySmall
+   *          indicates the length of a barely visible object at the highest
+   *          zoom level
+   * @param forceEndpoints
+   *          indicates whether or not the endpoints should be visible at all
+   *          zoom levels
+   */
   public PolylineEncoder(int numLevels, int zoomFactor, double verySmall, boolean forceEndpoints) {
     this.numLevels = numLevels;
     this.zoomFactor = zoomFactor;
@@ -52,9 +77,13 @@ public class PolylineEncoder {
 
 
   /**
-   * Douglas-Peucker algorithm, adapted for encoding
+   * Ramer-Douglas-Peucker algorithm, adapted for encoding. This algorithm is
+   * used to reduce the number of points in a curve.
    * 
-   * @return HashMap [EncodedPoints;EncodedLevels]
+   * @return HashMap [encodedPoints; encodedPointsLiteral; encodedLevels]
+   * @see <a
+   *      href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker
+   *      algorithm (Wikipedia)</a>
    * 
    */
   public HashMap<String, String> dpEncode(Track track) {
@@ -167,9 +196,11 @@ public class PolylineEncoder {
 
 
   /**
+   * Parses a String containing points in a form as described in param points.
+   * 
    * @param points
    *          set the points that should be encoded all points have to be in the
-   *          following form: {@code Latitude, longitude\n}
+   *          following form: {@code Latitude, Longitude\n}
    * 
    * @return the parsed track
    * 
@@ -185,7 +216,8 @@ public class PolylineEncoder {
 
 
   /**
-   * Altitude will be ignored here so far
+   * Parses a String containing points in a form as described in param points.
+   * Altitude will be ignored here so far.
    * 
    * @param points
    *          set the points that should be encoded all points have to be in the
@@ -205,10 +237,13 @@ public class PolylineEncoder {
 
 
   /**
-   * Google can't show Altitude, but its in some GPS/GPX Files Altitude will be
-   * ignored here so far
+   * Parses a String containing points in a form as described in param points.
+   * Google can't show Altitude, but its in some GPS/GPX Files. Altitude will be
+   * ignored here so far.
    * 
    * @param points
+   *          set the points that should be encoded all points have to be in the
+   *          following form: {@code Longitude,Latitude,Altitude\n}
    * 
    * @return the parsed track
    * 
@@ -226,13 +261,13 @@ public class PolylineEncoder {
 
   /**
    * Parses a String to a Track. If one point is defined by two coordinates the
-   * altitude will be set to 0.
+   * altitude will be set to 0.0
    * 
    * @param points
    * @param separator
    * @param positions
    * 
-   * @return the parsed Track
+   * @return the parsed track
    * 
    * @see TrackSeparator
    * @see PointArrayPositions
@@ -250,7 +285,7 @@ public class PolylineEncoder {
           break;
 
         case 2:
-          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()])));
+          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), 0.0));
           break;
       }
     }
