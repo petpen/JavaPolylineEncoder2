@@ -52,6 +52,6 @@ public class Util {
     // McClure takes floor to, but its different to Maps explanation...
     // further testing needed
 
-    return (int) Math.floor(coordinate * 1e5);
+    return (int) Math.floor(coordinate*1e5);
   }
 }

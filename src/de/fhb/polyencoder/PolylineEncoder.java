@@ -45,7 +45,7 @@ public class PolylineEncoder {
     this.zoomLevelBreaks = new double[numLevels];
 
     for (int i = 0; i < numLevels; i++) {
-      this.zoomLevelBreaks[i] = verySmall * Math.pow(this.zoomFactor, numLevels - i - 1);
+      this.zoomLevelBreaks[i] = verySmall*Math.pow(this.zoomFactor, numLevels - i - 1);
     }
   }
 
@@ -146,14 +146,14 @@ public class PolylineEncoder {
     if (segStart.equals(segEnd)) {
       out = Util.sqrtOfSquared((segEndLat - ptLat), (segEndLon - ptLon));
     } else {
-      u = ((ptLat - segStartLat) * (segEndLat - segStartLat) + (ptLon - segStartLon) * (segEndLon - segStartLon)) / segLength;
+      u = ((ptLat - segStartLat)*(segEndLat - segStartLat) + (ptLon - segStartLon)*(segEndLon - segStartLon))/segLength;
 
       if (u <= 0) {
         out = Util.sqrtOfSquared((ptLat - segStartLat), (ptLon - segStartLon));
       }
 
       if (0 < u && u < 1) {
-        out = Util.sqrtOfSquared((ptLat - segStartLat - u * (segEndLat - segStartLat)), (ptLon - segStartLon - u * (segEndLon - segStartLon)));
+        out = Util.sqrtOfSquared((ptLat - segStartLat - u*(segEndLat - segStartLat)), (ptLon - segStartLon - u*(segEndLon - segStartLon)));
       }
 
       if (1 <= u) {
