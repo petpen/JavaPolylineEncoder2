@@ -365,7 +365,6 @@ public class PolylineEncoder {
 
   /**
    * Parses a String containing points in a form as described in param points.
-   * Altitude will be ignored here so far.
    * 
    * @param points
    *          set the points that should be encoded all points have to be in the
@@ -377,7 +376,7 @@ public class PolylineEncoder {
    */
   public static Track kmlLineStringToTrack(String points) {
     TrackSeparator sep = new TrackSeparator(" ", ",");
-    PointArrayPositions pos = new PointArrayPositions(1, 0);
+    PointArrayPositions pos = new PointArrayPositions(1, 0, 2);
   
     return parseStringToTrack(points, sep, pos);
   }
