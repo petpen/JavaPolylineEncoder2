@@ -140,7 +140,7 @@ public class PolylineEncoder {
     }
 
     encodedPoints = createEncodings(points, dists);
-    String encodedPointsLiteral = Util.replace(encodedPoints, "\\", "\\\\");
+    String encodedPointsLiteral = encodeDoubleBackslash(encodedPoints);
 
     encodedLevels = encodeLevels(points, dists, absMaxDist);
 
@@ -476,10 +476,16 @@ public class PolylineEncoder {
 
     HashMap<String, String> resultMap = new HashMap<String, String>();
     resultMap.put("encodedPoints", encodedPoints.toString());
-    resultMap.put("encodedPointsLiteral", Util.replace(encodedPoints.toString(), "\\", "\\\\"));
+    resultMap.put("encodedPointsLiteral", encodeDoubleBackslash(encodedPoints.toString()));
     resultMap.put("encodedLevels", encodedLevels.toString());
 
     return resultMap;
+  }
+
+
+
+  public static String encodeDoubleBackslash(String s) {
+    return s.replaceAll("\\\\", "\\\\\\\\");
   }
 
 

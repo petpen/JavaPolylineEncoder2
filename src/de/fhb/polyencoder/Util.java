@@ -23,29 +23,6 @@ public class Util {
 
 
 
-  public static String replace(String s, String one, String another) {
-    // In a string replace one substring with another
-    if (s.equals(""))
-      return "";
-
-    int i = s.indexOf(one, 0);
-    int lastpos = 0;
-
-    String res = "";
-
-    while (i != -1) {
-      res += s.substring(lastpos, i) + another;
-      lastpos = i + one.length();
-      i = s.indexOf(one, lastpos);
-    }
-
-    res += s.substring(lastpos); // the rest
-
-    return res;
-  }
-
-
-
   public static int floor1e5(double coordinate) {
     // Flooring Result, seams not to round, so its done with math.round
     // should just cut the last digits, maybe with strings?
