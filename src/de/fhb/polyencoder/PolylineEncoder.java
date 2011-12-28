@@ -386,8 +386,7 @@ public class PolylineEncoder {
 
   /**
    * Parses a String containing points in a form as described in param points.
-   * Google can't show Altitude, but its in some GPS/GPX Files. Altitude will be
-   * ignored here so far.
+   * Google can't show Altitude, but its in some GPS/GPX Files.
    * 
    * @param points
    *          set the points that should be encoded all points have to be in the
@@ -400,7 +399,7 @@ public class PolylineEncoder {
   public static Track pointsAndAltitudeToTrack(String points) {
     System.out.println("pointsAndAltitudeToTrack");
     TrackSeparator sep = new TrackSeparator("\n", ",");
-    PointArrayPositions pos = new PointArrayPositions(1, 0);
+    PointArrayPositions pos = new PointArrayPositions(1, 0, 2);
   
     return parseStringToTrack(points, sep, pos);
   }
