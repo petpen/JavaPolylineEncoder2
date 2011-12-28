@@ -77,6 +77,84 @@ public class PolylineEncoder {
 
 
   /**
+   * This computes the appropriate zoom level of a point in terms of it's
+   * distance from the relevant segment in the DP algorithm. Could be done in
+   * terms of a logarithm, but this approach makes it a bit easier to ensure
+   * that the level is not too large.
+   */
+  public int computeLevel(double absMaxDist) {
+    int lev = 0;
+  
+    if (absMaxDist > this.verySmall) {
+      lev = 0;
+  
+      while (absMaxDist < this.zoomLevelBreaks[lev]) {
+        lev++;
+      }
+    }
+  
+    return lev;
+  }
+
+
+
+  public String createEncodings(ArrayList<Trackpoint> points, double[] dists) {
+    Double curPointLat, curPointLng;
+    StringBuffer encodedPoints = new StringBuffer();
+  
+    int pLat = 0, pLng = 0;
+    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0;
+  
+    for (int i = 0; i < points.size(); i++) {
+      curPointLat = points.get(i).lat();
+      curPointLng = points.get(i).lng();
+  
+      // determine bounds (max/min lat/lon)
+      if (i == 0) {
+        maxLat = minLat = curPointLat;
+        maxLng = minLng = curPointLng;
+      } else {
+        if (curPointLat > maxLat) {
+          maxLat = curPointLat;
+        } else if (curPointLat < minLat) {
+          minLat = curPointLat;
+        } else if (curPointLng > maxLng) {
+          maxLng = curPointLng;
+        } else if (curPointLng < minLng) {
+          minLng = curPointLng;
+        }
+      }
+  
+      if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
+  
+        int late5 = Util.floor1e5(curPointLat);
+        int lnge5 = Util.floor1e5(curPointLng);
+  
+        int dlat = late5 - pLat;
+        int dlng = lnge5 - pLng;
+  
+        pLat = late5;
+        pLng = lnge5;
+  
+        encodedPoints.append(encodeSignedNumber(dlat));
+        encodedPoints.append(encodeSignedNumber(dlng));
+      }
+    }
+  
+    HashMap<String, Double> bounds = new HashMap<String, Double>();
+    bounds.put("maxlat", new Double(maxLat));
+    bounds.put("minlat", new Double(minLat));
+    bounds.put("maxlon", new Double(maxLng));
+    bounds.put("minlon", new Double(minLng));
+  
+    this.setBounds(bounds);
+  
+    return encodedPoints.toString();
+  }
+
+
+
+  /**
    * Ramer-Douglas-Peucker algorithm, adapted for encoding. This algorithm is
    * used to reduce the number of points in a curve.
    * 
@@ -114,7 +192,7 @@ public class PolylineEncoder {
         segmentLength = Math.pow(segEnd.lat() - segStart.lat(), 2) + Math.pow(segEnd.lng() - segStart.lng(), 2);
 
         for (int segLoc = segStackStart + 1; segLoc < segStackEnd; segLoc++) {
-          temp = this.distance(points.get(segLoc), segStart, segEnd, segmentLength);
+          temp = distance(points.get(segLoc), segStart, segEnd, segmentLength);
 
           if (temp > maxDist) {
             maxDist = temp;
@@ -153,180 +231,6 @@ public class PolylineEncoder {
 
 
   /**
-   * Computes the distance between the point pt and the segment
-   * [seqStart,seqEnd]. This could probably be replaced with something that is a
-   * bit more numerically stable.
-   * 
-   * @param pt
-   * @param segStart
-   * @param segEnd
-   * @return
-   */
-  public double distance(Trackpoint pt, Trackpoint segStart, Trackpoint segEnd, double segLength) {
-    double u, out = 0.0;
-    double ptLat = pt.lat();
-    double ptLon = pt.lng();
-    double segStartLat = segStart.lat();
-    double segStartLon = segStart.lng();
-    double segEndLat = segEnd.lat();
-    double segEndLon = segEnd.lng();
-
-    if (segStart.equals(segEnd)) {
-      out = Util.sqrtOfSquared((segEndLat - ptLat), (segEndLon - ptLon));
-    } else {
-      u = ((ptLat - segStartLat)*(segEndLat - segStartLat) + (ptLon - segStartLon)*(segEndLon - segStartLon))/segLength;
-
-      if (u <= 0) {
-        out = Util.sqrtOfSquared((ptLat - segStartLat), (ptLon - segStartLon));
-      }
-
-      if (0 < u && u < 1) {
-        out = Util.sqrtOfSquared((ptLat - segStartLat - u*(segEndLat - segStartLat)), (ptLon - segStartLon - u*(segEndLon - segStartLon)));
-      }
-
-      if (1 <= u) {
-        out = Util.sqrtOfSquared((ptLat - segEndLat), (ptLon - segEndLon));
-      }
-    }
-
-    return out;
-  }
-
-
-
-  /**
-   * Parses a String containing points in a form as described in param points.
-   * 
-   * @param points
-   *          set the points that should be encoded all points have to be in the
-   *          following form: {@code Latitude, Longitude\n}
-   * 
-   * @return the parsed track
-   * 
-   * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
-   */
-  public static Track pointsToTrack(String points) {
-    TrackSeparator sep = new TrackSeparator("\n", ", ");
-    PointArrayPositions pos = new PointArrayPositions(0, 1);
-
-    return parseStringToTrack(points, sep, pos);
-  }
-
-
-
-  /**
-   * Parses a String containing points in a form as described in param points.
-   * Altitude will be ignored here so far.
-   * 
-   * @param points
-   *          set the points that should be encoded all points have to be in the
-   *          following form: {@code Longitude,Latitude,Altitude'_' ...}
-   * 
-   * @return the parsed track
-   * 
-   * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
-   */
-  public static Track kmlLineStringToTrack(String points) {
-    TrackSeparator sep = new TrackSeparator(" ", ",");
-    PointArrayPositions pos = new PointArrayPositions(1, 0);
-
-    return parseStringToTrack(points, sep, pos);
-  }
-
-
-
-  /**
-   * Parses a String containing points in a form as described in param points.
-   * Google can't show Altitude, but its in some GPS/GPX Files. Altitude will be
-   * ignored here so far.
-   * 
-   * @param points
-   *          set the points that should be encoded all points have to be in the
-   *          following form: {@code Longitude,Latitude,Altitude\n}
-   * 
-   * @return the parsed track
-   * 
-   * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
-   */
-  public static Track pointsAndAltitudeToTrack(String points) {
-    System.out.println("pointsAndAltitudeToTrack");
-    TrackSeparator sep = new TrackSeparator("\n", ",");
-    PointArrayPositions pos = new PointArrayPositions(1, 0);
-
-    return parseStringToTrack(points, sep, pos);
-  }
-
-
-
-  /**
-   * Parses a String to a Track. If one point is defined by two coordinates the
-   * altitude will be set to 0.0
-   * 
-   * @param points
-   * @param separator
-   * @param positions
-   * 
-   * @return the parsed track
-   * 
-   * @see TrackSeparator
-   * @see PointArrayPositions
-   */
-  public static Track parseStringToTrack(String points, TrackSeparator separator, PointArrayPositions positions) {
-    Track trk = new Track();
-    StringTokenizer st = new StringTokenizer(points, separator.forLines());
-
-    while (st.hasMoreTokens()) {
-      String[] pointStrings = st.nextToken().split(separator.forPoints());
-
-      switch (pointStrings.length) {
-        case 3:
-          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), new Double(pointStrings[positions.alt()])));
-          break;
-
-        case 2:
-          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), 0.0));
-          break;
-      }
-    }
-
-    return trk;
-  }
-
-
-
-  public static String encodeSignedNumber(int num) {
-    int signed = num << 1;
-
-    if (num < 0) {
-      signed = ~(signed);
-    }
-
-    return (encodeNumber(signed));
-  }
-
-
-
-  public static String encodeNumber(int num) {
-    int unitSeparator = 0x1f;
-    int whitespace = 0x20;
-
-    StringBuffer encodeString = new StringBuffer();
-
-    while (num >= whitespace) {
-      int nextValue = (whitespace | (num & unitSeparator)) + 63;
-      encodeString.append((char) (nextValue));
-      num >>= 5;
-    }
-
-    num += 63;
-    encodeString.append((char) (num));
-
-    return encodeString.toString();
-  }
-
-
-
-  /**
    * Now we can use the previous function to march down the list of points and
    * encode the levels. Like createEncodings, we ignore points whose distance
    * (in dists) is undefined.
@@ -356,86 +260,205 @@ public class PolylineEncoder {
 
 
 
-  /**
-   * This computes the appropriate zoom level of a point in terms of it's
-   * distance from the relevant segment in the DP algorithm. Could be done in
-   * terms of a logarithm, but this approach makes it a bit easier to ensure
-   * that the level is not too large.
-   */
-  public int computeLevel(double absMaxDist) {
-    int lev = 0;
-
-    if (absMaxDist > this.verySmall) {
-      lev = 0;
-
-      while (absMaxDist < this.zoomLevelBreaks[lev]) {
-        lev++;
-      }
-    }
-
-    return lev;
-  }
-
-
-
-  public String createEncodings(ArrayList<Trackpoint> points, double[] dists) {
-    Double curPointLat, curPointLng;
-    StringBuffer encodedPoints = new StringBuffer();
-
-    int pLat = 0, pLng = 0;
-    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0;
-
-    for (int i = 0; i < points.size(); i++) {
-      curPointLat = points.get(i).lat();
-      curPointLng = points.get(i).lng();
-
-      // determine bounds (max/min lat/lon)
-      if (i == 0) {
-        maxLat = minLat = curPointLat;
-        maxLng = minLng = curPointLng;
-      } else {
-        if (curPointLat > maxLat) {
-          maxLat = curPointLat;
-        } else if (curPointLat < minLat) {
-          minLat = curPointLat;
-        } else if (curPointLng > maxLng) {
-          maxLng = curPointLng;
-        } else if (curPointLng < minLng) {
-          minLng = curPointLng;
-        }
-      }
-
-      if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
-
-        int late5 = Util.floor1e5(curPointLat);
-        int lnge5 = Util.floor1e5(curPointLng);
-
-        int dlat = late5 - pLat;
-        int dlng = lnge5 - pLng;
-
-        pLat = late5;
-        pLng = lnge5;
-
-        encodedPoints.append(encodeSignedNumber(dlat));
-        encodedPoints.append(encodeSignedNumber(dlng));
-      }
-    }
-
-    HashMap<String, Double> bounds = new HashMap<String, Double>();
-    bounds.put("maxlat", new Double(maxLat));
-    bounds.put("minlat", new Double(minLat));
-    bounds.put("maxlon", new Double(maxLng));
-    bounds.put("minlon", new Double(minLng));
-
-    this.setBounds(bounds);
-
-    return encodedPoints.toString();
+  public HashMap<String, Double> getBounds() {
+    return bounds;
   }
 
 
 
   public void setBounds(HashMap<String, Double> bounds) {
     this.bounds = bounds;
+  }
+
+
+
+  /**
+   * Computes the distance between the point pt and the segment
+   * [seqStart,seqEnd]. This could probably be replaced with something that is a
+   * bit more numerically stable.
+   * 
+   * @param pt
+   * @param segStart
+   * @param segEnd
+   * @return
+   */
+  public static double distance(Trackpoint pt, Trackpoint segStart, Trackpoint segEnd, double segLength) {
+    double u, out = 0.0;
+    double ptLat = pt.lat();
+    double ptLon = pt.lng();
+    double segStartLat = segStart.lat();
+    double segStartLon = segStart.lng();
+    double segEndLat = segEnd.lat();
+    double segEndLon = segEnd.lng();
+  
+    if (segStart.equals(segEnd)) {
+      out = Util.sqrtOfSquared((segEndLat - ptLat), (segEndLon - ptLon));
+    } else {
+      u = ((ptLat - segStartLat)*(segEndLat - segStartLat) + (ptLon - segStartLon)*(segEndLon - segStartLon))/segLength;
+  
+      if (u <= 0) {
+        out = Util.sqrtOfSquared((ptLat - segStartLat), (ptLon - segStartLon));
+      }
+  
+      if (0 < u && u < 1) {
+        out = Util.sqrtOfSquared((ptLat - segStartLat - u*(segEndLat - segStartLat)), (ptLon - segStartLon - u*(segEndLon - segStartLon)));
+      }
+  
+      if (1 <= u) {
+        out = Util.sqrtOfSquared((ptLat - segEndLat), (ptLon - segEndLon));
+      }
+    }
+  
+    return out;
+  }
+
+
+
+  /**
+   * Replaces all double backslashes inside a String. It uses a regular
+   * expression.
+   * 
+   * @param s
+   *          String that may have double backslashes
+   * 
+   * @return the String with all double backslashes replaced
+   * 
+   * @see <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html">Potential encoding pitfalls</a>
+   */
+  public static String encodeDoubleBackslash(String s) {
+    return s.replaceAll("\\\\", "\\\\\\\\");
+  }
+
+
+
+  public static String encodeNumber(int num) {
+    int unitSeparator = 0x1f;
+    int whitespace = 0x20;
+  
+    StringBuffer encodeString = new StringBuffer();
+  
+    while (num >= whitespace) {
+      int nextValue = (whitespace | (num & unitSeparator)) + 63;
+      encodeString.append((char) (nextValue));
+      num >>= 5;
+    }
+  
+    num += 63;
+    encodeString.append((char) (num));
+  
+    return encodeString.toString();
+  }
+
+
+
+  public static String encodeSignedNumber(int num) {
+    int signed = num << 1;
+  
+    if (num < 0) {
+      signed = ~(signed);
+    }
+  
+    return (encodeNumber(signed));
+  }
+
+
+
+  /**
+   * Parses a String containing points in a form as described in param points.
+   * Altitude will be ignored here so far.
+   * 
+   * @param points
+   *          set the points that should be encoded all points have to be in the
+   *          following form: {@code Longitude,Latitude,Altitude'_' ...}
+   * 
+   * @return the parsed track
+   * 
+   * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
+   */
+  public static Track kmlLineStringToTrack(String points) {
+    TrackSeparator sep = new TrackSeparator(" ", ",");
+    PointArrayPositions pos = new PointArrayPositions(1, 0);
+  
+    return parseStringToTrack(points, sep, pos);
+  }
+
+
+
+  /**
+   * Parses a String containing points in a form as described in param points.
+   * Google can't show Altitude, but its in some GPS/GPX Files. Altitude will be
+   * ignored here so far.
+   * 
+   * @param points
+   *          set the points that should be encoded all points have to be in the
+   *          following form: {@code Longitude,Latitude,Altitude\n}
+   * 
+   * @return the parsed track
+   * 
+   * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
+   */
+  public static Track pointsAndAltitudeToTrack(String points) {
+    System.out.println("pointsAndAltitudeToTrack");
+    TrackSeparator sep = new TrackSeparator("\n", ",");
+    PointArrayPositions pos = new PointArrayPositions(1, 0);
+  
+    return parseStringToTrack(points, sep, pos);
+  }
+
+
+
+  /**
+   * Parses a String containing points in a form as described in param points.
+   * 
+   * @param points
+   *          set the points that should be encoded all points have to be in the
+   *          following form: {@code Latitude, Longitude\n}
+   * 
+   * @return the parsed track
+   * 
+   * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
+   */
+  public static Track pointsToTrack(String points) {
+    TrackSeparator sep = new TrackSeparator("\n", ", ");
+    PointArrayPositions pos = new PointArrayPositions(0, 1);
+  
+    return parseStringToTrack(points, sep, pos);
+  }
+
+
+
+  /**
+   * Parses a String to a Track. If one point is defined by two coordinates the
+   * altitude will be set to 0.0
+   * 
+   * @param points
+   * @param separator
+   * @param positions
+   * 
+   * @return the parsed track
+   * 
+   * @see TrackSeparator
+   * @see PointArrayPositions
+   */
+  public static Track parseStringToTrack(String points, TrackSeparator separator, PointArrayPositions positions) {
+    Track trk = new Track();
+    StringTokenizer st = new StringTokenizer(points, separator.forLines());
+  
+    while (st.hasMoreTokens()) {
+      String[] pointStrings = st.nextToken().split(separator.forPoints());
+  
+      switch (pointStrings.length) {
+        case 3:
+          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), new Double(pointStrings[positions.alt()])));
+          break;
+  
+        case 2:
+          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), 0.0));
+          break;
+      }
+    }
+  
+    return trk;
   }
 
 
@@ -479,28 +502,5 @@ public class PolylineEncoder {
     resultMap.put("encodedLevels", encodedLevels.toString());
 
     return resultMap;
-  }
-
-
-
-  /**
-   * Replaces all double backslashes inside a String. It uses a regular
-   * expression.
-   * 
-   * @param s
-   *          String that may have double backslashes
-   * 
-   * @return the String with all double backslashes replaced
-   * 
-   * @see <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html">Potential encoding pitfalls</a>
-   */
-  public static String encodeDoubleBackslash(String s) {
-    return s.replaceAll("\\\\", "\\\\\\\\");
-  }
-
-
-
-  public HashMap<String, Double> getBounds() {
-    return bounds;
   }
 }
