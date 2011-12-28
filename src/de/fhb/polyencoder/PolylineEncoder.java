@@ -82,8 +82,7 @@ public class PolylineEncoder {
    * 
    * @return HashMap [encodedPoints; encodedPointsLiteral; encodedLevels]
    * @see <a
-   *      href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker
-   *      algorithm (Wikipedia)</a>
+   *      href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker algorithm (Wikipedia)</a>
    * 
    */
   public HashMap<String, String> dpEncode(Track track) {
@@ -484,6 +483,17 @@ public class PolylineEncoder {
 
 
 
+  /**
+   * Replaces all double backslashes inside a String. It uses a regular
+   * expression.
+   * 
+   * @param s
+   *          String that may have double backslashes
+   * 
+   * @return the String with all double backslashes replaced
+   * 
+   * @see <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html">Potential encoding pitfalls</a>
+   */
   public static String encodeDoubleBackslash(String s) {
     return s.replaceAll("\\\\", "\\\\\\\\");
   }
