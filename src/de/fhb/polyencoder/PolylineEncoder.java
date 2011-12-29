@@ -246,11 +246,13 @@ public class PolylineEncoder {
   public static HashMap<String, Double> createBounds(ArrayList<Trackpoint> points) {
     double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0, maxAlt = 0, minAlt = 0;
     double curPointLat, curPointLng, curPointAlt;
+    Trackpoint point;
     
     for (int i = 0; i < points.size(); i++) {
-      curPointLat = points.get(i).lat();
-      curPointLng = points.get(i).lng();
-      curPointAlt = points.get(i).alt();
+      point = points.get(i);
+      curPointLat = point.lat();
+      curPointLng = point.lng();
+      curPointAlt = point.alt();
 
       if (i > 0) {
         minLat = Math.min(curPointLat, minLat);
