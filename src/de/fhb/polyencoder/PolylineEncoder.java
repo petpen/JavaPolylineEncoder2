@@ -244,34 +244,37 @@ public class PolylineEncoder {
 
 
   public static HashMap<String, Double> createBounds(ArrayList<Trackpoint> points) {
-    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0;
-    double curPointLat, curPointLng;
+    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0, maxAlt = 0, minAlt = 0;
+    double curPointLat, curPointLng, curPointAlt;
     
     for (int i = 0; i < points.size(); i++) {
       curPointLat = points.get(i).lat();
       curPointLng = points.get(i).lng();
+      curPointAlt = points.get(i).alt();
 
-      if (i == 0) {
+      if (i > 0) {
+        minLat = Math.min(curPointLat, minLat);
+        maxLat = Math.max(curPointLat, maxLat);
+        
+        minLng = Math.min(curPointLng, minLng);
+        maxLng = Math.max(curPointLng, maxLng);
+        
+        minAlt = Math.min(curPointAlt, minAlt);
+        maxAlt = Math.max(curPointAlt, maxAlt);
+      } else {
         maxLat = minLat = curPointLat;
         maxLng = minLng = curPointLng;
-      } else {
-        if (curPointLat > maxLat) {
-          maxLat = curPointLat;
-        } else if (curPointLat < minLat) {
-          minLat = curPointLat;
-        } else if (curPointLng > maxLng) {
-          maxLng = curPointLng;
-        } else if (curPointLng < minLng) {
-          minLng = curPointLng;
-        }
+        maxAlt = minAlt = curPointAlt;
       }
     }
     
     HashMap<String, Double> bounds = new HashMap<String, Double>();
-    bounds.put("maxlat", new Double(maxLat));
-    bounds.put("minlat", new Double(minLat));
-    bounds.put("maxlon", new Double(maxLng));
-    bounds.put("minlon", new Double(minLng));
+    bounds.put("maxlat", maxLat);
+    bounds.put("minlat", minLat);
+    bounds.put("maxlon", maxLng);
+    bounds.put("minlon", minLng);
+    bounds.put("maxalt", maxAlt);
+    bounds.put("minalt", minAlt);
     
     return bounds;
   }
