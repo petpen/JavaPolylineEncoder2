@@ -331,6 +331,18 @@ public class PolylineEncoder {
 
 
 
+  /**
+   * Algorithm is explained in <a href=
+   * "http://code.google.com/intl/en/apis/maps/documentation/utilities/polylinealgorithm.html"
+   * >Google's Polyline Algorithm</a> This function is very similar to Google's,
+   * but Mark McClure added some stuff to deal with the double slash issue. Mark
+   * MkClures version can be found here: <a href=
+   * "http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/PolylineEncoder.js"
+   * >Mark McClures PolylineEncoder</a>
+   * 
+   * @param num
+   * @return
+   */
   public static String encodeNumber(int num) {
     int unitSeparator = 0x1f;
     int whitespace = 0x20;
@@ -351,6 +363,13 @@ public class PolylineEncoder {
 
 
 
+  /**
+   * This one is Google's verbatim. Code by Mark McClure
+   * 
+   * @param num
+   *          number to encode
+   * @return the encoded signed number
+   */
   public static String encodeSignedNumber(int num) {
     int signed = num << 1;
   
