@@ -320,22 +320,19 @@ public class PolylineEncoder {
 
 
   public static String createEncodings(ArrayList<Trackpoint> points, double[] dists) {
-    double curPointLat, curPointLng;
     StringBuffer encodedPoints = new StringBuffer();
   
     int pLat = 0, pLng = 0;
+    int late5, lnge5, dlat, dlng;
   
     for (int i = 0; i < points.size(); i++) {
-      curPointLat = points.get(i).lat();
-      curPointLng = points.get(i).lng();
-  
       if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
   
-        int late5 = Util.floor1e5(curPointLat);
-        int lnge5 = Util.floor1e5(curPointLng);
+        late5 = Util.floor1e5(points.get(i).lat());
+        lnge5 = Util.floor1e5(points.get(i).lng());
   
-        int dlat = late5 - pLat;
-        int dlng = lnge5 - pLng;
+        dlat = late5 - pLat;
+        dlng = lnge5 - pLng;
 
         encodedPoints.append(encodeSignedNumber(dlat));
         encodedPoints.append(encodeSignedNumber(dlng));
