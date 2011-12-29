@@ -406,7 +406,8 @@ public class PolylineEncoder {
 
 
   /**
-   * Parses a String containing points in a form as described in param points.
+   * Parses a String containing points in a form as described in parameter
+   * points. The Altitude will be set to 0.0.
    * 
    * @param points
    *          set the points that should be encoded all points have to be in the
