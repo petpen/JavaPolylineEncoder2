@@ -21,6 +21,7 @@ public class PolylineEncoder {
   private double[] zoomLevelBreaks;
 
   private HashMap<String, Double> bounds;
+  private ArrayList<Trackpoint> points;
 
 
 
@@ -98,69 +99,12 @@ public class PolylineEncoder {
 
 
 
-  public String createEncodings(ArrayList<Trackpoint> points, double[] dists) {
-    Double curPointLat, curPointLng;
-    StringBuffer encodedPoints = new StringBuffer();
-  
-    int pLat = 0, pLng = 0;
-    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0;
-  
-    for (int i = 0; i < points.size(); i++) {
-      curPointLat = points.get(i).lat();
-      curPointLng = points.get(i).lng();
-  
-      // determine bounds (max/min lat/lon)
-      if (i == 0) {
-        maxLat = minLat = curPointLat;
-        maxLng = minLng = curPointLng;
-      } else {
-        if (curPointLat > maxLat) {
-          maxLat = curPointLat;
-        } else if (curPointLat < minLat) {
-          minLat = curPointLat;
-        } else if (curPointLng > maxLng) {
-          maxLng = curPointLng;
-        } else if (curPointLng < minLng) {
-          minLng = curPointLng;
-        }
-      }
-  
-      if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
-  
-        int late5 = Util.floor1e5(curPointLat);
-        int lnge5 = Util.floor1e5(curPointLng);
-  
-        int dlat = late5 - pLat;
-        int dlng = lnge5 - pLng;
-  
-        pLat = late5;
-        pLng = lnge5;
-  
-        encodedPoints.append(encodeSignedNumber(dlat));
-        encodedPoints.append(encodeSignedNumber(dlng));
-      }
-    }
-  
-    HashMap<String, Double> bounds = new HashMap<String, Double>();
-    bounds.put("maxlat", new Double(maxLat));
-    bounds.put("minlat", new Double(minLat));
-    bounds.put("maxlon", new Double(maxLng));
-    bounds.put("minlon", new Double(minLng));
-  
-    this.setBounds(bounds);
-  
-    return encodedPoints.toString();
-  }
-
-
-
   /**
    * Ramer-Douglas-Peucker algorithm, adapted for encoding. This algorithm is
    * used to reduce the number of points in a curve.
    * 
    * @return HashMap [encodedPoints; encodedPointsLiteral; encodedLevels]
-   * @see <a
-   *      href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker algorithm (Wikipedia)</a>
+   * @see <a href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker algorithm (Wikipedia)</a>
    * 
    */
   public HashMap<String, String> dpEncode(Track track) {
@@ -218,9 +162,10 @@ public class PolylineEncoder {
 
     encodedPoints = createEncodings(points, dists);
     String encodedPointsLiteral = encodeDoubleBackslash(encodedPoints);
-
     encodedLevels = encodeLevels(points, dists, absMaxDist);
 
+    setBounds(points);
+    
     HashMap<String, String> hm = new HashMap<String, String>();
     hm.put("encodedPoints", encodedPoints);
     hm.put("encodedPointsLiteral", encodedPointsLiteral);
@@ -268,6 +213,139 @@ public class PolylineEncoder {
 
   public void setBounds(HashMap<String, Double> bounds) {
     this.bounds = bounds;
+  }
+
+
+
+  public void setBounds(ArrayList<Trackpoint> points) {
+    this.bounds = createBounds(points);
+  }
+
+
+
+  /**
+   * Sets the points and creates the bounds to this points, too.
+   * 
+   * @param points
+   *          points used with this encoder
+   */
+  public void setPoints(ArrayList<Trackpoint> points) {
+    this.points = points;
+
+    setBounds(points);
+  }
+
+
+
+  public ArrayList<Trackpoint> getPoints() {
+    return this.points;
+  }
+
+
+
+  public static HashMap<String, Double> createBounds(ArrayList<Trackpoint> points) {
+    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0;
+    double curPointLat, curPointLng;
+    
+    for (int i = 0; i < points.size(); i++) {
+      curPointLat = points.get(i).lat();
+      curPointLng = points.get(i).lng();
+
+      if (i == 0) {
+        maxLat = minLat = curPointLat;
+        maxLng = minLng = curPointLng;
+      } else {
+        if (curPointLat > maxLat) {
+          maxLat = curPointLat;
+        } else if (curPointLat < minLat) {
+          minLat = curPointLat;
+        } else if (curPointLng > maxLng) {
+          maxLng = curPointLng;
+        } else if (curPointLng < minLng) {
+          minLng = curPointLng;
+        }
+      }
+    }
+    
+    HashMap<String, Double> bounds = new HashMap<String, Double>();
+    bounds.put("maxlat", new Double(maxLat));
+    bounds.put("minlat", new Double(minLat));
+    bounds.put("maxlon", new Double(maxLng));
+    bounds.put("minlon", new Double(minLng));
+    
+    return bounds;
+  }
+
+
+
+  public static HashMap<String, String> createEncodings(ArrayList<Trackpoint> points, int level, int step) {
+    StringBuffer encodedPoints = new StringBuffer();
+    StringBuffer encodedLevels = new StringBuffer();
+  
+    int plat = 0;
+    int plng = 0;
+    int counter = 0;
+  
+    int listSize = points.size();
+  
+    int late5, lnge5, dlat, dlng;
+  
+    for (int i = 0; i < listSize; i += step) {
+      counter++;
+  
+      late5 = Util.floor1e5(points.get(i).lat());
+      lnge5 = Util.floor1e5(points.get(i).lng());
+  
+      dlat = late5 - plat;
+      dlng = lnge5 - plng;
+  
+      encodedPoints.append(encodeSignedNumber(dlat));
+      encodedPoints.append(encodeSignedNumber(dlng));
+      encodedLevels.append(encodeNumber(level));
+
+      plat = late5;
+      plng = lnge5;
+    }
+  
+    System.out.println("listSize: " + listSize + " step: " + step + " counter: " + counter);
+  
+    HashMap<String, String> resultMap = new HashMap<String, String>();
+    resultMap.put("encodedPoints", encodedPoints.toString());
+    resultMap.put("encodedPointsLiteral", encodeDoubleBackslash(encodedPoints.toString()));
+    resultMap.put("encodedLevels", encodedLevels.toString());
+  
+    return resultMap;
+  }
+
+
+
+  public static String createEncodings(ArrayList<Trackpoint> points, double[] dists) {
+    double curPointLat, curPointLng;
+    StringBuffer encodedPoints = new StringBuffer();
+  
+    int pLat = 0, pLng = 0;
+  
+    for (int i = 0; i < points.size(); i++) {
+      curPointLat = points.get(i).lat();
+      curPointLng = points.get(i).lng();
+  
+      if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
+  
+        int late5 = Util.floor1e5(curPointLat);
+        int lnge5 = Util.floor1e5(curPointLng);
+  
+        int dlat = late5 - pLat;
+        int dlng = lnge5 - pLng;
+
+        encodedPoints.append(encodeSignedNumber(dlat));
+        encodedPoints.append(encodeSignedNumber(dlng));
+  
+        pLat = late5;
+        pLng = lnge5;
+      }
+    }
+  
+    return encodedPoints.toString();
   }
 
 
@@ -477,48 +555,5 @@ public class PolylineEncoder {
     }
   
     return trk;
-  }
-
-
-
-  public static HashMap<String, String> createEncodings(Track track, int level, int step) {
-    StringBuffer encodedPoints = new StringBuffer();
-    StringBuffer encodedLevels = new StringBuffer();
-
-    ArrayList<Trackpoint> trackpointList = track.getPoints();
-
-    int plat = 0;
-    int plng = 0;
-    int counter = 0;
-
-    int listSize = trackpointList.size();
-
-    Trackpoint trackpoint;
-
-    for (int i = 0; i < listSize; i += step) {
-      counter++;
-      trackpoint = trackpointList.get(i);
-
-      int late5 = Util.floor1e5(trackpoint.getLatitude());
-      int lnge5 = Util.floor1e5(trackpoint.getLongitude());
-
-      int dlat = late5 - plat;
-      int dlng = lnge5 - plng;
-
-      plat = late5;
-      plng = lnge5;
-
-      encodedPoints.append(encodeSignedNumber(dlat)).append(encodeSignedNumber(dlng));
-      encodedLevels.append(encodeNumber(level));
-    }
-
-    System.out.println("listSize: " + listSize + " step: " + step + " counter: " + counter);
-
-    HashMap<String, String> resultMap = new HashMap<String, String>();
-    resultMap.put("encodedPoints", encodedPoints.toString());
-    resultMap.put("encodedPointsLiteral", encodeDoubleBackslash(encodedPoints.toString()));
-    resultMap.put("encodedLevels", encodedLevels.toString());
-
-    return resultMap;
   }
 }
