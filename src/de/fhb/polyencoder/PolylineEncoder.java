@@ -282,8 +282,7 @@ public class PolylineEncoder {
     StringBuffer encodedPoints = new StringBuffer();
     StringBuffer encodedLevels = new StringBuffer();
   
-    int plat = 0;
-    int plng = 0;
+    int plat = 0, plng = 0;
     int counter = 0;
   
     int listSize = points.size();
