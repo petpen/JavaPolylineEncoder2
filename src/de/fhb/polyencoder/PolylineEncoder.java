@@ -161,7 +161,7 @@ public class PolylineEncoder {
     }
 
     encodedPoints = createEncodings(points, dists);
-    String encodedPointsLiteral = encodeDoubleBackslash(encodedPoints);
+    String encodedPointsLiteral = encodeBackslash(encodedPoints);
     encodedLevels = encodeLevels(points, dists, absMaxDist);
 
     setBounds(points);
@@ -315,7 +315,7 @@ public class PolylineEncoder {
   
     HashMap<String, String> resultMap = new HashMap<String, String>();
     resultMap.put("encodedPoints", encodedPoints.toString());
-    resultMap.put("encodedPointsLiteral", encodeDoubleBackslash(encodedPoints.toString()));
+    resultMap.put("encodedPointsLiteral", encodeBackslash(encodedPoints.toString()));
     resultMap.put("encodedLevels", encodedLevels.toString());
   
     return resultMap;
@@ -394,7 +394,7 @@ public class PolylineEncoder {
 
 
   /**
-   * Replaces all double backslashes inside a String. It uses a regular
+   * Replaces all backslashes inside a String with two backslashes. It uses a regular
    * expression.
    * 
    * @param s
@@ -404,7 +404,7 @@ public class PolylineEncoder {
    * 
    * @see <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html">Potential encoding pitfalls</a>
    */
-  public static String encodeDoubleBackslash(String s) {
+  public static String encodeBackslash(String s) {
     return s.replaceAll("\\\\", "\\\\\\\\");
   }
 
