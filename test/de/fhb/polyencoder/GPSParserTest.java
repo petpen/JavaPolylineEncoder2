@@ -49,6 +49,22 @@ public class GPSParserTest {
 
 
   @Test
+  public void testParseStringToTrackLatLngIgnoreAlt() {
+    String pointIn = "42.244814 -71.463566 1.463566";
+
+    TrackSeparator sep = new TrackSeparator("\n", " ");
+    PointArrayPositions pos = new PointArrayPositions(0, 1);
+    Track trkResult = GPSParser.parseStringToTrack(pointIn, sep, pos);
+
+    assertTrue("There should only be one point in the Track", 1 == trkResult.getPoints().size());
+    assertTrue("Latitude should be 42.244814", 42.244814 == trkResult.getPoint(0).getLatitude());
+    assertTrue("Longitude should be -71.463566", -71.463566 == trkResult.getPoint(0).getLongitude());
+    assertTrue("Altitude should be 0.0", 0.0 == trkResult.getPoint(0).getAltitude());
+  }
+
+
+
+  @Test
   public void testParseStringWithMultiplePointsToTrackLatLng() {
     String pointsIn = "42.244814 -71.463566\n42.240618 -71.464372";
 
