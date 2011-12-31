@@ -79,8 +79,12 @@ public class GPSParser {
    * missing coordinate will be the altitude. The altitude will be set to 0.0
    * 
    * @param points
+   *          String which contains points to parse
    * @param separator
+   *          {@link TrackSeparator} for line and point coordinates
    * @param positions
+   *          {@link PointArrayPositions} for positions of the parsed
+   *          coordinates
    * 
    * @return the parsed track
    * 
