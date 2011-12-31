@@ -76,7 +76,8 @@ public class GPSParser {
 
   /**
    * Parses a String to a Track. If one point is defined by two coordinates the
-   * missing coordinate will be the altitude. The altitude will be set to 0.0
+   * missing coordinate will be the altitude. The altitude will be set to 0.0 in
+   * the case it is not set or not defined in parameter positions.
    * 
    * @param points
    *          String which contains points to parse
