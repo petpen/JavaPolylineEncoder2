@@ -3,7 +3,8 @@ package de.fhb.polyencoder;
 import java.util.StringTokenizer;
 
 /**
- * This class was part of {@link PolylineEncoder}.
+ * This class was part of {@link PolylineEncoder}. It is used to parse GPS
+ * points which are represented by longitude, latitude and/or altitude
  * 
  * @author Mark Rambow (markrambow[at]gmail[dot]com)
  * @author Peter Pensold
@@ -11,7 +12,8 @@ import java.util.StringTokenizer;
  */
 public class GPSParser {
   /**
-   * Parses a String containing points in a form as described in param points.
+   * Parses a String containing points in a form as described in parameter
+   * points.
    * 
    * @param points
    *          set the points that should be encoded all points have to be in the
@@ -31,8 +33,8 @@ public class GPSParser {
 
 
   /**
-   * Parses a String containing points in a form as described in param points.
-   * Google can't show Altitude, but its in some GPS/GPX Files.
+   * Parses a String containing points in a form as described in parameter
+   * points. Google can't show Altitude, but its in some GPS/GPX Files.
    * 
    * @param points
    *          set the points that should be encoded all points have to be in the
@@ -43,7 +45,6 @@ public class GPSParser {
    * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
    */
   public static Track pointsWithAltitudeToTrack(String points) {
-    System.out.println("pointsWithAltitudeToTrack");
     TrackSeparator sep = new TrackSeparator("\n", ",");
     PointArrayPositions pos = new PointArrayPositions(1, 0, 2);
 
