@@ -527,7 +527,7 @@ public class PolylineEncoder {
 
   /**
    * Parses a String to a Track. If one point is defined by two coordinates the
-   * altitude will be set to 0.0
+   * missing coordinate will be the altitude. the altitude will be set to 0.0
    * 
    * @param points
    * @param separator
