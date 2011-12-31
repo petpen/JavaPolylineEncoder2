@@ -106,7 +106,7 @@ public class GPSParserTest {
 
 
   @Test
-  public void testNoPointsKmlLineStringToTrack() {
+  public void testNoPointsInKmlLineStringToTrack() {
     String line = "42.244814 -71.463566";
     Track trkResult = GPSParser.kmlLineStringToTrack(line);
 
@@ -129,6 +129,116 @@ public class GPSParserTest {
   public void testEmptyKmlLineStringToTrack() {
     String line = "";
     Track trkResult = GPSParser.kmlLineStringToTrack(line);
+
+    assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
+  }
+
+
+
+  @Test
+  public void testPointsWithAltitudeToTrack() {
+    String line = "42.244814,-71.463566,0.0\n42.240618,-71.464372,1.463566";
+    Track trkResult = GPSParser.pointsWithAltitudeToTrack(line);
+
+    assertTrue("There must be two points in the track", 2 == trkResult.getPoints().size());
+    assertTrue("The first point must have an altitude of 0.0", 0.0 == trkResult.getPoint(0).getAltitude());
+    assertTrue("The second point must have an altitude of 1.463566", 1.463566 == trkResult.getPoint(1).getAltitude());
+  }
+
+
+
+  @Test
+  public void testPointsWithAltitudeMixedPointsStringToTrack() {
+    String line = "42.244814,-71.463566,1.6546\n42.240618,-71.464372\n43.240618,-69.664352";
+    Track trkResult = GPSParser.pointsWithAltitudeToTrack(line);
+
+    assertTrue("There must be three points in the track", 3 == trkResult.getPoints().size());
+    assertTrue("The first point must have an altitude of 1.6546", 1.6546 == trkResult.getPoint(0).getAltitude());
+    assertTrue("The second point must have an altitude of 0.0", 0.0 == trkResult.getPoint(1).getAltitude());
+    assertTrue("The third point must have an altitude of 0.0", 0.0 == trkResult.getPoint(2).getAltitude());
+  }
+
+
+
+  @Test
+  public void testNoPointsInPointsWithAltitudeStringToTrack() {
+    String line = "42.244814\n-71.463566";
+    Track trkResult = GPSParser.pointsWithAltitudeToTrack(line);
+
+    assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
+  }
+
+
+
+  @Test
+  public void testInvalidInPointsWithAltitudeStringToTrack() {
+    String line = "42.244814-71.463566";
+    Track trkResult = GPSParser.pointsWithAltitudeToTrack(line);
+
+    assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
+  }
+
+
+
+  @Test
+  public void testEmptyInPointsWithAltitudeStringToTrack() {
+    String line = "";
+    Track trkResult = GPSParser.pointsWithAltitudeToTrack(line);
+
+    assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
+  }
+
+
+
+  @Test
+  public void testPointsStringToTrack() {
+    String line = "42.244814, -71.463566\n42.240618, -71.464372";
+    Track trkResult = GPSParser.pointsToTrack(line);
+
+    assertTrue("There must be two points in the track", 2 == trkResult.getPoints().size());
+    assertTrue("The first point must have an altitude of 0.0", 0.0 == trkResult.getPoint(0).getAltitude());
+    assertTrue("The second point must have an altitude of 0.0", 0.0 == trkResult.getPoint(1).getAltitude());
+  }
+
+
+
+  @Test
+  public void testPointsMixedPointsStringToTrack() {
+    String line = "42.244814, -71.463566, 1.6546\n42.240618, -71.464372\n43.240618, -69.664352";
+    Track trkResult = GPSParser.pointsToTrack(line);
+
+    assertTrue("There must be three points in the track", 3 == trkResult.getPoints().size());
+    assertTrue("The first point must have an altitude of 0.0", 0.0 == trkResult.getPoint(0).getAltitude());
+    assertTrue("The second point must have an altitude of 0.0", 0.0 == trkResult.getPoint(1).getAltitude());
+    assertTrue("The third point must have an altitude of 0.0", 0.0 == trkResult.getPoint(2).getAltitude());
+  }
+
+
+
+  @Test
+  public void testNoPointsInPointsStringToTrack() {
+    String line = "42.244814\n-71.463566";
+    Track trkResult = GPSParser.pointsToTrack(line);
+
+    assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
+  }
+
+
+
+  @Test
+  public void testInvalidInPointsStringToTrack() {
+    String line = "42.244814-71.463566";
+    Track trkResult = GPSParser.pointsToTrack(line);
+
+    assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
+  }
+
+
+
+  @Test
+  public void testEmptyInPointsStringToTrack() {
+    String line = "";
+    Track trkResult = GPSParser.pointsToTrack(line);
 
     assertTrue("The track must have no points", 0 == trkResult.getPoints().size());
   }

@@ -100,7 +100,8 @@ public class GPSParser {
 
       switch (pointStrings.length) {
         case 3:
-          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), new Double(pointStrings[positions.alt()])));
+          double altitude = (positions.getAltitudePos() == PointArrayPositions.EMTPY_COORDINATE) ? 0.0 : new Double(pointStrings[positions.alt()]);
+          trk.addPoint(new Trackpoint(new Double(pointStrings[positions.lat()]), new Double(pointStrings[positions.lng()]), altitude));
           break;
 
         case 2:

@@ -13,9 +13,11 @@ package de.fhb.polyencoder;
  *      PointArrayPositions)
  */
 public class PointArrayPositions {
-  private int altitudePos = 2;
-  private int latitudePos = 0;
-  private int longitudePos = 1;
+  public static final int EMTPY_COORDINATE = -1;
+  
+  private int altitudePos = EMTPY_COORDINATE;
+  private int latitudePos = EMTPY_COORDINATE;
+  private int longitudePos = EMTPY_COORDINATE;
 
 
 
@@ -45,7 +47,7 @@ public class PointArrayPositions {
    *          Longitude of a point
    */
   public PointArrayPositions(int lat, int lng) {
-    this(lat, lng, 0);
+    this(lat, lng, EMTPY_COORDINATE);
   }
 
 
