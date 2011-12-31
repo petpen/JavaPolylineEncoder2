@@ -5,8 +5,15 @@ import org.junit.*;
 
 public class PolylineEncoderTest {
   private static PolylineEncoder encoder;
-  private static Track trackPointOnly;
-  private static Track trackSamePoints;
+
+
+
+  @Test
+  public void testEncodeFalseBackslash() {
+    String in = "\n";
+    String out = "\n";
+    assertEquals("A backslash which acts as an control character should not be encoded.", out, PolylineEncoder.encodeBackslash(in));
+  }
 
 
 

@@ -415,12 +415,13 @@ public class PolylineEncoder {
    * "http://code.google.com/intl/en/apis/maps/documentation/utilities/polylinealgorithm.html"
    * >Google's Polyline Algorithm</a> This function is very similar to Google's,
    * but Mark McClure added some stuff to deal with the double slash issue. Mark
-   * MkClures version can be found here: <a href=
+   * McClures version can be found here: <a href=
    * "http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/PolylineEncoder.js"
    * >Mark McClures PolylineEncoder</a>
    * 
    * @param num
-   * @return
+   *          number to encode
+   * @return the encoded number
    */
   public static String encodeNumber(int num) {
     int unitSeparator = 0x1f;
@@ -493,8 +494,8 @@ public class PolylineEncoder {
    * 
    * @see #parseStringToTrack(String, TrackSeparator, PointArrayPositions)
    */
-  public static Track pointsAndAltitudeToTrack(String points) {
-    System.out.println("pointsAndAltitudeToTrack");
+  public static Track pointsWithAltitudeToTrack(String points) {
+    System.out.println("pointsWithAltitudeToTrack");
     TrackSeparator sep = new TrackSeparator("\n", ",");
     PointArrayPositions pos = new PointArrayPositions(1, 0, 2);
   
