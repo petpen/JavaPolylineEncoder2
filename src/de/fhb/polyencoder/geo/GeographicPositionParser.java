@@ -1,16 +1,23 @@
-package de.fhb.polyencoder;
+package de.fhb.polyencoder.geo;
 
 import java.util.StringTokenizer;
 
+import de.fhb.polyencoder.PointArrayPositions;
+import de.fhb.polyencoder.PolylineEncoder;
+import de.fhb.polyencoder.Track;
+import de.fhb.polyencoder.TrackSeparator;
+import de.fhb.polyencoder.Trackpoint;
+
 /**
- * This class was part of {@link PolylineEncoder}. It is used to parse GPS
- * points which are represented by longitude, latitude and/or altitude
+ * This class was part of {@link PolylineEncoder}. It is used to parse points
+ * placed in the geographic coordinate system. They are represented by
+ * longitude, latitude and/or altitude
  * 
  * @author Mark Rambow (markrambow[at]gmail[dot]com)
  * @author Peter Pensold
  * @version 0.5
  */
-public class GPSParser {
+public class GeographicPositionParser {
   /**
    * Parses a String containing points in a form as described in parameter
    * points.
@@ -112,5 +119,42 @@ public class GPSParser {
     }
 
     return trk;
+  }
+
+
+
+  /**
+   * Swaps a geographic coordinate from double to integer. As defined by the
+   * geographic coordinate system the latitude (-90 <= lat <= 90) and the
+   * longitude (-180 < lng <= 180) have ranges as described in the braces. After
+   * swapping the value will be multiplied by 1e5 (100000) and floored to match
+   * into an integer.
+   * 
+   * @param value
+   * @param coordinate
+   * 
+   * @throws CoordinateOutOfRangeException
+   * 
+   * @return
+   */
+  public static int floor1e5(double value, GeographicCoordinate coordinate) throws CoordinateOutOfRangeException {
+    switch (coordinate) {
+      case LATITUDE:
+        if (GeographicCoordinate.isInvalidLatitude(value))
+          throw new CoordinateOutOfRangeException("The latitude must be in a range of -90 <= lat <= 90.");
+        break;
+      case LONGITUDE:
+        if (GeographicCoordinate.isInvalidLongitude(value))
+          throw new CoordinateOutOfRangeException("The longitude must be in a range of -180 < lng <= 180.");
+
+        double smallestLongitudeForFlooring = -179.999990;
+        
+        if(value < smallestLongitudeForFlooring)
+          value = smallestLongitudeForFlooring;
+        
+        break;
+    }
+
+    return (int) Math.floor(value*1e5);
   }
 }

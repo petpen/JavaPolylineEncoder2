@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+import de.fhb.polyencoder.geo.CoordinateOutOfRangeException;
+import de.fhb.polyencoder.geo.GeographicCoordinate;
+import de.fhb.polyencoder.geo.GeographicPositionParser;
+
 public class PolylineEncoder {
   private boolean forceEndpoints = true;
   private int numLevels = 18;
@@ -228,7 +232,7 @@ public class PolylineEncoder {
    * @param points
    *          points used with this encoder
    */
-  public void setPoints(ArrayList<Trackpoint> points) {
+  public void setPointsAndCreateBounds(ArrayList<Trackpoint> points) {
     this.points = points;
 
     setBounds(points);
@@ -294,20 +298,24 @@ public class PolylineEncoder {
     int late5, lnge5, dlat, dlng;
   
     for (int i = 0; i < listSize; i += step) {
-      counter++;
-  
-      late5 = Util.floor1e5(points.get(i).lat());
-      lnge5 = Util.floor1e5(points.get(i).lng());
-  
-      dlat = late5 - plat;
-      dlng = lnge5 - plng;
-  
-      encodedPoints.append(encodeSignedNumber(dlat));
-      encodedPoints.append(encodeSignedNumber(dlng));
-      encodedLevels.append(encodeNumber(level));
+      try {
+        late5 = GeographicPositionParser.floor1e5(points.get(i).lat(), GeographicCoordinate.LATITUDE);
+        lnge5 = GeographicPositionParser.floor1e5(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
 
-      plat = late5;
-      plng = lnge5;
+        dlat = late5 - plat;
+        dlng = lnge5 - plng;
+
+        encodedPoints.append(encodeSignedNumber(dlat));
+        encodedPoints.append(encodeSignedNumber(dlng));
+        encodedLevels.append(encodeNumber(level));
+
+        plat = late5;
+        plng = lnge5;
+
+        counter++;
+      } catch (CoordinateOutOfRangeException e) {
+        System.out.println(e.getMessage());
+      }
     }
   
     System.out.println("listSize: " + listSize + " step: " + step + " counter: " + counter);
@@ -330,18 +338,21 @@ public class PolylineEncoder {
   
     for (int i = 0; i < points.size(); i++) {
       if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
-  
-        late5 = Util.floor1e5(points.get(i).lat());
-        lnge5 = Util.floor1e5(points.get(i).lng());
-  
-        dlat = late5 - pLat;
-        dlng = lnge5 - pLng;
+        try {
+          late5 = GeographicPositionParser.floor1e5(points.get(i).lat(), GeographicCoordinate.LATITUDE);
+          lnge5 = GeographicPositionParser.floor1e5(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
 
-        encodedPoints.append(encodeSignedNumber(dlat));
-        encodedPoints.append(encodeSignedNumber(dlng));
-  
-        pLat = late5;
-        pLng = lnge5;
+          dlat = late5 - pLat;
+          dlng = lnge5 - pLng;
+
+          encodedPoints.append(encodeSignedNumber(dlat));
+          encodedPoints.append(encodeSignedNumber(dlng));
+
+          pLat = late5;
+          pLng = lnge5;
+        } catch (CoordinateOutOfRangeException e) {
+          System.out.println(e.getMessage());
+        }
       }
     }
   
