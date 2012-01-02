@@ -1,10 +1,11 @@
 package de.fhb.polyencoder.resources.encoder;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
-// The Java class will be hosted at the URI path "/helloworld"
 @Path("/encoder/gpx/html")
 public class GpxHtmlResource {
 
@@ -16,5 +17,11 @@ public class GpxHtmlResource {
   public String getClichedMessage() {
     // Return some cliched textual content
     return "/encoder/gpx/html";
+  }
+  @POST
+  @Produces("text/plain")
+  public String post(@QueryParam("link") String link) {
+    if (link != null) return link;
+    return "";
   }
 }

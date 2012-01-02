@@ -4,10 +4,18 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="lib/junit-4.5.jar"/>
-	<classpathentry kind="lib" path="lib/jsr311-api-0.9.jar"/>
-	<classpathentry kind="lib" path="lib/grizzly-servlet-webserver-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-core-0.9-ea.jar"/>
-	<classpathentry kind="lib" path="lib/jersey-server-0.9-ea.jar"/>
 	<classpathentry kind="lib" path="lib/asm-3.0.jar"/>
+	<classpathentry kind="lib" path="lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-framework-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-http-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-http-servlet-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-portunif-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-rcm-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-servlet-webserver-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/grizzly-utils-1.9.36.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-bundle-1.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-test-framework-core-1.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-test-framework-grizzly-1.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/jersey-test-framework-http-1.9.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
