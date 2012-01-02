@@ -13,7 +13,7 @@ public class EncodersResourceTest extends JerseyTest {
 
 
   public EncodersResourceTest() throws Exception {
-    super("de.fhb.polyencoder.resources");
+    super("de.fhb.polyencoder.server.resources");
     webResource = resource();
   }
 
@@ -29,7 +29,7 @@ public class EncodersResourceTest extends JerseyTest {
 
   @Test
   public void testPostEmptyInput() {
-    String responseMsg = webResource.path("encoder/gpx/html").post(String.class);
+    String responseMsg = webResource.path("encoder").path("gpx").path("html").post(String.class);
     assertEquals("Return should be empty", "", responseMsg);
   }
 
@@ -37,7 +37,7 @@ public class EncodersResourceTest extends JerseyTest {
 
   @Test
   public void testPostWithInput() {
-    String responseMsg = webResource.path("encoder/gpx/html").queryParam("link", "foo").post(String.class);
+    String responseMsg = webResource.path("encoder").path("gpx").path("html").queryParam("link", "foo").post(String.class);
     assertEquals("Return should be \"foo\"", "foo", responseMsg);
   }
 }
