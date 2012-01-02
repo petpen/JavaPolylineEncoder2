@@ -12,7 +12,7 @@ public class PolyEncoder {
     JerseyServer jersey = new JerseyServer();
     jersey.startServer();
     System.in.read();
-    // jersey.stopServer();
+    jersey.stopServer();
     System.exit(0);
   }
 }
