@@ -70,7 +70,7 @@ public class EncodersResourceTest extends JerseyTest {
   @Test
   public void testPostWrongTyp() {
     String responseMsg = webResource.path("encoder").path("foo/html").queryParam("link", "foo").post(String.class);
-    assertEquals("Should return error", "no support for typ/format", responseMsg);
+    assertEquals("Should return error", "no support for typ", responseMsg);
   }
 
 
@@ -78,6 +78,6 @@ public class EncodersResourceTest extends JerseyTest {
   @Test
   public void testPostWrongFormat() {
     String responseMsg = webResource.path("encoder").path("gpx/bar").queryParam("link", "foo").post(String.class);
-    assertEquals("Should return error", "no support for typ/format", responseMsg);
+    assertEquals("Should return error", "no support for format", responseMsg);
   }
 }
