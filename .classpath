@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="lib/jersey-test-framework-core-1.9.1.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-test-framework-grizzly-1.9.1.jar"/>
 	<classpathentry kind="lib" path="lib/jersey-test-framework-http-1.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/jaxb-2.1.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

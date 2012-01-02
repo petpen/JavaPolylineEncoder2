@@ -1,4 +1,4 @@
-package de.fhb.polyencoder.resources.encoder;
+package de.fhb.polyencoder.resources;
 
 import static org.junit.Assert.*;
 import org.junit.*;
@@ -6,13 +6,13 @@ import org.junit.*;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.test.framework.JerseyTest;
 
-public class GpxHtmlResourceTest extends JerseyTest {
+public class EncodersResourceTest extends JerseyTest {
 
   WebResource webResource;
 
 
 
-  public GpxHtmlResourceTest() throws Exception {
+  public EncodersResourceTest() throws Exception {
     super("de.fhb.polyencoder.resources");
     webResource = resource();
   }
@@ -21,7 +21,7 @@ public class GpxHtmlResourceTest extends JerseyTest {
 
   @Test
   public void testGet() {
-    String responseMsg = webResource.path("encoder/gpx/html").get(String.class);
+    String responseMsg = webResource.path("encoder").path("gpx").path("html").get(String.class);
     assertEquals("Should return /encoder/gpx/html", "/encoder/gpx/html", responseMsg);
   }
 

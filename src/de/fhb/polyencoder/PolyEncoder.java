@@ -9,13 +9,10 @@ public class PolyEncoder {
    * @throws IOException
    */
   public static void main(String[] args) throws IOException {
-    System.out.println(work("yes"));
-    RunServer.RunServer();
-  }
-
-
-
-  static String work(String str) {
-    return str;
+    JerseyServer jersey = new JerseyServer();
+    jersey.startServer();
+    System.in.read();
+    // jersey.stopServer();
+    System.exit(0);
   }
 }
