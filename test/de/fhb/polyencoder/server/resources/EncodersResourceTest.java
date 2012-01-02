@@ -20,24 +20,64 @@ public class EncodersResourceTest extends JerseyTest {
 
 
   @Test
-  public void testGet() {
-    String responseMsg = webResource.path("encoder").path("gpx").path("html").get(String.class);
+  public void testGetGpxHtml() {
+    String responseMsg = webResource.path("encoder").path("gpx/html").get(String.class);
     assertEquals("Should return /encoder/gpx/html", "/encoder/gpx/html", responseMsg);
   }
 
 
 
   @Test
-  public void testPostEmptyInput() {
-    String responseMsg = webResource.path("encoder").path("gpx").path("html").post(String.class);
-    assertEquals("Return should be empty", "", responseMsg);
+  public void testGetKmlJson() {
+    String responseMsg = webResource.path("encoder").path("kml/json").get(String.class);
+    assertEquals("Should return /encoder/kml/json", "/encoder/kml/json", responseMsg);
   }
 
 
 
   @Test
-  public void testPostWithInput() {
-    String responseMsg = webResource.path("encoder").path("gpx").path("html").queryParam("link", "foo").post(String.class);
-    assertEquals("Return should be \"foo\"", "foo", responseMsg);
+  public void testGetKmzJson() {
+    String responseMsg = webResource.path("encoder").path("kmz/json").get(String.class);
+    assertEquals("Should return /encoder/kmz/json", "/encoder/kmz/json", responseMsg);
+  }
+
+
+
+  @Test
+  public void testGetRawRaw() {
+    String responseMsg = webResource.path("encoder").path("raw/raw").get(String.class);
+    assertEquals("Should return /encoder/raw/raw", "/encoder/raw/raw", responseMsg);
+  }
+
+
+
+  @Test
+  public void testPostNoLink() {
+    String responseMsg = webResource.path("encoder").path("gpx/html").post(String.class);
+    assertEquals("Return with empty link", "gpx/html?link=", responseMsg);
+  }
+
+
+
+  @Test
+  public void testPostWithLink() {
+    String responseMsg = webResource.path("encoder").path("gpx/html").queryParam("link", "foo").post(String.class);
+    assertEquals("Return with link \"foo\"", "gpx/html?link=foo", responseMsg);
+  }
+
+
+
+  @Test
+  public void testPostWrongTyp() {
+    String responseMsg = webResource.path("encoder").path("foo/html").queryParam("link", "foo").post(String.class);
+    assertEquals("Should return error", "no support for typ/format", responseMsg);
+  }
+
+
+
+  @Test
+  public void testPostWrongFormat() {
+    String responseMsg = webResource.path("encoder").path("gpx/bar").queryParam("link", "foo").post(String.class);
+    assertEquals("Should return error", "no support for typ/format", responseMsg);
   }
 }
