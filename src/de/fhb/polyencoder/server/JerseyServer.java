@@ -1,4 +1,4 @@
-package de.fhb.polyencoder;
+package de.fhb.polyencoder.server;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,7 +14,7 @@ public class JerseyServer {
 
 
   public JerseyServer() {
-    initParams.put("com.sun.jersey.config.property.packages", "de.fhb.polyencoder.resources");
+    initParams.put("com.sun.jersey.config.property.packages", "de.fhb.polyencoder.server.resources");
   }
 
 

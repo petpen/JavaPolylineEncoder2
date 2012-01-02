@@ -2,7 +2,9 @@ package de.fhb.polyencoder;
 
 import java.io.IOException;
 
-public class PolyEncoder {
+import de.fhb.polyencoder.server.JerseyServer;
+
+public class JavaPolylineEncoder2 {
 
   /**
    * @param args

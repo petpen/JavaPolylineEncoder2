@@ -1,4 +1,4 @@
-package de.fhb.polyencoder.resources;
+package de.fhb.polyencoder.server.resources;
 
 import static org.junit.Assert.*;
 import org.junit.*;
