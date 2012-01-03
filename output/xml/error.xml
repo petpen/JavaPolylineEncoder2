@@ -1,0 +1,3 @@
+<polylineencoder>
+  <status code="{statusCode}">{statusMessage}</status>
+</polylineencoder>

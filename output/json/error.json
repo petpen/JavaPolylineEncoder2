@@ -1,0 +1,6 @@
+{
+  "status": {
+	  "code": {statusCode},
+	  "message": "{statusMessage}"
+  }
+}
