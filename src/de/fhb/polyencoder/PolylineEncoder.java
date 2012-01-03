@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import de.fhb.polyencoder.geo.CoordinateOutOfRangeException;
+import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.geo.GeographicCoordinate;
 import de.fhb.polyencoder.geo.GeographicPositionParser;
 
@@ -23,8 +24,8 @@ public class PolylineEncoder {
   private double verySmall = 0.00001;
   private double[] zoomLevelBreaks;
 
-  private HashMap<String, Double> bounds;
-  private ArrayList<Trackpoint> points;
+  private GeographicBounds bounds;
+  private ArrayList<GeographicLocation> points;
 
 
 
@@ -107,14 +108,14 @@ public class PolylineEncoder {
    * used to reduce the number of points in a curve.
    * 
    * @return HashMap [encodedPoints; encodedPointsLiteral; encodedLevels]
-   * @see <a href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer–Douglas–Peucker algorithm (Wikipedia)</a>
+   * @see <a href="http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm">Ramer-Douglas-Peucker algorithm (Wikipedia)</a>
    * 
    */
   public HashMap<String, String> dpEncode(Track track) {
-    ArrayList<Trackpoint> points = track.getPoints();
+    ArrayList<GeographicLocation> points = track.getPoints();
     Stack<int[]> stack = new Stack<int[]>();
     String encodedPoints, encodedLevels;
-    Trackpoint segStart, segEnd;
+    GeographicLocation segStart, segEnd;
 
     int maxLoc = 0;
     int segStackStart, segStackEnd;
@@ -183,7 +184,7 @@ public class PolylineEncoder {
    * encode the levels. Like createEncodings, we ignore points whose distance
    * (in dists) is undefined.
    */
-  public String encodeLevels(ArrayList<Trackpoint> points, double[] dists, double absMaxDist) {
+  public String encodeLevels(ArrayList<GeographicLocation> points, double[] dists, double absMaxDist) {
     String edge;
     StringBuffer encoded_levels = new StringBuffer();
 
@@ -208,20 +209,20 @@ public class PolylineEncoder {
 
 
 
-  public HashMap<String, Double> getBounds() {
+  public GeographicBounds getBounds() {
     return bounds;
   }
 
 
 
-  public void setBounds(HashMap<String, Double> bounds) {
+  public void setBounds(GeographicBounds bounds) {
     this.bounds = bounds;
   }
 
 
 
-  public void setBounds(ArrayList<Trackpoint> points) {
-    this.bounds = createBounds(points);
+  public void setBounds(ArrayList<GeographicLocation> points) {
+    this.bounds = new GeographicBounds(points);
   }
 
 
@@ -232,7 +233,7 @@ public class PolylineEncoder {
    * @param points
    *          points used with this encoder
    */
-  public void setPointsAndCreateBounds(ArrayList<Trackpoint> points) {
+  public void setPointsAndCreateBounds(ArrayList<GeographicLocation> points) {
     this.points = points;
 
     setBounds(points);
@@ -240,53 +241,13 @@ public class PolylineEncoder {
 
 
 
-  public ArrayList<Trackpoint> getPoints() {
+  public ArrayList<GeographicLocation> getPoints() {
     return this.points;
   }
 
 
 
-  public static HashMap<String, Double> createBounds(ArrayList<Trackpoint> points) {
-    double maxLat = 0, minLat = 0, maxLng = 0, minLng = 0, maxAlt = 0, minAlt = 0;
-    double curPointLat, curPointLng, curPointAlt;
-    Trackpoint point;
-    
-    for (int i = 0; i < points.size(); i++) {
-      point = points.get(i);
-      curPointLat = point.lat();
-      curPointLng = point.lng();
-      curPointAlt = point.alt();
-
-      if (i > 0) {
-        minLat = Math.min(curPointLat, minLat);
-        maxLat = Math.max(curPointLat, maxLat);
-        
-        minLng = Math.min(curPointLng, minLng);
-        maxLng = Math.max(curPointLng, maxLng);
-        
-        minAlt = Math.min(curPointAlt, minAlt);
-        maxAlt = Math.max(curPointAlt, maxAlt);
-      } else {
-        maxLat = minLat = curPointLat;
-        maxLng = minLng = curPointLng;
-        maxAlt = minAlt = curPointAlt;
-      }
-    }
-    
-    HashMap<String, Double> bounds = new HashMap<String, Double>();
-    bounds.put("maxlat", maxLat);
-    bounds.put("minlat", minLat);
-    bounds.put("maxlon", maxLng);
-    bounds.put("minlon", minLng);
-    bounds.put("maxalt", maxAlt);
-    bounds.put("minalt", minAlt);
-    
-    return bounds;
-  }
-
-
-
-  public static HashMap<String, String> createEncodings(ArrayList<Trackpoint> points, int level, int step) {
+  public static HashMap<String, String> createEncodings(ArrayList<GeographicLocation> points, int level, int step) {
     StringBuffer encodedPoints = new StringBuffer();
     StringBuffer encodedLevels = new StringBuffer();
   
@@ -299,8 +260,8 @@ public class PolylineEncoder {
   
     for (int i = 0; i < listSize; i += step) {
       try {
-        late5 = GeographicPositionParser.floor1e5(points.get(i).lat(), GeographicCoordinate.LATITUDE);
-        lnge5 = GeographicPositionParser.floor1e5(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
+        late5 = GeographicCoordinate.toInt(points.get(i).lat(), GeographicCoordinate.LATITUDE);
+        lnge5 = GeographicCoordinate.toInt(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
 
         dlat = late5 - plat;
         dlng = lnge5 - plng;
@@ -330,7 +291,7 @@ public class PolylineEncoder {
 
 
 
-  public static String createEncodings(ArrayList<Trackpoint> points, double[] dists) {
+  public static String createEncodings(ArrayList<GeographicLocation> points, double[] dists) {
     StringBuffer encodedPoints = new StringBuffer();
   
     int pLat = 0, pLng = 0;
@@ -339,8 +300,8 @@ public class PolylineEncoder {
     for (int i = 0; i < points.size(); i++) {
       if (dists[i] != 0 || i == 0 || i == points.size() - 1) {
         try {
-          late5 = GeographicPositionParser.floor1e5(points.get(i).lat(), GeographicCoordinate.LATITUDE);
-          lnge5 = GeographicPositionParser.floor1e5(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
+          late5 = GeographicCoordinate.toInt(points.get(i).lat(), GeographicCoordinate.LATITUDE);
+          lnge5 = GeographicCoordinate.toInt(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
 
           dlat = late5 - pLat;
           dlng = lnge5 - pLng;
@@ -371,7 +332,7 @@ public class PolylineEncoder {
    * @param segEnd
    * @return
    */
-  public static double distance(Trackpoint pt, Trackpoint segStart, Trackpoint segEnd, double segLength) {
+  public static double distance(GeographicLocation pt, GeographicLocation segStart, GeographicLocation segEnd, double segLength) {
     double u, out = 0.0;
     double ptLat = pt.lat();
     double ptLon = pt.lng();

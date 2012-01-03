@@ -3,7 +3,7 @@ package de.fhb.polyencoder;
 import java.util.ArrayList;
 
 /**
- * Holds a List of {@link Trackpoint}s.
+ * Holds a List of {@link GeographicLocation}s.
  * 
  * Porting of Mark McClures Javascript PolylineEncoder
  * 
@@ -12,35 +12,35 @@ import java.util.ArrayList;
  * @version 1
  */
 public class Track {
-  private ArrayList<Trackpoint> points;
+  private ArrayList<GeographicLocation> points;
 
 
 
   public Track() {
-    points = new ArrayList<Trackpoint>();
+    points = new ArrayList<GeographicLocation>();
   }
 
 
 
-  public ArrayList<Trackpoint> getPoints() {
+  public ArrayList<GeographicLocation> getPoints() {
     return this.points;
   }
 
 
 
-  public void setPoints(ArrayList<Trackpoint> points) {
+  public void setPoints(ArrayList<GeographicLocation> points) {
     this.points = points;
   }
 
 
 
-  public Trackpoint getPoint(int index) {
+  public GeographicLocation getPoint(int index) {
     return this.points.get(index);
   }
 
 
 
-  public void addPoint(Trackpoint point) {
+  public void addPoint(GeographicLocation point) {
     this.points.add(point);
   }
 }

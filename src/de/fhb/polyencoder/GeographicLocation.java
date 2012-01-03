@@ -1,15 +1,17 @@
 package de.fhb.polyencoder;
 
+import de.fhb.polyencoder.geo.GeographicCoordinate;
+
 /**
- * Trackpoint for GPS coordinates.
+ * GeographicLocation with GPS coordinates.
  * 
- * Porting of Mark McClures JavaScript PolylineEncoder
+ * Porting of Mark McClures JavaScript PolylineEncoder (named as Trackpoint)
  * 
  * @author Mark Rambow (markrambow[at]gmail[dot]com)
  * @author Peter Pensold
  * @version 1
  */
-public class Trackpoint {
+public class GeographicLocation {
   private double altitude;
   private double latitude;
   private double longitude;
@@ -17,19 +19,19 @@ public class Trackpoint {
 
 
   /**
-   * Creates a Trackpoint with a given latitude and longitude. The altitude will
+   * Creates a GeographicLocation with a given latitude and longitude. The altitude will
    * be set to 0.0
    * 
    * @param latitude
    * @param longitude
    */
-  public Trackpoint(double latitude, double longitude) {
+  public GeographicLocation(double latitude, double longitude) {
     this(latitude, longitude, 0.0);
   }
 
 
 
-  public Trackpoint(double latitude, double longitude, double altitude) {
+  public GeographicLocation(double latitude, double longitude, double altitude) {
     setLatitude(latitude);
     setLongitude(longitude);
     setAltitude(altitude);
@@ -37,10 +39,34 @@ public class Trackpoint {
 
 
 
+  public boolean hasValidLatitude() {
+    return GeographicCoordinate.isValidLatitude(latitude);
+  }
+
+
+
+  public boolean hasInvalidLatitude() {
+    return GeographicCoordinate.isInvalidLatitude(latitude);
+  }
+
+
+
+  public boolean hasValidLongitude() {
+    return GeographicCoordinate.isValidLongitude(longitude);
+  }
+
+
+
+  public boolean hasInvalidLongitude() {
+    return GeographicCoordinate.isInvalidLongitude(longitude);
+  }
+
+
+
   /**
    * Return format is: Latitude;Longitude;Altitude
    * 
-   * @return String with the coordinates of this trackpoint.
+   * @return String with the coordinates of this GeographicLocation.
    */
   public String toString() {
     return this.latitude + ";" + this.longitude + ";" + this.altitude;
@@ -49,12 +75,12 @@ public class Trackpoint {
 
 
   /**
-   * Produces a hashcode of this trackpoint. Uses a prime number to generate
+   * Produces a hashcode of this GeographicLocation. Uses a prime number to generate
    * this number.
    * 
    * This method was generated with Eclipse.
    * 
-   * @return the hashcode of this trackpoint
+   * @return the hashcode of this GeographicLocation
    * 
    * @see java.lang.Object#equals(java.lang.Object)
    * @see java.util.HashMap
@@ -79,8 +105,8 @@ public class Trackpoint {
 
 
   /**
-   * Indicates whether some trackpoint equals this trackpoint. It will compare
-   * the altitude, longitude and latitude of the trackpoints.
+   * Indicates whether some GeographicLocation equals this GeographicLocation. It will compare
+   * the altitude, longitude and latitude of the GeographicLocation.
    * 
    * This method was generated with Eclipse.
    * 
@@ -99,11 +125,11 @@ public class Trackpoint {
       return false;
     }
 
-    if (!(obj instanceof Trackpoint)) {
+    if (!(obj instanceof GeographicLocation)) {
       return false;
     }
 
-    Trackpoint other = (Trackpoint) obj;
+    GeographicLocation other = (GeographicLocation) obj;
 
     if (Double.doubleToLongBits(altitude) != Double.doubleToLongBits(other.altitude)) {
       return false;
