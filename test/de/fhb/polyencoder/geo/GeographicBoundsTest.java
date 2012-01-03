@@ -1,6 +1,6 @@
 package de.fhb.polyencoder.geo;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
