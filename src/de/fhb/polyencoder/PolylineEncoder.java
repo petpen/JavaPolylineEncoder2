@@ -1,13 +1,5 @@
 package de.fhb.polyencoder;
 
-/**
- * Porting of Mark McClures Javascript PolylineEncoder
- * All the mathematical logic is more or less copied from McClure
- *  
- * @author Mark Rambow (markrambow[at]gmail[dot]com)
- * @author Peter Pensold
- * @version 0.5
- */
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -16,6 +8,14 @@ import de.fhb.polyencoder.geo.CoordinateOutOfRangeException;
 import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.geo.GeographicCoordinate;
 
+/**
+ * Porting of Mark McClures Javascript PolylineEncoder
+ * All the mathematical logic is more or less copied from McClure
+ *  
+ * @author Mark Rambow (markrambow[at]gmail[dot]com)
+ * @author Peter Pensold
+ * @version 0.5
+ */
 public class PolylineEncoder {
   private boolean forceEndpoints;
   private int numLevels;
