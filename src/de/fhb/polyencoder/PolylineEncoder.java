@@ -15,13 +15,12 @@ import java.util.Stack;
 import de.fhb.polyencoder.geo.CoordinateOutOfRangeException;
 import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.geo.GeographicCoordinate;
-import de.fhb.polyencoder.geo.GeographicPositionParser;
 
 public class PolylineEncoder {
-  private boolean forceEndpoints = true;
-  private int numLevels = 18;
-  private int zoomFactor = 2;
-  private double verySmall = 0.00001;
+  private boolean forceEndpoints;
+  private int numLevels;
+  private int zoomFactor;
+  private double verySmall;
   private double[] zoomLevelBreaks;
 
   private GeographicBounds bounds;
@@ -41,7 +40,7 @@ public class PolylineEncoder {
    * @see #PolylineEncoder(int, int, double, boolean)
    */
   public PolylineEncoder() {
-    createZoomLevelBreaks();
+    this(18,2,0.00001,true);
   }
 
 
