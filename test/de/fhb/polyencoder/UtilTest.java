@@ -33,7 +33,7 @@ public class UtilTest {
 
   @Test
   public void testReadExistFile() {
-    String content = Util.readFile("output/html/maps.html");
+    String content = Util.readFile("templates/html/maps.html");
     assertFalse("Should return no empty content", content.equals(""));
   }
 
@@ -41,7 +41,7 @@ public class UtilTest {
 
   @Test
   public void testReadNotExistFile() {
-    String content = Util.readFile("output/html/mapssss.html");
+    String content = Util.readFile("templates/html/mapssss.html");
     assertTrue("Should return empty content", content.equals(""));
   }
 

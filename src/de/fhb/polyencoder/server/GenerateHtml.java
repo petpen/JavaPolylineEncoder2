@@ -15,6 +15,6 @@ public class GenerateHtml {
 
 
   private static String getTemplate() {
-    return Util.readFile("output/html/maps.html");
+    return Util.readFile("templates/html/maps.html");
   }
 }
