@@ -9,7 +9,12 @@
 		function initialize() {
 			if (GBrowserIsCompatible()) {
 				var map = new GMap2(document.getElementById("map_canvas"));
-				map.setCenter(new GLatLng({centerLat}, {centerLng}), 8);
+				
+				var bounds = new GLatLngBounds;
+				bounds.extend(new GLatLng({minLat}, {minLng})); 
+				bounds.extend(new GLatLng({maxLat}, {maxLng})); 
+				
+				map.setCenter(bounds.getCenter(), map.getBoundsZoomLevel(bounds));
 				map.setUIToDefault();
 				map.setMapType(G_NORMAL_MAP);
 		 
