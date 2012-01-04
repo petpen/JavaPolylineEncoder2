@@ -1,0 +1,11 @@
+{statusCode}
+{statusMessage}
+{createdDate}
+
+{encodedPoints}
+{pointCount}
+{encodedLevels}
+{centerLat}, {centerLng}
+{minLat},{maxLat}
+{minLng}, {maxLng}
+{minAlt}, {maxAlt}

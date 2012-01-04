@@ -9,7 +9,7 @@ public enum InputType {
   
   public static InputType test(String str) {
     try {
-      return valueOf(str);
+      return valueOf(str.toUpperCase());
     } catch (Exception e) {
       return NOSUPPORT;
     }

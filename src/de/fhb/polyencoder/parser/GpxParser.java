@@ -29,9 +29,11 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
   public void parse(String data) {
     Document dom = Util.parseXMLToDocument(data);
 
-    addTracksToTracks(dom);
-    addRoutesToTracks(dom);
-    addWaypointsToTracks(dom);
+    if(dom != null) {
+      addTracksToTracks(dom);
+      addRoutesToTracks(dom);
+      addWaypointsToTracks(dom);
+    }
   }
 
 
