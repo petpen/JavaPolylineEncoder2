@@ -13,7 +13,7 @@ public class FormularResource {
     form.append("<html>");
     form.append("<head></head>");
     form.append("<body>");
-    form.append("<form method=\"post\" action=\"/encoder/raw/html\">");
+    form.append("<form method=\"post\" action=\"/encoder/gpx/html\">");
     form.append("<textarea name=\"coords\"></textarea ><br>");
     form.append("<input type=\"submit\">");
     form.append("</form>");

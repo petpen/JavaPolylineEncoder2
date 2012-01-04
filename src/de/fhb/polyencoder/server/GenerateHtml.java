@@ -8,8 +8,7 @@ public class GenerateHtml {
 
   public static String getHtml(HashMap<String, String> map) {
     String html = getTemplate();
-    html = Util.replaceMarker(html, "encodedPoints", map.get("encodedPoints"));
-    html = Util.replaceMarker(html, "encodedLevels", map.get("encodedLevels"));
+    html = Util.replaceMarker(html, map);
     return html;
   }
 
