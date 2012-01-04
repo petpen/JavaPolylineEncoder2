@@ -36,4 +36,11 @@ public class UtilTest {
   public void testCreateCenter() {
     assertTrue("Center must be 5", 5 == Util.createCenter(-10, 20));
   }
+
+
+
+  @Test
+  public void testCreateCenterMaxMinFlipped() {
+    assertTrue("Center must be 5", 5 == Util.createCenter(20, -10));
+  }
 }
