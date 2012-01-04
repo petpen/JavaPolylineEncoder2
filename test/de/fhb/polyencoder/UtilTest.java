@@ -48,6 +48,14 @@ public class UtilTest {
 
 
   @Test
+  public void testReadFile() {
+    String content = Util.readFile("testfiles/readFile.test");
+    assertEquals("Should return right content", "hello world\n!\"§$%&/\nok!", content);
+  }
+
+
+
+  @Test
   public void testCreateCenter() {
     assertTrue("Center must be 5", 5 == Util.createCenter(-10, 20));
   }
