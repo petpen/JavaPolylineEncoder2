@@ -29,6 +29,12 @@ public class Util {
 
 
 
+  public static double createCenter(double min, double max) {
+    return min + (max - min)/2;
+  }
+
+
+
   public static String readFile(String fileName) {
     String loadingFailedOutput = "";
     FileReader fr;
