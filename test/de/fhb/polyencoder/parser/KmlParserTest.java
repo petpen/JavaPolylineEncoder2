@@ -23,7 +23,7 @@ public class KmlParserTest {
     String line = "42.244814,-71.463566,0.0 42.240618,-71.464372,1.463566";
     parser.parse(line);
     
-    Track trkResult = parser.getTrack();
+    Track trkResult = parser.getTracks().get(0);
 
     assertEquals("There must be two points in the track", 2, trkResult.getPoints().size());
     assertTrue("The first point must have an altitude of 0.0", 0.0 == trkResult.getPoint(0).getAltitude());
@@ -37,7 +37,7 @@ public class KmlParserTest {
     String line = "42.244814,-71.463566,1.6546 42.240618,-71.464372 43.240618,-69.664352";
     parser.parse(line);
     
-    Track trkResult = parser.getTrack();
+    Track trkResult = parser.getTracks().get(0);
 
     assertEquals("There must be three points in the track", 3, trkResult.getPoints().size());
     assertTrue("The first point must have an altitude of 1.6546", 1.6546 == trkResult.getPoint(0).getAltitude());
@@ -52,7 +52,7 @@ public class KmlParserTest {
     String line = "42.244814 -71.463566";
     parser.parse(line);
     
-    Track trkResult = parser.getTrack();
+    Track trkResult = parser.getTracks().get(0);
 
     assertEquals("The track must have no points", 0, trkResult.getPoints().size());
   }
@@ -64,7 +64,7 @@ public class KmlParserTest {
     String line = "42.244814-71.463566";
     parser.parse(line);
     
-    Track trkResult = parser.getTrack();
+    Track trkResult = parser.getTracks().get(0);
 
     assertEquals("The track must have no points", 0, trkResult.getPoints().size());
   }
@@ -76,7 +76,7 @@ public class KmlParserTest {
     String line = "";
     parser.parse(line);
     
-    Track trkResult = parser.getTrack();
+    Track trkResult = parser.getTracks().get(0);
 
     assertEquals("The track must have no points", 0, trkResult.getPoints().size());
   }

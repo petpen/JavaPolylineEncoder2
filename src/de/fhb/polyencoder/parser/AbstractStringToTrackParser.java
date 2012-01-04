@@ -1,5 +1,7 @@
 package de.fhb.polyencoder.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import de.fhb.polyencoder.PointArrayPositions;
@@ -8,7 +10,7 @@ import de.fhb.polyencoder.TrackSeparator;
 import de.fhb.polyencoder.geo.GeographicLocation;
 
 public abstract class AbstractStringToTrackParser {
-  protected Track trk;
+  protected List<Track> tracks = new ArrayList<Track>();
 
 
 
@@ -51,8 +53,10 @@ public abstract class AbstractStringToTrackParser {
 
     return trk;
   }
-  
-  public Track getTrack() {
-    return trk;
+
+
+
+  public List<Track> getTracks() {
+    return tracks;
   }
 }
