@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Collection of useful functions.
@@ -72,5 +75,15 @@ public class Util {
    */
   public static String replaceMarker(String text, String marker, String replace) {
     return text.replaceAll("\\{" + marker + "\\}",replace);
+  }
+
+
+
+  public static String replaceMarker(String text, HashMap<String, String> map) {
+    for (Entry<String, String> entry : map.entrySet()) {
+      System.out.println(entry.getKey() + ": " + entry.getValue());
+      text = replaceMarker(text, entry.getKey(), entry.getValue());
+  }
+  return text;
   }
 }

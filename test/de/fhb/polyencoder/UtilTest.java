@@ -1,6 +1,9 @@
 package de.fhb.polyencoder;
 
 import static org.junit.Assert.*;
+
+import java.util.HashMap;
+
 import org.junit.*;
 
 public class UtilTest {
@@ -14,11 +17,28 @@ public class UtilTest {
     assertEquals("The new String must be \"Hi User\"", "Hi User", Util.replaceMarker(text, marker, replace));
   }
 
+
+
+  @Test
+  public void testReplaceMarkerHashMap() {
+    String text = "Hi {name} {nachname}";
+    HashMap<String, String> map = new HashMap<String, String>();
+    map.put("name", "foo");
+    map.put("nachname", "bar");
+
+    assertEquals("The new String must be \"Hi foo bar\"", "Hi foo bar", Util.replaceMarker(text, map));
+  }
+
+
+
   @Test
   public void testReadExistFile() {
     String content = Util.readFile("output/html/maps.html");
     assertFalse("Should return no empty content", content.equals(""));
   }
+
+
+
   @Test
   public void testReadNotExistFile() {
     String content = Util.readFile("output/html/mapssss.html");
