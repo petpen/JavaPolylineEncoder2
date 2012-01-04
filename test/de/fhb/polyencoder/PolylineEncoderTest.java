@@ -3,6 +3,7 @@ package de.fhb.polyencoder;
 import static org.junit.Assert.*;
 import org.junit.*;
 
+
 /**
  * @author Peter Pensold
  */

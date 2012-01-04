@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import de.fhb.polyencoder.Track;
-import de.fhb.polyencoder.GeographicLocation;
 
 public class GeographicBoundsTest {
   @Test

@@ -1,6 +1,5 @@
-package de.fhb.polyencoder;
+package de.fhb.polyencoder.geo;
 
-import de.fhb.polyencoder.geo.GeographicCoordinate;
 
 /**
  * GeographicLocation with GPS coordinates.

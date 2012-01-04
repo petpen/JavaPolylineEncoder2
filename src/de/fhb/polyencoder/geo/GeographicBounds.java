@@ -3,7 +3,6 @@ package de.fhb.polyencoder.geo;
 import java.util.ArrayList;
 
 import de.fhb.polyencoder.Track;
-import de.fhb.polyencoder.GeographicLocation;
 import de.fhb.polyencoder.Util;
 
 /**

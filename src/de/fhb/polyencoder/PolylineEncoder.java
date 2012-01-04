@@ -7,6 +7,7 @@ import java.util.Stack;
 import de.fhb.polyencoder.geo.CoordinateOutOfRangeException;
 import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.geo.GeographicCoordinate;
+import de.fhb.polyencoder.geo.GeographicLocation;
 
 /**
  * Porting of Mark McClures Javascript PolylineEncoder

@@ -2,6 +2,8 @@ package de.fhb.polyencoder;
 
 import java.util.ArrayList;
 
+import de.fhb.polyencoder.geo.GeographicLocation;
+
 /**
  * Holds a List of {@link GeographicLocation}s.
  * 
