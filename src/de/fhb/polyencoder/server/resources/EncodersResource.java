@@ -17,7 +17,6 @@ import de.fhb.polyencoder.server.OutputType;
 public class EncodersResource {
 
   @GET
-  @Produces("text/html")
   public String get(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link) {
     if (link == null)
       link = "";
@@ -28,7 +27,6 @@ public class EncodersResource {
 
   @POST
   @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-  // @Produces("text/html")
   public String post(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link, @FormParam("coords") String coords) {
     Track track = null;
     if (link == null) {

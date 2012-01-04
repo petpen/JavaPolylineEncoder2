@@ -9,15 +9,15 @@ public class FormularResource {
   @Produces("text/html")
   public String get() {
     StringBuilder form = new StringBuilder();
-    form.append("<!DOCTYPE html>");
-    form.append("<html>");
-    form.append("<head></head>");
-    form.append("<body>");
-    form.append("<form method=\"post\" action=\"/encoder/gpx/html\">");
-    form.append("<textarea name=\"coords\"></textarea ><br>");
-    form.append("<input type=\"submit\">");
-    form.append("</form>");
-    form.append("</body>");
+    form.append("<!DOCTYPE html>\n");
+    form.append("<html>\n");
+    form.append("<head></head>\n");
+    form.append("<body>\n");
+    form.append("<form method=\"post\" action=\"/encoder/gpx/html\">\n");
+    form.append("<textarea name=\"coords\"></textarea ><br>\n");
+    form.append("<input type=\"submit\">\n");
+    form.append("</form>\n");
+    form.append("</body>\n");
     form.append("</html>");
     return form.toString();
   }
