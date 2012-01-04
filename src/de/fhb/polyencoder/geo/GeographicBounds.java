@@ -16,6 +16,10 @@ public class GeographicBounds {
   private double minLng = 0.0;
   private double maxAlt = 0.0;
   private double minAlt = 0.0;
+  
+  private double centerLat = Double.NaN;
+  private double centerLng = Double.NaN;
+  private double centerAlt = Double.NaN;
 
 
 
@@ -78,6 +82,14 @@ public class GeographicBounds {
 
 
 
+  private void createCenter() {
+    this.centerLat = (maxLat - minLat)/2 + minLat;
+    this.centerLng = (maxLng - minLng)/2 + minLng;
+    this.centerAlt = (maxAlt - minAlt)/2 + minAlt;
+  }
+
+
+
   public double getMaxLat() {
     return maxLat;
   }
@@ -110,5 +122,35 @@ public class GeographicBounds {
 
   public double getMinAlt() {
     return minAlt;
+  }
+
+
+
+  public double getCenterLat() {
+    if (Double.isNaN(centerLat)) {
+      createCenter();
+    }
+
+    return centerLat;
+  }
+
+
+
+  public double getCenterLng() {
+    if (Double.isNaN(centerLng)) {
+      createCenter();
+    }
+
+    return centerLng;
+  }
+
+
+
+  public double getCenterAlt() {
+    if (Double.isNaN(centerAlt)) {
+      createCenter();
+    }
+
+    return centerAlt;
   }
 }
