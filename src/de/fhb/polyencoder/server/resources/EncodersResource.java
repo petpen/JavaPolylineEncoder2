@@ -9,6 +9,8 @@ import de.fhb.polyencoder.PolylineEncoder;
 import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.geo.GeographicPositionParser;
 import de.fhb.polyencoder.server.GenerateHtml;
+import de.fhb.polyencoder.server.InputType;
+import de.fhb.polyencoder.server.OutputType;
 
 @Path("/encoder/{typ}/{format}")
 public class EncodersResource {
@@ -24,7 +26,7 @@ public class EncodersResource {
 
 
   @POST
-  @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
+  @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
   // @Produces("text/html")
   public String post(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link, @FormParam("coords") String coords) {
     Track track = null;
@@ -42,31 +44,31 @@ public class EncodersResource {
       return "load form link";
     }
 
-    if (typ.equals("gpx")) {
+    switch (InputType.test(typ.toUpperCase())) {
+    case GPX:
       track = GeographicPositionParser.pointsToTrack(coords);
-    } else if (typ.equals("kml")) {
-
-    } else if (typ.equals("kmz")) {
-
-    } else if (typ.equals("raw")) {
-
-    } else {
+      break;
+    case KML:
+      break;
+    case KMZ:
+      break;
+    case RAW:
+      break;
+    default:
       return "no support for typ";
     }
 
     PolylineEncoder polylineEncoder = new PolylineEncoder();
     HashMap<String, String> map = polylineEncoder.dpEncode(track);
 
-    if (format.equals("html")) {
+    switch (OutputType.test(format.toUpperCase())) {
+    case HTML:
       return GenerateHtml.getHtml(map);
-      // return "gpx/html?link=" + link;
-    } else if (format.equals("json")) {
-      return "kml/json?link=" + link;
-    } else if (format.equals("json")) {
-      return "kmz/json?link=" + link;
-    } else if (format.equals("raw")) {
-      return "raw/raw?link=" + link;
-    } else {
+    case JSON:
+      return "json output";
+    case RAW:
+      return "raw output";
+    default:
       return "no support for format";
     }
   }
