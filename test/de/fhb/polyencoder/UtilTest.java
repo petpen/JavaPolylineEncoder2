@@ -44,4 +44,18 @@ public class UtilTest {
     String content = Util.readFile("output/html/mapssss.html");
     assertTrue("Should return empty content", content.equals(""));
   }
+
+
+
+  @Test
+  public void testCreateCenter() {
+    assertTrue("Center must be 5", 5 == Util.createCenter(-10, 20));
+  }
+
+
+
+  @Test
+  public void testCreateCenterMaxMinFlipped() {
+    assertTrue("Center must be 5", 5 == Util.createCenter(20, -10));
+  }
 }

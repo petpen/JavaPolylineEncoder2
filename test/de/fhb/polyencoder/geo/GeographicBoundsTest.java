@@ -45,4 +45,19 @@ public class GeographicBoundsTest {
     assertTrue("maxalt must be 10.0", 10.0 == bounds.getMaxAlt());
     assertTrue("minalt must be 2.0", 2.0 == bounds.getMinAlt());
   }
+
+
+
+  @Test
+  public void testCenter() {
+    Track trk = new Track();
+    trk.addPoint(new GeographicLocation(20.0, 0.0, 5.0));
+    trk.addPoint(new GeographicLocation(40.0, 10.0, 10.0));
+
+    GeographicBounds bounds = new GeographicBounds(trk);
+
+    assertTrue("CenterLat must be 30.0", 30.0 == bounds.getCenterLat());
+    assertTrue("CenterLng must be 5.0", 5.0 == bounds.getCenterLng());
+    assertTrue("CenterAlt must be 7.5", 7.5 == bounds.getCenterAlt());
+  }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.GeographicLocation;
+import de.fhb.polyencoder.Util;
 
 /**
  * @author Peter Pensold
@@ -16,6 +17,10 @@ public class GeographicBounds {
   private double minLng = 0.0;
   private double maxAlt = 0.0;
   private double minAlt = 0.0;
+  
+  private double centerLat = Double.NaN;
+  private double centerLng = Double.NaN;
+  private double centerAlt = Double.NaN;
 
 
 
@@ -78,6 +83,14 @@ public class GeographicBounds {
 
 
 
+  private void createCenter() {
+    this.centerLat = Util.createCenter(minLat, maxLat);
+    this.centerLng = Util.createCenter(minLng, maxLng);
+    this.centerAlt = Util.createCenter(minAlt, maxAlt);
+  }
+
+
+
   public double getMaxLat() {
     return maxLat;
   }
@@ -110,5 +123,35 @@ public class GeographicBounds {
 
   public double getMinAlt() {
     return minAlt;
+  }
+
+
+
+  public double getCenterLat() {
+    if (Double.isNaN(centerLat)) {
+      createCenter();
+    }
+
+    return centerLat;
+  }
+
+
+
+  public double getCenterLng() {
+    if (Double.isNaN(centerLng)) {
+      createCenter();
+    }
+
+    return centerLng;
+  }
+
+
+
+  public double getCenterAlt() {
+    if (Double.isNaN(centerAlt)) {
+      createCenter();
+    }
+
+    return centerAlt;
   }
 }
