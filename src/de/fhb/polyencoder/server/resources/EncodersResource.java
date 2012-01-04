@@ -7,6 +7,7 @@ import javax.ws.rs.core.MediaType;
 
 import de.fhb.polyencoder.PolylineEncoder;
 import de.fhb.polyencoder.Track;
+import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.geo.GeographicPositionParser;
 import de.fhb.polyencoder.server.GenerateHtml;
 import de.fhb.polyencoder.server.InputType;
@@ -60,6 +61,7 @@ public class EncodersResource {
 
     PolylineEncoder polylineEncoder = new PolylineEncoder();
     HashMap<String, String> map = polylineEncoder.dpEncode(track);
+    map.putAll(new GeographicBounds(track).getCenter());
 
     switch (OutputType.test(format.toUpperCase())) {
     case HTML:

@@ -1,6 +1,7 @@
 package de.fhb.polyencoder.geo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.Util;
@@ -152,5 +153,15 @@ public class GeographicBounds {
     }
 
     return centerAlt;
+  }
+  
+  
+  
+  public HashMap<String, String> getCenter() {
+    HashMap<String, String> map = new HashMap<String, String>();
+    map.put("centerLat", String.valueOf(getCenterLat()));
+    map.put("centerLng", String.valueOf(getCenterLng()));
+    map.put("centerAlt", String.valueOf(getCenterAlt()));
+    return map;
   }
 }
