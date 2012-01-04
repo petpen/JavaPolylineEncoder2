@@ -81,7 +81,6 @@ public class Util {
 
   public static String replaceMarker(String text, HashMap<String, String> map) {
     for (Entry<String, String> entry : map.entrySet()) {
-      System.out.println(entry.getKey() + ": " + entry.getValue());
       text = replaceMarker(text, entry.getKey(), entry.getValue());
   }
   return text;
