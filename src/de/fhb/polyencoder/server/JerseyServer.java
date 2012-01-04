@@ -10,7 +10,7 @@ import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
 public class JerseyServer {
   private SelectorThread threadSelector;
   private final String baseUri = "http://localhost:9998/";
-  final Map<String, String> initParams = new HashMap<String, String>();
+  private final Map<String, String> initParams = new HashMap<String, String>();
 
 
 
