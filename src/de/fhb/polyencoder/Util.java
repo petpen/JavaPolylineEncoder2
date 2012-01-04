@@ -48,7 +48,7 @@ public class Util {
       BufferedReader br = new BufferedReader(fr);
 
       while ((line = br.readLine()) != null) {
-        sb.append(line);
+        sb.append(line + "\n");
       }
 
       fr.close();
