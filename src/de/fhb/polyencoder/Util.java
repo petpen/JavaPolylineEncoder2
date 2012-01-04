@@ -50,6 +50,7 @@ public class Util {
       while ((line = br.readLine()) != null) {
         sb.append(line + "\n");
       }
+      sb.deleteCharAt(sb.length()-1);
 
       fr.close();
     } catch (FileNotFoundException e) {
