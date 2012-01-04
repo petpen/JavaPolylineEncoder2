@@ -12,10 +12,12 @@ import com.sun.jersey.test.framework.WebAppDescriptor;
 import com.sun.jersey.test.framework.spi.container.TestContainerFactory;
 import com.sun.jersey.test.framework.spi.container.grizzly.web.GrizzlyWebTestContainerFactory;
 
+import de.fhb.polyencoder.Util;
+
 public class EncodersResourceTest extends JerseyTest {
 
   public static final String PACKAGE_NAME = "de.fhb.polyencoder.server.resources";
-  private static final String DEFAULT_COORDS_GPX = "5, 5\n5.1, 4.3\n5.3, 3.9";
+  private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/threeWaypoints_GPX_1.0.gpx");
   private static final String DEFAULT_COORDS_GPX_ENCODED_POINTS = "_qo]_qo]}oR~ugCaaf@~bmA";
   private static final String DEFAULT_COORDS_GPX_ENCODED_LEVELS = "PLP";
   private WebResource webResource;
@@ -70,25 +72,25 @@ public class EncodersResourceTest extends JerseyTest {
 
   @Test
   public void testPostNoLinkNoCoords() {
-    String responseMsg = webResource.path("gpx/html").post(String.class);
-    assertEquals("Return with empty link", "no input no output", responseMsg);
+    String responseMsg = webResource.path("gpx/raw").post(String.class);
+    assertEquals("Return with empty link", "400\nNo data found.", responseMsg);
   }
 
 
 
   @Test
   public void testPostWithLink() {
-    String responseMsg = webResource.path("gpx/html").queryParam("link", "foo").post(String.class);
-    assertEquals("Return with link \"foo\"", "load form link", responseMsg);
+    String responseMsg = webResource.path("gpx/raw").queryParam("link", "foo").post(String.class);
+    assertEquals("Return with link \"foo\"", "400\nNo data found.", responseMsg);
   }
 
 
 
   @Test
   public void testPostWrongTyp() {
-    WebResource webRes = webResource.path("foo/html").queryParam("coords", DEFAULT_COORDS_GPX);
+    WebResource webRes = webResource.path("foo/raw").queryParam("coords", DEFAULT_COORDS_GPX);
     String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
-    assertEquals("Should return error", "no support for typ", responseMsg);
+    assertEquals("Should return error", "400\n No inputformat specified or not supported.", responseMsg);
   }
 
 
@@ -97,7 +99,7 @@ public class EncodersResourceTest extends JerseyTest {
   public void testPostWrongFormat() {
     WebResource webRes = webResource.path("gpx/bar").queryParam("coords", DEFAULT_COORDS_GPX);
     String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
-    assertEquals("Should return error", "no support for format", responseMsg);
+    assertEquals("Should return error", "400\n Wrong outputformat specified or not supported.", responseMsg);
   }
 
 
@@ -106,7 +108,6 @@ public class EncodersResourceTest extends JerseyTest {
   public void testPostGpxHtml() {
     WebResource webRes = webResource.path("gpx/html").queryParam("coords", DEFAULT_COORDS_GPX);
     String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
-    System.out.println(responseMsg);
     assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
     assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
   }
