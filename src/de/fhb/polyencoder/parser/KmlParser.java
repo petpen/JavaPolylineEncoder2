@@ -21,6 +21,6 @@ public class KmlParser extends AbstractStringToTrackParser implements StringToTr
     TrackSeparator sep = new TrackSeparator(" ", ",");
     PointArrayPositions pos = new PointArrayPositions(1, 0, 2);
 
-    trk = parseStringToTrack(data, sep, pos);
+    tracks.add(parseStringToTrack(data, sep, pos));
   }
 }
