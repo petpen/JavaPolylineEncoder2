@@ -4,8 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 /**
  * Collection of useful functions.
@@ -90,5 +97,33 @@ public class Util {
       text = replaceMarker(text, entry.getKey(), entry.getValue());
     }
     return text;
+  }
+
+
+
+  /**
+   * Parses an String containing a xml structure to a document. If an exception
+   * will be thrown the method will return null.
+   * 
+   * @param data
+   *          String containing a valid xml structure
+   * @return Document or null if exception was thrown.
+   */
+  public static Document parseXMLToDocument(String data) {
+    Document doc = null;
+
+    try {
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder;
+      builder = factory.newDocumentBuilder();
+
+      InputSource is = new InputSource();
+      is.setCharacterStream(new StringReader(data));
+      doc = builder.parse(is);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return doc;
   }
 }
