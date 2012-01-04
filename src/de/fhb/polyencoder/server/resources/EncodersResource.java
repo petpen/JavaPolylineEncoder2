@@ -9,6 +9,8 @@ import de.fhb.polyencoder.PolylineEncoder;
 import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.geo.GeographicPositionParser;
+import de.fhb.polyencoder.parser.ParserFactory;
+import de.fhb.polyencoder.parser.StringToTrackParser;
 import de.fhb.polyencoder.server.GenerateHtml;
 import de.fhb.polyencoder.server.InputType;
 import de.fhb.polyencoder.server.OutputType;
@@ -28,7 +30,8 @@ public class EncodersResource {
   @POST
   @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
   public String post(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link, @FormParam("coords") String coords) {
-    Track track = null;
+    StringToTrackParser trackParser;
+    PolylineEncoder polylineEncoder = new PolylineEncoder();
     if (link == null) {
       link = "";
     }
@@ -43,23 +46,15 @@ public class EncodersResource {
       return "load form link";
     }
 
-    switch (InputType.test(typ.toUpperCase())) {
-    case GPX:
-      track = GeographicPositionParser.pointsToTrack(coords);
-      break;
-    case KML:
-      break;
-    case KMZ:
-      break;
-    case RAW:
-      break;
-    default:
+    trackParser = ParserFactory.buildParser(InputType.test(typ.toUpperCase()));
+    if (trackParser == null) {
       return "no support for typ";
     }
 
-    PolylineEncoder polylineEncoder = new PolylineEncoder();
-    HashMap<String, String> map = polylineEncoder.dpEncode(track);
-    map.putAll(new GeographicBounds(track).getCenter());
+    trackParser.parse(coords);
+
+    HashMap<String, String> map = polylineEncoder.dpEncode(trackParser.getTrack());
+    map.putAll(new GeographicBounds(trackParser.getTrack()).getCenter());
 
     switch (OutputType.test(format.toUpperCase())) {
     case HTML:
