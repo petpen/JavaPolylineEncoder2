@@ -54,7 +54,7 @@ public class EncodersResource {
     trackParser.parse(coords);
 
     HashMap<String, String> map = polylineEncoder.dpEncode(trackParser.getTrack());
-    map.putAll(new GeographicBounds(trackParser.getTrack()).getCenter());
+    map.putAll(new GeographicBounds(trackParser.getTrack()).getMinMax());
 
     switch (OutputType.test(format.toUpperCase())) {
     case HTML:

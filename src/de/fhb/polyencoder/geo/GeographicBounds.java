@@ -164,4 +164,17 @@ public class GeographicBounds {
     map.put("centerAlt", String.valueOf(getCenterAlt()));
     return map;
   }
+  
+  
+  
+  public HashMap<String, String> getMinMax() {
+    HashMap<String, String> map = new HashMap<String, String>();
+    map.put("maxLat", String.valueOf(getMaxLat()));
+    map.put("minLat", String.valueOf(getMinLat()));
+    map.put("maxLng", String.valueOf(getMaxLng()));
+    map.put("minLng", String.valueOf(getMinLng()));
+    map.put("maxAlt", String.valueOf(getMaxAlt()));
+    map.put("minAlt", String.valueOf(getMinAlt()));
+    return map;
+  }
 }
