@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * Collection of useful functions.
@@ -88,7 +87,7 @@ public class Util {
   public static String replaceMarker(String text, HashMap<String, String> map) {
     for (Entry<String, String> entry : map.entrySet()) {
       text = replaceMarker(text, entry.getKey(), entry.getValue());
-  }
-  return text;
+    }
+    return text;
   }
 }
