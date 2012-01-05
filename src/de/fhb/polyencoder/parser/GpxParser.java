@@ -30,37 +30,53 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
     Document dom = Util.parseXMLToDocument(data);
 
     if(dom != null) {
-      addTracksToTracks(dom);
-      addRoutesToTracks(dom);
-      addWaypointsToTracks(dom);
+      findAndAddTracks(dom);
+      findAndAddRoutes(dom);
+      findAndAddWaypoints(dom);
     }
   }
 
 
 
-  private void addTracksToTracks(Document dom) {
-    addPathsToTracks(dom, TAG_TRACK, TAG_TRACKPOINT);
+  private void findAndAddTracks(Document dom) {
+    findAndAddAllTracks(dom, TAG_TRACK, TAG_TRACKPOINT);
   }
 
 
 
-  private void addRoutesToTracks(Document dom) {
-    addPathsToTracks(dom, TAG_ROUTE, TAG_ROUTEPOINT);
+  private void findAndAddRoutes(Document dom) {
+    findAndAddAllTracks(dom, TAG_ROUTE, TAG_ROUTEPOINT);
   }
 
 
 
-  private void addWaypointsToTracks(Document dom) {
-    addPathsToTracks(dom, TAG_ROOT, TAG_WAYPOINT);
+  private void findAndAddWaypoints(Document dom) {
+    findAndAddAllTracks(dom, TAG_ROOT, TAG_WAYPOINT);
   }
 
 
 
-  private void addPathsToTracks(Document dom, String tagPath, String tagPoint) {
+  /**
+   * Finds all tracks beginning with tagPath and having a point which is
+   * described by tagPoint. If the found track may be empty it will not be
+   * added. If a track contains segments, they will be ignored and only the
+   * points will be added to the track.
+   * 
+   * @param dom
+   *          Document that should containt the tags tagPath and tagPoint
+   * @param tagPath
+   *          tag marking a path (e.g. rte, trk)
+   * @param tagPoint
+   *          tag marking a point
+   */
+  private void findAndAddAllTracks(Document dom, String tagPath, String tagPoint) {
     NodeList trackElements = dom.getElementsByTagName(tagPath);
   
     for (int i = 0; i < trackElements.getLength(); i++) {
-      tracks.add(parseTrackElement((Element) trackElements.item(i), tagPoint));
+      Track trk = parseTrackElement((Element) trackElements.item(i), tagPoint);
+
+      if (trk.getPoints().size() > 0)
+        tracks.add(trk);
     }
   }
 
