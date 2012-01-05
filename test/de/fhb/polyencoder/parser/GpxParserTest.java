@@ -22,8 +22,8 @@ public class GpxParserTest {
 
 
   @Test
-  public void testCorruptedGPXFile() {
-    String data = Util.readFile("testfiles/corrupted.gpx");
+  public void testCorruptedFile() {
+    String data = Util.readFile("testfiles/gpx/corrupted.gpx");
     parser.parse(data);
 
     assertEquals("There must be no track", 0, parser.getTracks().size());
@@ -33,7 +33,7 @@ public class GpxParserTest {
 
   @Test
   public void testEmptyTrack() {
-    String data = Util.readFile("testfiles/emptyTrack.gpx");
+    String data = Util.readFile("testfiles/gpx/emptyTrack.gpx");
     parser.parse(data);
 
     assertEquals("There must be no track", 0, parser.getTracks().size());
@@ -42,8 +42,8 @@ public class GpxParserTest {
 
 
   @Test
-  public void testInvalidPointGPXFile() {
-    String data = Util.readFile("testfiles/invalidPoint.gpx");
+  public void testInvalidPoint() {
+    String data = Util.readFile("testfiles/gpx/invalidPoint.gpx");
     parser.parse(data);
 
     assertEquals("There must be one track parsed", 1, parser.getTracks().size());
@@ -54,7 +54,7 @@ public class GpxParserTest {
 
   @Test
   public void testSingleRouteGPX1_1() {
-    String data = Util.readFile("testfiles/routepoints_GPX_1.1.gpx");
+    String data = Util.readFile("testfiles/gpx/routepoints_GPX_1.1.gpx");
     parser.parse(data);
 
     assertEquals("There must be one track inside the GPX-File", 1, parser.getTracks().size());
@@ -65,7 +65,7 @@ public class GpxParserTest {
 
   @Test
   public void testMultipleTracksMixedWithWaypointsGPX1_0() {
-    String data = Util.readFile("testfiles/waypoints_trackpoints_GPX_1.0.gpx");
+    String data = Util.readFile("testfiles/gpx/waypoints_trackpoints_GPX_1.0.gpx");
     parser.parse(data);
 
     List<Track> tracks = parser.getTracks();
@@ -85,7 +85,7 @@ public class GpxParserTest {
 
   @Test
   public void testWaypointsAndTrackpointsGPX1_0() {
-    String data = Util.readFile("testfiles/waypoints_trackpoints_GPX_1.0.gpx");
+    String data = Util.readFile("testfiles/gpx/waypoints_trackpoints_GPX_1.0.gpx");
     parser.parse(data);
 
     List<Track> tracks = parser.getTracks();
