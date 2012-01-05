@@ -51,7 +51,7 @@ public class Track {
   public String toString() {
     StringBuilder str = new StringBuilder("");
     for (GeographicLocation point : points) {
-      str.append(point.toString() + "\n");
+      str.append(point.toString() + ";");
     }
     if (str.length() > 0) {
       str.deleteCharAt(str.length() - 1);

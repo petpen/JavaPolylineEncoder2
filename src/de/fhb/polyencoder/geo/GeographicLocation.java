@@ -67,7 +67,7 @@ public class GeographicLocation {
    * @return String with the coordinates of this GeographicLocation.
    */
   public String toString() {
-    return String.valueOf(latitude) + ", " + String.valueOf(longitude) + ", " + String.valueOf(altitude);
+    return String.valueOf(latitude) + "," + String.valueOf(longitude) + "," + String.valueOf(altitude);
   }
 
 
