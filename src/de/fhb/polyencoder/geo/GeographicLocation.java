@@ -1,6 +1,5 @@
 package de.fhb.polyencoder.geo;
 
-
 /**
  * GeographicLocation with GPS coordinates.
  * 
@@ -18,8 +17,8 @@ public class GeographicLocation {
 
 
   /**
-   * Creates a GeographicLocation with a given latitude and longitude. The altitude will
-   * be set to 0.0
+   * Creates a GeographicLocation with a given latitude and longitude. The
+   * altitude will be set to 0.0
    * 
    * @param latitude
    * @param longitude
@@ -68,14 +67,14 @@ public class GeographicLocation {
    * @return String with the coordinates of this GeographicLocation.
    */
   public String toString() {
-    return this.latitude + ";" + this.longitude + ";" + this.altitude;
+    return String.valueOf(latitude) + ", " + String.valueOf(longitude) + ", " + String.valueOf(altitude);
   }
 
 
 
   /**
-   * Produces a hashcode of this GeographicLocation. Uses a prime number to generate
-   * this number.
+   * Produces a hashcode of this GeographicLocation. Uses a prime number to
+   * generate this number.
    * 
    * This method was generated with Eclipse.
    * 
@@ -90,13 +89,13 @@ public class GeographicLocation {
     long temp;
 
     temp = Double.doubleToLongBits(altitude);
-    result = prime*result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ (temp >>> 32));
 
     temp = Double.doubleToLongBits(latitude);
-    result = prime*result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ (temp >>> 32));
 
     temp = Double.doubleToLongBits(longitude);
-    result = prime*result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + (int) (temp ^ (temp >>> 32));
 
     return result;
   }
@@ -104,8 +103,9 @@ public class GeographicLocation {
 
 
   /**
-   * Indicates whether some GeographicLocation equals this GeographicLocation. It will compare
-   * the altitude, longitude and latitude of the GeographicLocation.
+   * Indicates whether some GeographicLocation equals this GeographicLocation.
+   * It will compare the altitude, longitude and latitude of the
+   * GeographicLocation.
    * 
    * This method was generated with Eclipse.
    * 
@@ -213,5 +213,4 @@ public class GeographicLocation {
   public double lng() {
     return getLongitude();
   }
-
 }
