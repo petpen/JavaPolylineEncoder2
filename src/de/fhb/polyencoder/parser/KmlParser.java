@@ -5,6 +5,8 @@ import de.fhb.polyencoder.TrackSeparator;
 
 public class KmlParser extends AbstractStringToTrackParser implements StringToTrackParser {
 
+  protected static String TAG_DATA = "coordinates";
+  
   /**
    * Parses a String containing points in a form as described in parameter
    * points.

@@ -10,19 +10,19 @@ import de.fhb.polyencoder.geo.GeographicLocation;
 
 public class GpxParser extends AbstractStringToTrackParser implements StringToTrackParser {
   
-  private static String TAG_ROOT = "gpx";
+  protected static String TAG_ROOT = "gpx";
   
-  private static String TAG_TRACK = "trk";
-  private static String TAG_TRACKPOINT = "trkpt";
+  protected static String TAG_TRACK = "trk";
+  protected static String TAG_TRACKPOINT = "trkpt";
   
-  private static String TAG_ROUTE = "rte";  
-  private static String TAG_ROUTEPOINT = "rtept";
+  protected static String TAG_ROUTE = "rte";  
+  protected static String TAG_ROUTEPOINT = "rtept";
 
-  private static String TAG_WAYPOINT = "wpt";
+  protected static String TAG_WAYPOINT = "wpt";
   
-  private static String ATTRIBUTE_LAT = "lat";
-  private static String ATTRIBUTE_LNG = "lon";
-  private static String TAG_ALT = "ele";
+  protected static String ATTRIBUTE_LAT = "lat";
+  protected static String ATTRIBUTE_LNG = "lon";
+  protected static String TAG_ALT = "ele";
 
 
 
