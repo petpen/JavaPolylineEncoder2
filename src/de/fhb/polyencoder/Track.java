@@ -45,4 +45,22 @@ public class Track {
   public void addPoint(GeographicLocation point) {
     this.points.add(point);
   }
+
+
+
+  public String toString() {
+    StringBuilder str = new StringBuilder("");
+    for (GeographicLocation point : points) {
+      str.append(point.toString() + "\n");
+    }
+    if (str.length() > 0) {
+      str.deleteCharAt(str.length() - 1);
+    }
+    return str.toString();
+  }
+  
+  
+  public int size() {
+    return points.size();
+  }
 }

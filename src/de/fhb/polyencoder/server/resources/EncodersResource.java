@@ -1,20 +1,11 @@
 package de.fhb.polyencoder.server.resources;
 
-import java.util.HashMap;
-import java.util.List;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import de.fhb.polyencoder.PolylineEncoder;
-import de.fhb.polyencoder.Track;
-import de.fhb.polyencoder.geo.GeographicBounds;
-import de.fhb.polyencoder.parser.ParserFactory;
-import de.fhb.polyencoder.parser.StringToTrackParser;
-import de.fhb.polyencoder.server.GenerateErrorMessage;
-import de.fhb.polyencoder.server.GenerateHtml;
-import de.fhb.polyencoder.server.InputType;
+import static de.fhb.polyencoder.server.EncodersController.*;
 import de.fhb.polyencoder.server.OutputType;
+import de.fhb.polyencoder.view.GenerateErrorMessage;
 
 @Path("/encoder/{typ}/{format}")
 public class EncodersResource {
@@ -51,7 +42,7 @@ public class EncodersResource {
       }
     } else {
       OutputType outputType = OutputType.test(format);
-      
+
       if (isInputValid == false) {
         errorMessage += " No inputformat specified or not supported.";
       }
@@ -65,76 +56,6 @@ public class EncodersResource {
     }
 
     return result;
-  }
-
-
-
-  private String encodeData(String data, String typ, String format) {
-    String result = "";
-    List<Track> tracks = parseData(data, typ);
-
-    if (tracks.size() > 0) {
-      PolylineEncoder polylineEncoder = new PolylineEncoder();
-      HashMap<String, String> map = polylineEncoder.dpEncode(tracks.get(0));
-      map.putAll(new GeographicBounds(tracks.get(0)).getMinMaxBounds());
-
-      switch (OutputType.test(format)) {
-        case HTML:
-          result = GenerateHtml.getHtml(map);
-          break;
-        case JSON:
-          result = GenerateErrorMessage.getAs(200, "Output as JSON.", OutputType.JSON);
-          break;
-        case RAW:
-          result = GenerateErrorMessage.getAs(200, "Output as Raw.", OutputType.RAW);
-          break;
-        default:
-          result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
-      }
-    } else {
-      result = GenerateErrorMessage.getAs(400, "No tracks found.");
-    }
-    
-    return result;
-  }
-
-
-
-  private List<Track> parseData(String coords, String typ) {
-    StringToTrackParser trackParser;
-
-    trackParser = ParserFactory.buildParser(InputType.test(typ));
-    
-    trackParser.parse(coords);
-    
-    return trackParser.getTracks();
-  }
-
-
-
-  private boolean isOutputValid(String format) {
-    OutputType input = OutputType.test(format);
-    return (input != OutputType.NOSUPPORT);
-  }
-
-
-
-  private boolean hasValidData(String data) {
-    return (data != null && data.length() > 0);
-  }
-
-
-
-  private boolean isValidLink(String link) {
-    // TODO This has to be checked later for a valid url
-    return (link != null && link.length() > 0);
-  }
-
-
-
-  private boolean isValidTyp(String typ) {
-    InputType input = InputType.test(typ);
-    return (input != InputType.NOSUPPORT);
   }
 
 }
