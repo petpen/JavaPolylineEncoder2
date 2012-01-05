@@ -21,7 +21,7 @@ public class KmlParserTest {
 
   @Test
   public void testToTrack() {
-    String data = Util.readFile("testfiles/singleTrack.kml");
+    String data = Util.readFile("testfiles/kml/singleTrack.kml");
     parser.parse(data);
 
     assertEquals("There must be one track", 1, parser.getTracks().size());
@@ -40,7 +40,7 @@ public class KmlParserTest {
 
   @Test
   public void testMultipleTracks() {
-    String data = Util.readFile("testfiles/multipleTracks.kml");
+    String data = Util.readFile("testfiles/kml/multipleTracks.kml");
     parser.parse(data);
 
     assertEquals("There must be two tracks", 2, parser.getTracks().size());
@@ -53,7 +53,7 @@ public class KmlParserTest {
 
   @Test
   public void testCorruptedKMLFile() {
-    String data = Util.readFile("testfiles/corrupted.kml");
+    String data = Util.readFile("testfiles/kml/corrupted.kml");
     parser.parse(data);
 
     assertEquals("There must be no track", 0, parser.getTracks().size());
@@ -63,7 +63,7 @@ public class KmlParserTest {
 
   @Test
   public void testEmptyTrack() {
-    String data = Util.readFile("testfiles/emptyTrack.kml");
+    String data = Util.readFile("testfiles/kml/emptyTrack.kml");
     parser.parse(data);
 
     assertEquals("There must be no track", 0, parser.getTracks().size());
@@ -73,7 +73,7 @@ public class KmlParserTest {
 
   @Test
   public void testInvalidPointKMLFile() {
-    String data = Util.readFile("testfiles/invalidPoint.kml");
+    String data = Util.readFile("testfiles/kml/invalidPoint.kml");
     parser.parse(data);
 
     assertEquals("There must be one track parsed", 1, parser.getTracks().size());
