@@ -1,6 +1,5 @@
 package de.fhb.polyencoder.server;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,9 +10,7 @@ import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.parser.ParserFactory;
 import de.fhb.polyencoder.parser.StringToTrackParser;
-import de.fhb.polyencoder.view.GenerateErrorMessage;
-import de.fhb.polyencoder.view.GenerateHtml;
-import de.fhb.polyencoder.view.GenerateJson;
+import de.fhb.polyencoder.server.view.*;
 
 public class EncodersController {
 
@@ -40,26 +37,26 @@ public class EncodersController {
       HashMap<String, String> map = polylineEncoder.dpEncode(tracks.get(0));
       map.putAll(new GeographicBounds(tracks.get(0)).getMinMaxBounds());
       map.putAll(new GeographicBounds(tracks.get(0)).getCenter());
+      map.put("pointCount", String.valueOf(tracks.get(0).size()));
       map.put("createdDate", String.valueOf(new Date().getTime()));
 
       switch (OutputType.test(format)) {
-      case HTML:
-        result = GenerateHtml.getHtml(map);
-        break;
-      case JSON:
-        map.put("statusCode", "200");
-        map.put("statusMessage", "");
-        map.put("pointCount", String.valueOf(tracks.get(0).size()));
-        result = GenerateJson.getJson(map); //200, "Output as JSON.", OutputType.JSON
-        break;
-      case XML:
-        result = GenerateErrorMessage.getAs(200, "Output as XML.", OutputType.XML);
-        break;
-      case RAW:
-        result = GenerateErrorMessage.getAs(200, "Output as Raw.", OutputType.RAW);
-        break;
-      default:
-        result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
+        case HTML:
+          result = GenerateHtml.getHtml(map);
+          break;
+        case JSON:
+          map.put("statusCode", "200");
+          map.put("statusMessage", "");
+          result = GenerateJson.getJson(map);
+          break;
+        case XML:
+          result = GenerateErrorMessage.getAs(200, "Output as XML.", OutputType.XML);
+          break;
+        case RAW:
+          result = GenerateErrorMessage.getAs(200, "Output as Raw.", OutputType.RAW);
+          break;
+        default:
+          result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
       }
     } else {
       result = GenerateErrorMessage.getAs(400, "No tracks found.");
@@ -74,7 +71,7 @@ public class EncodersController {
     StringToTrackParser trackParser;
 
     trackParser = ParserFactory.buildParser(InputType.test(typ));
-    if(trackParser != null) {
+    if (trackParser != null) {
       trackParser.parse(coords);
     } else {
       return new ArrayList<Track>();

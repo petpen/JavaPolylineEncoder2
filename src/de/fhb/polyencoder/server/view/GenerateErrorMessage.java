@@ -1,4 +1,4 @@
-package de.fhb.polyencoder.view;
+package de.fhb.polyencoder.server.view;
 
 import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.server.OutputType;

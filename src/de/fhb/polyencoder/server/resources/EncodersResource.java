@@ -3,18 +3,25 @@ package de.fhb.polyencoder.server.resources;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-import static de.fhb.polyencoder.server.EncodersController.*;
+import de.fhb.polyencoder.server.EncodersController;
 import de.fhb.polyencoder.server.OutputType;
-import de.fhb.polyencoder.view.GenerateErrorMessage;
+import de.fhb.polyencoder.server.view.GenerateErrorMessage;
 
 @Path("/encoder/{typ}/{format}")
 public class EncodersResource {
 
   @GET
   public String get(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link) {
-    if (isValidLink(link) == false)
-      link = "";
-    return "/encoder/" + typ + "/" + format;
+    String result;
+
+    if (!EncodersController.isValidLink(link)) {
+      result = GenerateErrorMessage.getAs(400, "Invalid link.", OutputType.test(format));
+    } else {
+      //TODO load data from link, need interface to stub download
+      String data = "";
+      result = EncodersController.encodeData(data, typ, format);
+    }
+    return result;
   }
 
 
@@ -25,18 +32,18 @@ public class EncodersResource {
     String result = "";
     String errorMessage = "";
 
-    boolean isInputValid = isValidTyp(typ);
-    boolean isOutputValid = isOutputValid(format);
+    boolean isInputValid = EncodersController.isValidTyp(typ);
+    boolean isOutputValid = EncodersController.isOutputValid(format);
 
     if (isInputValid && isOutputValid) {
 
-      if (isValidLink(link)) {
-        // TODO load data from link
+      if (EncodersController.isValidLink(link)) {
+        // TODO see TODO at get()
         data = "";
       }
 
-      if (hasValidData(data)) {
-        result = encodeData(data, typ, format);
+      if (EncodersController.hasValidData(data)) {
+        result = EncodersController.encodeData(data, typ, format);
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }

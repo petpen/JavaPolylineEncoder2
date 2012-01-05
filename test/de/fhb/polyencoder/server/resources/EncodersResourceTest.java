@@ -17,6 +17,7 @@ import de.fhb.polyencoder.Util;
 public class EncodersResourceTest extends JerseyTest {
 
   public static final String PACKAGE_NAME = "de.fhb.polyencoder.server.resources";
+  private static final String DEFAULT_VALID_LINK = "http://www.google.de/robots.txt";
   private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/gpx/threeWaypoints_GPX_1.0.gpx");
   private static final String DEFAULT_COORDS_GPX_ENCODED_POINTS = "_qo]_qo]}oR~ugCaaf@~bmA";
   private static final String DEFAULT_COORDS_GPX_ENCODED_LEVELS = "PLP";
@@ -38,34 +39,66 @@ public class EncodersResourceTest extends JerseyTest {
 
 
 
+  // @Test
+  // public void testGetGpxValidLink() {
+  // WebResource webRes = webResource.path("gpx/bar").queryParam("link",
+  // DEFAULT_VALID_LINK);
+  // String responseMsg = webRes.get(String.class);
+  // assertEquals("Should return <p>Invalid link.</p>", responseMsg);
+  // }
+
   @Test
-  public void testGetGpxHtml() {
+  public void testGetGpxWithOutLink() {
     String responseMsg = webResource.path("gpx/html").get(String.class);
-    assertEquals("Should return /encoder/gpx/html", "/encoder/gpx/html", responseMsg);
+    assertTrue("Should return <p>Invalid link.</p>", responseMsg.indexOf("<p>Invalid link.</p>") >= 0);
+    responseMsg = webResource.path("gpx/json").get(String.class);
+    assertTrue("Should return \"message\": \"Invalid link.\"", responseMsg.indexOf("\"message\": \"Invalid link.\"") >= 0);
+    responseMsg = webResource.path("gpx/xml").get(String.class);
+    assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
+    responseMsg = webResource.path("gpx/raw").get(String.class);
+    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
   }
 
 
 
   @Test
-  public void testGetKmlJson() {
-    String responseMsg = webResource.path("kml/json").get(String.class);
-    assertEquals("Should return /encoder/kml/json", "/encoder/kml/json", responseMsg);
+  public void testGetKmlWithOutLink() {
+    String responseMsg = webResource.path("kml/html").get(String.class);
+    assertTrue("Should return <p>Invalid link.</p>", responseMsg.indexOf("<p>Invalid link.</p>") >= 0);
+    responseMsg = webResource.path("kml/json").get(String.class);
+    assertTrue("Should return \"message\": \"Invalid link.\"", responseMsg.indexOf("\"message\": \"Invalid link.\"") >= 0);
+    responseMsg = webResource.path("kml/xml").get(String.class);
+    assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
+    responseMsg = webResource.path("kml/raw").get(String.class);
+    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
   }
 
 
 
   @Test
-  public void testGetKmzJson() {
-    String responseMsg = webResource.path("kmz/json").get(String.class);
-    assertEquals("Should return /encoder/kmz/json", "/encoder/kmz/json", responseMsg);
+  public void testGetKmzWithOutLink() {
+    String responseMsg = webResource.path("kmz/html").get(String.class);
+    assertTrue("Should return <p>Invalid link.</p>", responseMsg.indexOf("<p>Invalid link.</p>") >= 0);
+    responseMsg = webResource.path("kmz/json").get(String.class);
+    assertTrue("Should return \"message\": \"Invalid link.\"", responseMsg.indexOf("\"message\": \"Invalid link.\"") >= 0);
+    responseMsg = webResource.path("kmz/xml").get(String.class);
+    assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
+    responseMsg = webResource.path("kmz/raw").get(String.class);
+    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
   }
 
 
 
   @Test
-  public void testGetRawRaw() {
-    String responseMsg = webResource.path("raw/raw").get(String.class);
-    assertEquals("Should return /encoder/raw/raw", "/encoder/raw/raw", responseMsg);
+  public void testGetRawWithOutLink() {
+    String responseMsg = webResource.path("raw/html").get(String.class);
+    assertTrue("Should return <p>Invalid link.</p>", responseMsg.indexOf("<p>Invalid link.</p>") >= 0);
+    responseMsg = webResource.path("raw/json").get(String.class);
+    assertTrue("Should return \"message\": \"Invalid link.\"", responseMsg.indexOf("\"message\": \"Invalid link.\"") >= 0);
+    responseMsg = webResource.path("raw/xml").get(String.class);
+    assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
+    responseMsg = webResource.path("raw/raw").get(String.class);
+    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
   }
 
 

@@ -1,4 +1,4 @@
-package de.fhb.polyencoder.view;
+package de.fhb.polyencoder.server.view;
 
 import java.util.HashMap;
 
