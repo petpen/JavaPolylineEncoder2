@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>SingleTrack.kml</name>
+dssgjhd fkjghsdlfg hsdaljfhkasjdhfklahsdlkfhaskdhfalksdhfasldf,df asdhf s d, fhsdl fhasdlfh
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>WestminsterAbbeyToLondonEye</name>
+		<styleUrl>#sn_ylw-pushpin</styleUrl>
+		<LineString>
+			<tessellate>1</tessellate>
+			<coordinates>
+				-0.1272722324704489,51.4997138231825,0 -0.1272211506475873,51.50018496481678,0 -0.1269185324692412,51.50015726809205,0 -0.1266326027293063,51.50014524024321,0 -0.1264294905337338,51.50013362447846,0 -0.1263734840254227,51.50011744373658,0 -0.1261953005045946,51.50016313585792,0 -0.1260449577193234,51.50016458848036,0 -0.1260158208366469,51.5007771205548,0 -0.1258710763250703,51.50088131642899,0 -0.1236302851066329,5

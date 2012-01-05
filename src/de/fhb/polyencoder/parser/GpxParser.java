@@ -10,19 +10,19 @@ import de.fhb.polyencoder.geo.GeographicLocation;
 
 public class GpxParser extends AbstractStringToTrackParser implements StringToTrackParser {
   
-  private static String TAG_ROOT = "gpx";
+  protected static String TAG_ROOT = "gpx";
   
-  private static String TAG_TRACK = "trk";
-  private static String TAG_TRACKPOINT = "trkpt";
+  protected static String TAG_TRACK = "trk";
+  protected static String TAG_TRACKPOINT = "trkpt";
   
-  private static String TAG_ROUTE = "rte";  
-  private static String TAG_ROUTEPOINT = "rtept";
+  protected static String TAG_ROUTE = "rte";  
+  protected static String TAG_ROUTEPOINT = "rtept";
 
-  private static String TAG_WAYPOINT = "wpt";
+  protected static String TAG_WAYPOINT = "wpt";
   
-  private static String ATTRIBUTE_LAT = "lat";
-  private static String ATTRIBUTE_LNG = "lon";
-  private static String TAG_ALT = "ele";
+  protected static String ATTRIBUTE_LAT = "lat";
+  protected static String ATTRIBUTE_LNG = "lon";
+  protected static String TAG_ALT = "ele";
 
 
 
@@ -30,37 +30,53 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
     Document dom = Util.parseXMLToDocument(data);
 
     if(dom != null) {
-      addTracksToTracks(dom);
-      addRoutesToTracks(dom);
-      addWaypointsToTracks(dom);
+      findAndAddTracks(dom);
+      findAndAddRoutes(dom);
+      findAndAddWaypoints(dom);
     }
   }
 
 
 
-  private void addTracksToTracks(Document dom) {
-    addPathsToTracks(dom, TAG_TRACK, TAG_TRACKPOINT);
+  private void findAndAddTracks(Document dom) {
+    findAndAddAllTracks(dom, TAG_TRACK, TAG_TRACKPOINT);
   }
 
 
 
-  private void addRoutesToTracks(Document dom) {
-    addPathsToTracks(dom, TAG_ROUTE, TAG_ROUTEPOINT);
+  private void findAndAddRoutes(Document dom) {
+    findAndAddAllTracks(dom, TAG_ROUTE, TAG_ROUTEPOINT);
   }
 
 
 
-  private void addWaypointsToTracks(Document dom) {
-    addPathsToTracks(dom, TAG_ROOT, TAG_WAYPOINT);
+  private void findAndAddWaypoints(Document dom) {
+    findAndAddAllTracks(dom, TAG_ROOT, TAG_WAYPOINT);
   }
 
 
 
-  private void addPathsToTracks(Document dom, String tagPath, String tagPoint) {
+  /**
+   * Finds all tracks beginning with tagPath and having a point which is
+   * described by tagPoint. If the found track may be empty it will not be
+   * added. If a track contains segments, they will be ignored and only the
+   * points will be added to the track.
+   * 
+   * @param dom
+   *          Document that should containt the tags tagPath and tagPoint
+   * @param tagPath
+   *          tag marking a path (e.g. rte, trk)
+   * @param tagPoint
+   *          tag marking a point
+   */
+  private void findAndAddAllTracks(Document dom, String tagPath, String tagPoint) {
     NodeList trackElements = dom.getElementsByTagName(tagPath);
   
     for (int i = 0; i < trackElements.getLength(); i++) {
-      tracks.add(parseTrackElement((Element) trackElements.item(i), tagPoint));
+      Track trk = parseTrackElement((Element) trackElements.item(i), tagPoint);
+
+      if (trk.getPoints().size() > 0)
+        tracks.add(trk);
     }
   }
 
@@ -72,7 +88,11 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
     NodeList pointList = pointElements.getElementsByTagName(tag);
 
     for (int i = 0; i < pointList.getLength(); i++) {
-      trk.addPoint(parseToLocation((Element) pointList.item(i)));
+      try {
+        trk.addPoint(parseToLocation((Element) pointList.item(i)));
+      } catch (NumberFormatException ex) {
+        System.out.println("Location is invalid. This point will be ignored.");
+      }
     }
 
     return trk;
@@ -80,7 +100,7 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
 
 
 
-  private GeographicLocation parseToLocation(Element element) {
+  private GeographicLocation parseToLocation(Element element) throws NumberFormatException {
     double latitude = Double.parseDouble(element.getAttribute(ATTRIBUTE_LAT));
     double longitude = Double.parseDouble(element.getAttribute(ATTRIBUTE_LNG));
     double altitude = 0.0;
