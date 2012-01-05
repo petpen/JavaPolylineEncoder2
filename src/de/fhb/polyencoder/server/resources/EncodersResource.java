@@ -30,7 +30,7 @@ public class EncodersResource {
 
   @POST
   @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-  public String post(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link, @FormParam("coords") String coords) {
+  public String post(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link, @FormParam("coords") String data) {
     String result = "";
     String errorMessage = "";
 
@@ -41,49 +41,60 @@ public class EncodersResource {
 
       if (isValidLink(link)) {
         // TODO load data from link
-        coords = "";
+        data = "";
       }
 
-      if (hasValidCoords(coords)) {
-        List<Track> tracks = parseData(coords, typ);
-
-        if (tracks.size() > 0) {
-          PolylineEncoder polylineEncoder = new PolylineEncoder();
-          HashMap<String, String> map = polylineEncoder.dpEncode(tracks.get(0));
-          map.putAll(new GeographicBounds(tracks.get(0)).getMinMaxBounds());
-
-          switch (OutputType.test(format)) {
-            case HTML:
-              result = GenerateHtml.getHtml(map);
-              break;
-            case JSON:
-              result = GenerateErrorMessage.getAs(200, "Output as JSON.", OutputType.JSON);
-              break;
-            case RAW:
-              result = GenerateErrorMessage.getAs(200, "Output as Raw.", OutputType.RAW);
-              break;
-            default:
-              result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
-          }
-        } else {
-          result = GenerateErrorMessage.getAs(400, "No tracks found.");
-        }
+      if (hasValidData(data)) {
+        result = encodeData(data, typ, format);
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }
     } else {
+      OutputType outputType = OutputType.test(format);
+      
       if (isInputValid == false) {
         errorMessage += " No inputformat specified or not supported.";
       }
 
       if (isOutputValid == false) {
         errorMessage += " Wrong outputformat specified or not supported.";
+        outputType = OutputType.RAW;
       }
 
-      OutputType outputType = (isOutputValid) ? OutputType.test(format) : OutputType.RAW;
       result = GenerateErrorMessage.getAs(400, errorMessage, outputType);
     }
 
+    return result;
+  }
+
+
+
+  private String encodeData(String data, String typ, String format) {
+    String result = "";
+    List<Track> tracks = parseData(data, typ);
+
+    if (tracks.size() > 0) {
+      PolylineEncoder polylineEncoder = new PolylineEncoder();
+      HashMap<String, String> map = polylineEncoder.dpEncode(tracks.get(0));
+      map.putAll(new GeographicBounds(tracks.get(0)).getMinMaxBounds());
+
+      switch (OutputType.test(format)) {
+        case HTML:
+          result = GenerateHtml.getHtml(map);
+          break;
+        case JSON:
+          result = GenerateErrorMessage.getAs(200, "Output as JSON.", OutputType.JSON);
+          break;
+        case RAW:
+          result = GenerateErrorMessage.getAs(200, "Output as Raw.", OutputType.RAW);
+          break;
+        default:
+          result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
+      }
+    } else {
+      result = GenerateErrorMessage.getAs(400, "No tracks found.");
+    }
+    
     return result;
   }
 
@@ -108,8 +119,8 @@ public class EncodersResource {
 
 
 
-  private boolean hasValidCoords(String coords) {
-    return (coords != null && coords.length() > 0);
+  private boolean hasValidData(String data) {
+    return (data != null && data.length() > 0);
   }
 
 
