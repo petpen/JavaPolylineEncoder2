@@ -1,7 +1,7 @@
 {
   "status": {
-	  "code": {statusCode},
-	  "message": "{statusMessage}"
+    "code": {statusCode},
+    "message": "{statusMessage}"
   },
   "points": {
     "encoded": "{encodedPoints}",
@@ -9,22 +9,22 @@
     "levels": "{encodedLevels}"
    },
   "bounds": {
-  	"lat": {
-  	  "min": {minLat},
-  	  "max": {maxLat}
-  	},
-  	"lng": {
-  	  "min": {minLng},
-  	  "max": {maxLng}
-  	},
-  	"alt": {
-  	  "min": {minAlt},
-  	  "max": {maxAlt}
-  	},
-  	"center": {
-  	  "lat": {centerLat},
-  	  "lng": {centerLng}
-  	}
+    "lat": {
+      "min": {minLat},
+      "max": {maxLat}
+    },
+    "lng": {
+      "min": {minLng},
+      "max": {maxLng}
+    },
+    "alt": {
+      "min": {minAlt},
+      "max": {maxAlt}
+    },
+    "center": {
+      "lat": {centerLat},
+      "lng": {centerLng}
+    }
   },
-  "created": {createdDate}  
+  "created": {createdDate}
 }
