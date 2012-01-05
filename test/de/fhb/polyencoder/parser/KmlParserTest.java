@@ -52,7 +52,7 @@ public class KmlParserTest {
 
 
   @Test
-  public void testCorruptedKMLFile() {
+  public void testCorruptedFile() {
     String data = Util.readFile("testfiles/kml/corrupted.kml");
     parser.parse(data);
 
@@ -72,7 +72,7 @@ public class KmlParserTest {
 
 
   @Test
-  public void testInvalidPointKMLFile() {
+  public void testInvalidPoint() {
     String data = Util.readFile("testfiles/kml/invalidPoint.kml");
     parser.parse(data);
 

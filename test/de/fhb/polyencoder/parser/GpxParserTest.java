@@ -22,7 +22,7 @@ public class GpxParserTest {
 
 
   @Test
-  public void testCorruptedGPXFile() {
+  public void testCorruptedFile() {
     String data = Util.readFile("testfiles/gpx/corrupted.gpx");
     parser.parse(data);
 
@@ -42,7 +42,7 @@ public class GpxParserTest {
 
 
   @Test
-  public void testInvalidPointGPXFile() {
+  public void testInvalidPoint() {
     String data = Util.readFile("testfiles/gpx/invalidPoint.gpx");
     parser.parse(data);
 
