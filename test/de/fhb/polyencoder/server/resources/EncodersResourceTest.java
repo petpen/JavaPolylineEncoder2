@@ -56,7 +56,7 @@ public class EncodersResourceTest extends JerseyTest {
     responseMsg = webResource.path("gpx/xml").get(String.class);
     assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
     responseMsg = webResource.path("gpx/raw").get(String.class);
-    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
+    assertEquals("Should return \"Invalid link.\"", "400\nInvalid link.", responseMsg);
   }
 
 
@@ -70,7 +70,7 @@ public class EncodersResourceTest extends JerseyTest {
     responseMsg = webResource.path("kml/xml").get(String.class);
     assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
     responseMsg = webResource.path("kml/raw").get(String.class);
-    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
+    assertEquals("Should return \"Invalid link.\"", "400\nInvalid link.", responseMsg);
   }
 
 
@@ -84,7 +84,7 @@ public class EncodersResourceTest extends JerseyTest {
     responseMsg = webResource.path("kmz/xml").get(String.class);
     assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
     responseMsg = webResource.path("kmz/raw").get(String.class);
-    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
+    assertEquals("Should return \"Invalid link.\"", "400\nInvalid link.", responseMsg);
   }
 
 
@@ -98,7 +98,7 @@ public class EncodersResourceTest extends JerseyTest {
     responseMsg = webResource.path("raw/xml").get(String.class);
     assertTrue("Should return <status code=\"400\">Invalid link.</status>", responseMsg.indexOf("<status code=\"400\">Invalid link.</status>") >= 0);
     responseMsg = webResource.path("raw/raw").get(String.class);
-    assertTrue("Should return \"Invalid link.\"", responseMsg.indexOf("Invalid link.") >= 0);
+    assertEquals("Should return \"Invalid link.\"", "400\nInvalid link.", responseMsg);
   }
 
 
@@ -140,6 +140,16 @@ public class EncodersResourceTest extends JerseyTest {
   @Test
   public void testPostGpxHtml() {
     WebResource webRes = webResource.path("gpx/html").queryParam("coords", DEFAULT_COORDS_GPX);
+    String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
+    assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
+    assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
+  }
+
+
+
+  @Test
+  public void testPostGpxJson() {
+    WebResource webRes = webResource.path("gpx/json").queryParam("coords", DEFAULT_COORDS_GPX);
     String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
     assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
     assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
