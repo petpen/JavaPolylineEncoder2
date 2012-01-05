@@ -1,6 +1,7 @@
-package de.fhb.polyencoder.server;
+package de.fhb.polyencoder.view;
 
 import de.fhb.polyencoder.Util;
+import de.fhb.polyencoder.server.OutputType;
 
 public class GenerateErrorMessage {
 
