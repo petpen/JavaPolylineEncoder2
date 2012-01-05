@@ -22,6 +22,37 @@ public class GpxParserTest {
 
 
   @Test
+  public void testCorruptedGPXFile() {
+    String data = Util.readFile("testfiles/corrupted.gpx");
+    parser.parse(data);
+
+    assertEquals("There must be no track", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testEmptyTrack() {
+    String data = Util.readFile("testfiles/emptyTrack.gpx");
+    parser.parse(data);
+
+    assertEquals("There must be no track", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testInvalidPointGPXFile() {
+    String data = Util.readFile("testfiles/invalidPoint.gpx");
+    parser.parse(data);
+
+    assertEquals("There must be one track parsed", 1, parser.getTracks().size());
+    assertEquals("This track must have one point", 1, parser.getTracks().get(0).getPoints().size());
+  }
+
+
+
+  @Test
   public void testSingleRouteGPX1_1() {
     String data = Util.readFile("testfiles/routepoints_GPX_1.1.gpx");
     parser.parse(data);

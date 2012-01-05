@@ -88,7 +88,11 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
     NodeList pointList = pointElements.getElementsByTagName(tag);
 
     for (int i = 0; i < pointList.getLength(); i++) {
-      trk.addPoint(parseToLocation((Element) pointList.item(i)));
+      try {
+        trk.addPoint(parseToLocation((Element) pointList.item(i)));
+      } catch (NumberFormatException ex) {
+        System.out.println("Location is invalid. This point will be ignored.");
+      }
     }
 
     return trk;
@@ -96,7 +100,7 @@ public class GpxParser extends AbstractStringToTrackParser implements StringToTr
 
 
 
-  private GeographicLocation parseToLocation(Element element) {
+  private GeographicLocation parseToLocation(Element element) throws NumberFormatException {
     double latitude = Double.parseDouble(element.getAttribute(ATTRIBUTE_LAT));
     double longitude = Double.parseDouble(element.getAttribute(ATTRIBUTE_LNG));
     double altitude = 0.0;

@@ -121,7 +121,7 @@ public class Util {
       is.setCharacterStream(new StringReader(data));
       doc = builder.parse(is);
     } catch (Exception e) {
-      e.printStackTrace();
+      System.out.println("Returned null. Invalid or currupted XML file.");
     }
 
     return doc;
