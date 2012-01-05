@@ -50,7 +50,7 @@ public class UtilTest {
   @Test
   public void testReadFile() {
     String content = Util.readFile("testfiles/readFile.test");
-    assertEquals("Should return right content", "hello world\n!\"§$%&/\nok!", content);
+    assertEquals("Should return right content", "hello world\n!\"d$%&/\nok!", content);
   }
 
 

@@ -10,7 +10,7 @@ import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.Util;
 
 public class EncodersControllerTest {
-  private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/threeWaypoints_GPX_1.0.gpx");
+  private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/gpx/threeWaypoints_GPX_1.0.gpx");
   private static final String DEFAULT_COORDS_GPX_ENCODED_POINTS = "_qo]_qo]}oR~ugCaaf@~bmA";
   private static final String DEFAULT_COORDS_GPX_ENCODED_LEVELS = "PLP";
 

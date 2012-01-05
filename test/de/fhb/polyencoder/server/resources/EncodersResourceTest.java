@@ -17,7 +17,7 @@ import de.fhb.polyencoder.Util;
 public class EncodersResourceTest extends JerseyTest {
 
   public static final String PACKAGE_NAME = "de.fhb.polyencoder.server.resources";
-  private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/threeWaypoints_GPX_1.0.gpx");
+  private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/gpx/threeWaypoints_GPX_1.0.gpx");
   private static final String DEFAULT_COORDS_GPX_ENCODED_POINTS = "_qo]_qo]}oR~ugCaaf@~bmA";
   private static final String DEFAULT_COORDS_GPX_ENCODED_LEVELS = "PLP";
   private WebResource webResource;
