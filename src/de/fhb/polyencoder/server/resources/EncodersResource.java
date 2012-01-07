@@ -1,23 +1,33 @@
 package de.fhb.polyencoder.server.resources;
 
+import java.io.InputStream;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+
+import com.sun.jersey.multipart.FormDataParam;
 
 import de.fhb.polyencoder.server.EncodersController;
 import de.fhb.polyencoder.server.OutputType;
 import de.fhb.polyencoder.server.view.GenerateErrorMessage;
 
-@Path("/encoder/{typ}/{format}")
+@Path("/encoder/{"+EncodersResource.INPUT+"}/{"+EncodersResource.OUTPUT+"}")
 public class EncodersResource {
+  protected static final String INPUT = "typ";
+  protected static final String OUTPUT = "format";
+  private static final String LINK = "link";
+  private static final String POSTDATA = "coords";
+
+
 
   @GET
-  public String get(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link) {
+  public String get(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @QueryParam(LINK) String link) {
     String result;
 
     if (!EncodersController.isValidLink(link)) {
       result = GenerateErrorMessage.getAs(400, "Invalid link.", OutputType.test(format));
     } else {
-      //TODO load data from link, need interface to stub download
+      // TODO load data from link, need interface to stub download
       String data = "";
       result = EncodersController.encodeData(data, typ, format);
     }
@@ -28,7 +38,7 @@ public class EncodersResource {
 
   @POST
   @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-  public String post(@PathParam("typ") String typ, @PathParam("format") String format, @QueryParam("link") String link, @FormParam("coords") String data) {
+  public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormParam(POSTDATA) String data) {
     String result = "";
     String errorMessage = "";
 
@@ -36,11 +46,6 @@ public class EncodersResource {
     boolean isOutputValid = EncodersController.isOutputValid(format);
 
     if (isInputValid && isOutputValid) {
-
-      if (EncodersController.isValidLink(link)) {
-        // TODO see TODO at get()
-        data = "";
-      }
 
       if (EncodersController.hasValidData(data)) {
         result = EncodersController.encodeData(data, typ, format);
@@ -65,4 +70,11 @@ public class EncodersResource {
     return result;
   }
 
+
+
+  @POST
+  @Consumes({ MediaType.MULTIPART_FORM_DATA })
+  public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormDataParam(POSTDATA) InputStream dataStream) {
+    return null;
+  }
 }
