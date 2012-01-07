@@ -11,6 +11,10 @@ classes/*
 
 reports/*
 !reports/README.md
+
+temp/*
+!temp/README.md
+
 cob-instr/*
 cob-rep/*
 cobertura.ser
