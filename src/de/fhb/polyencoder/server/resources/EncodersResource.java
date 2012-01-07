@@ -28,7 +28,7 @@ public class EncodersResource {
   public String get(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @QueryParam(LINK) String link) {
     String result = "";
 
-    boolean isInputValid = EncodersController.isValidTyp(typ) & InputType.test(typ) != InputType.KMZ;
+    boolean isInputValid = EncodersController.isValidTyp(typ);
     boolean isOutputValid = EncodersController.isOutputValid(format);
 
     if (isInputValid && isOutputValid) {
@@ -54,7 +54,7 @@ public class EncodersResource {
   public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormParam(POSTDATA) String data) {
     String result = "";
 
-    boolean isInputValid = EncodersController.isValidTyp(typ);
+    boolean isInputValid = EncodersController.isValidTyp(typ) & InputType.test(typ) != InputType.KMZ;
     boolean isOutputValid = EncodersController.isOutputValid(format);
 
     if (isInputValid && isOutputValid) {
