@@ -91,8 +91,8 @@ public class EncodersResource {
 
     if (isInputValid && isOutputValid) {
       String data = "";
-      if (EncodersController.hasValidData(data)) {
-        result = EncodersController.encodeData(data, typ, format);
+      if (EncodersController.hasValidData(kmzName)) {
+        result = EncodersController.encodeData(kmzName, typ, format);
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }
