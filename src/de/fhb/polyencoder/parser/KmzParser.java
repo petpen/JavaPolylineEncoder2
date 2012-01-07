@@ -2,7 +2,6 @@ package de.fhb.polyencoder.parser;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.zip.ZipEntry;
@@ -29,8 +28,8 @@ public class KmzParser extends AbstractStringToTrackParser  implements StringToT
    * @param data
    *          Filename of the KMZ file on the server
    */
-  public void parse(String data) {
-    String kmlFileName = unzipMainKMLFromKMZ(data);
+  public void parseFile(String fileName) {
+    String kmlFileName = unzipMainKMLFromKMZ(fileName);
     String kmlContent = Util.readFile(kmlFileName);
     
     parseKMLData(kmlContent);
@@ -86,5 +85,11 @@ public class KmzParser extends AbstractStringToTrackParser  implements StringToT
     }
     
     return tempName;
+  }
+
+
+
+  public void parse(String data) {
+    //Not supported for KMZ, because this is a binary file
   }
 }

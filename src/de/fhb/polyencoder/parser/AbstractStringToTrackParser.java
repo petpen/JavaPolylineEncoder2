@@ -7,10 +7,21 @@ import java.util.StringTokenizer;
 import de.fhb.polyencoder.PointArrayPositions;
 import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.TrackSeparator;
+import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.geo.GeographicLocation;
 
 public abstract class AbstractStringToTrackParser {
   protected List<Track> tracks = new ArrayList<Track>();
+
+
+  public void parseFile(String fileName) {
+    String fileContent = Util.readFile(fileName);
+    parse(fileContent);
+  }
+
+
+
+  public abstract void parse(String data);
 
 
 
