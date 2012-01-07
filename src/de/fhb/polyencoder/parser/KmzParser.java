@@ -15,6 +15,12 @@ public class KmzParser extends AbstractStringToTrackParser  implements StringToT
 
 
 
+  public void parse(String data) {
+    //Not supported for KMZ, because this is a binary file
+  }
+
+
+
   /**
    * Reads a KMZ file from the server and extracts the main KML file inside this
    * file. The KML must be named {@code doc.kml}. This is the default if this
@@ -85,11 +91,5 @@ public class KmzParser extends AbstractStringToTrackParser  implements StringToT
     }
     
     return tempName;
-  }
-
-
-
-  public void parse(String data) {
-    //Not supported for KMZ, because this is a binary file
   }
 }
