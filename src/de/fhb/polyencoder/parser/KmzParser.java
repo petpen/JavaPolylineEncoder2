@@ -68,7 +68,6 @@ public class KmzParser extends AbstractStringToTrackParser  implements StringToT
 
       zis.close();
     } catch (Exception e) {
-      //e.printStackTrace();
       System.out.println("Problem with KMZ Data");
     }
 

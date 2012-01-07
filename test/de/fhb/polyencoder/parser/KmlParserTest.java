@@ -90,4 +90,41 @@ public class KmlParserTest {
 
     assertEquals("There must be no track parsed", 0, parser.getTracks().size());
   }
+  
+
+
+  @Test
+  public void testNoMainDocInFile() {
+    parser.parse("testfiles/kmz/noMainDoc.kmz");
+
+    assertEquals("There must be no track parsed", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testMoreFilesAndMainDoc() {
+    parser.parse("testfiles/kmz/moreFilesAndMainDoc.kmz");
+
+    assertEquals("There must be two track parsed", 2, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testMoreFilesWithoutMainDoc() {
+    parser.parse("testfiles/kmz/moreFilesWithoutMainDoc.kmz");
+
+    assertEquals("There must be one track parsed", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testMultipleKmlInKmz() {
+    parser.parse("testfiles/kmz/multipleKML.kmz");
+
+    assertEquals("There must only one track parsed.", 1, parser.getTracks().size());
+    assertTrue("This track must be from doc.kml Therefore the first point must have an latitude of 51.50016313585792.", 51.50016313585792 == parser.getTracks().get(0).getPoint(0).getLatitude());
+  }
 }

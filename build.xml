@@ -14,13 +14,24 @@
 		<delete dir="${classes.dir}">
 			<exclude name="README.md"/>
 		</delete>
+		
 		<delete dir="${reports.dir}">
+			<exclude name="README.md"/>
+		</delete>
+
+		<delete dir="${temp.dir}">
 			<exclude name="README.md"/>
 		</delete>
 
 		<delete file="${cobdata}" />
 		<delete dir="${inst.dir}" />
 		<delete dir="${cob.rep}" />
+	</target>
+	
+	<target name="clean_after" description="Remove files that have been created while testing and are unnecessary">
+		<delete dir="${temp.dir}">
+			<exclude name="README.md"/>
+		</delete>
 	</target>
 	
 	<target name="init" description="Prepare needed directories">
@@ -84,6 +95,6 @@
 			<cobertura-report format="xml" datafile="${cobdata}" destdir="${cob.rep.xml}" srcdir="${src.dir}" />
 		</target>
 		
-		<target name="check" depends="clean, cob-rep" description="Aufräumen und Cobertura Reports erstellen">
+		<target name="check" depends="clean, cob-rep, clean_after" description="Aufräumen und Cobertura Reports erstellen">
 		</target>
 </project>
