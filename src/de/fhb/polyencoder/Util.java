@@ -1,10 +1,15 @@
 package de.fhb.polyencoder;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -23,6 +28,10 @@ import org.xml.sax.InputSource;
  * 
  */
 public class Util {
+
+  private final static int BUFFER = 2048;
+
+
 
   /**
    * Calculates the following phrase with a and b:<br/>
@@ -64,9 +73,58 @@ public class Util {
       sb = new StringBuilder(loadingFailedOutput);
     } catch (IOException e) {
       sb = new StringBuilder(loadingFailedOutput);
+    } catch (StringIndexOutOfBoundsException e) {
+      sb = new StringBuilder(loadingFailedOutput);
     }
 
     return sb.toString();
+  }
+
+
+
+  /**
+   * Deletes a file if it exists, is writable and is not a directory.
+   * 
+   * @param fileName
+   * @return if deletion succeeded or not.
+   * @see File#delete()
+   */
+  public static boolean deleteFile(String fileName) {
+    boolean deletionSucceeded = false;
+
+    File file = new File(fileName);
+
+    if (file.exists() && file.canWrite() && file.isDirectory() == false) {
+      deletionSucceeded = file.delete();
+    }
+
+    return deletionSucceeded;
+  }
+
+
+
+  /**
+   * Writes a InputStream to a file.
+   * 
+   * @param is
+   *          InputStream containing the data to write to {@code fileName}
+   * @param fileName
+   *          Name of the new file
+   * @throws IOException
+   */
+  public static void writeInputStreamToFile(InputStream is, String fileName) throws Exception {
+    int count;
+    byte data[] = new byte[BUFFER];
+
+    FileOutputStream fos = new FileOutputStream(fileName);
+    BufferedOutputStream dest = new BufferedOutputStream(fos, BUFFER);
+
+    while ((count = is.read(data, 0, BUFFER)) != -1) {
+      dest.write(data, 0, count);
+    }
+
+    dest.flush();
+    dest.close();
   }
 
 
