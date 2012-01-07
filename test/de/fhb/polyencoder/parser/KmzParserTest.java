@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.*;
 
 import de.fhb.polyencoder.Track;
-import de.fhb.polyencoder.Util;
 
 public class KmzParserTest {
   private StringToTrackParser parser;
@@ -14,15 +13,14 @@ public class KmzParserTest {
 
   @Before
   public void initParser() {
-    parser = ParserFactory.buildKmlParser();
+    parser = ParserFactory.buildKmzParser();
   }
 
 
 
   @Test
-  public void testToTrack() {
-    String data = Util.readFile("testfiles/kml/singleTrack.kml");
-    parser.parse(data);
+  public void testSingleTrack() {
+    parser.parseFile("testfiles/kmz/singleTrack.kmz");
 
     assertEquals("There must be one track", 1, parser.getTracks().size());
     
@@ -40,8 +38,7 @@ public class KmzParserTest {
 
   @Test
   public void testMultipleTracks() {
-    String data = Util.readFile("testfiles/kml/multipleTracks.kml");
-    parser.parse(data);
+    parser.parseFile("testfiles/kmz/multipleTracks.kmz");
 
     assertEquals("There must be two tracks", 2, parser.getTracks().size());
     
@@ -52,9 +49,8 @@ public class KmzParserTest {
 
 
   @Test
-  public void testCorruptedFile() {
-    String data = Util.readFile("testfiles/kml/corrupted.kml");
-    parser.parse(data);
+  public void testCorruptedFileBeginning() {
+    parser.parseFile("testfiles/kmz/corruptedBeginning.kmz");
 
     assertEquals("There must be no track", 0, parser.getTracks().size());
   }
@@ -62,9 +58,8 @@ public class KmzParserTest {
 
 
   @Test
-  public void testEmptyTrack() {
-    String data = Util.readFile("testfiles/kml/emptyTrack.kml");
-    parser.parse(data);
+  public void testCorruptedFileMiddle() {
+    parser.parseFile("testfiles/kmz/corruptedMiddle.kmz");
 
     assertEquals("There must be no track", 0, parser.getTracks().size());
   }
@@ -72,11 +67,64 @@ public class KmzParserTest {
 
 
   @Test
-  public void testInvalidPoint() {
-    String data = Util.readFile("testfiles/kml/invalidPoint.kml");
-    parser.parse(data);
+  public void testCorruptedFileEnd() {
+    parser.parseFile("testfiles/kmz/corruptedEnd.kmz");
 
-    assertEquals("There must be one track parsed", 1, parser.getTracks().size());
-    assertEquals("This track must have one point", 16, parser.getTracks().get(0).getPoints().size());
+    assertEquals("There must be no track", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testEmptyFile() {
+    parser.parseFile("testfiles/kmz/empty.kmz");
+
+    assertEquals("There must be no track", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testWrongFile() {
+    parser.parseFile("testfiles/kmz/noKMZ.kmz");
+
+    assertEquals("There must be no track parsed", 0, parser.getTracks().size());
+  }
+  
+
+
+  @Test
+  public void testNoMainDocInFile() {
+    parser.parseFile("testfiles/kmz/noMainDoc.kmz");
+
+    assertEquals("There must be no track parsed", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testMoreFilesAndMainDoc() {
+    parser.parseFile("testfiles/kmz/moreFilesAndMainDoc.kmz");
+
+    assertEquals("There must be two track parsed", 2, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testMoreFilesWithoutMainDoc() {
+    parser.parseFile("testfiles/kmz/moreFilesWithoutMainDoc.kmz");
+
+    assertEquals("There must be one track parsed", 0, parser.getTracks().size());
+  }
+
+
+
+  @Test
+  public void testMultipleKmlInKmz() {
+    parser.parseFile("testfiles/kmz/multipleKML.kmz");
+
+    assertEquals("There must only one track parsed.", 1, parser.getTracks().size());
+    assertTrue("This track must be from doc.kml Therefore the first point must have an latitude of 51.50016313585792.", 51.50016313585792 == parser.getTracks().get(0).getPoint(0).getLatitude());
   }
 }
