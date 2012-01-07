@@ -93,4 +93,16 @@ public class EncodersController {
     return (link != null && link.length() > 0);
   }
 
+
+
+  public static String getErrorMsg(boolean isInputValid, boolean isOutputValid) {
+    String errorMessage = "";
+    if (isInputValid == false) {
+      errorMessage += " No inputformat specified or not supported.";
+    }
+    if (isOutputValid == false) {
+      errorMessage += " Wrong outputformat specified or not supported.";
+    }
+    return errorMessage;
+  }
 }
