@@ -14,7 +14,7 @@ import de.fhb.polyencoder.server.InputType;
 import de.fhb.polyencoder.server.OutputType;
 import de.fhb.polyencoder.server.view.GenerateErrorMessage;
 
-@Path("/encoder/{"+EncodersResource.INPUT+"}/{"+EncodersResource.OUTPUT+"}")
+@Path("/encoder/{" + EncodersResource.INPUT + "}/{" + EncodersResource.OUTPUT + "}")
 public class EncodersResource {
   protected static final String INPUT = "typ";
   protected static final String OUTPUT = "format";
@@ -78,21 +78,20 @@ public class EncodersResource {
   @POST
   @Consumes({ MediaType.MULTIPART_FORM_DATA })
   public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormDataParam(FILEDATA) InputStream dataStream) {
-    String kmzName = String.format("%s/%s.kmz", "temp", (new Date()).getTime());
-    try {
-      Util.writeInputStreamToFile(dataStream, kmzName);
-      
-    } catch (Exception e) {
-    }
-    String result = "";
-
     boolean isInputValid = EncodersController.isValidTyp(typ);
     boolean isOutputValid = EncodersController.isOutputValid(format);
+    String result = "";
 
     if (isInputValid && isOutputValid) {
-      String data = "";
-      if (EncodersController.hasValidData(kmzName)) {
-        result = EncodersController.encodeData(kmzName, typ, format);
+      String fileName = String.format("%s/%s.%s", "temp", (new Date()).getTime(), typ.toLowerCase());
+      try {
+        Util.writeInputStreamToFile(dataStream, fileName);
+      } catch (Exception e) {
+        fileName = "";
+      }
+
+      if (!fileName.equals("")) {
+        result = EncodersController.encodeData(fileName, typ, format);
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }
