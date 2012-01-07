@@ -10,6 +10,7 @@ import com.sun.jersey.multipart.FormDataParam;
 
 import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.server.EncodersController;
+import de.fhb.polyencoder.server.InputType;
 import de.fhb.polyencoder.server.OutputType;
 import de.fhb.polyencoder.server.view.GenerateErrorMessage;
 
@@ -19,6 +20,7 @@ public class EncodersResource {
   protected static final String OUTPUT = "format";
   private static final String LINK = "link";
   private static final String POSTDATA = "coords";
+  private static final String FILEDATA = "fileData";
 
 
 
@@ -26,7 +28,7 @@ public class EncodersResource {
   public String get(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @QueryParam(LINK) String link) {
     String result = "";
 
-    boolean isInputValid = EncodersController.isValidTyp(typ);
+    boolean isInputValid = EncodersController.isValidTyp(typ) & InputType.test(typ) != InputType.KMZ;
     boolean isOutputValid = EncodersController.isOutputValid(format);
 
     if (isInputValid && isOutputValid) {
@@ -75,7 +77,7 @@ public class EncodersResource {
 
   @POST
   @Consumes({ MediaType.MULTIPART_FORM_DATA })
-  public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormDataParam(POSTDATA) InputStream dataStream) {
+  public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormDataParam(FILEDATA) InputStream dataStream) {
     String kmzName = String.format("%s/%s.kmz", "temp", (new Date()).getTime());
     try {
       Util.writeInputStreamToFile(dataStream, kmzName);
@@ -83,7 +85,6 @@ public class EncodersResource {
     } catch (Exception e) {
     }
     String result = "";
-    String errorMessage = "";
 
     boolean isInputValid = EncodersController.isValidTyp(typ);
     boolean isOutputValid = EncodersController.isOutputValid(format);
@@ -96,17 +97,8 @@ public class EncodersResource {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }
     } else {
-      OutputType outputType = OutputType.test(format);
-
-      if (isInputValid == false) {
-        errorMessage += " No inputformat specified or not supported.";
-      }
-
-      if (isOutputValid == false) {
-        errorMessage += " Wrong outputformat specified or not supported.";
-        outputType = OutputType.RAW;
-      }
-
+      String errorMessage = EncodersController.getErrorMsg(isInputValid, isOutputValid);
+      OutputType outputType = isOutputValid ? OutputType.test(format) : OutputType.RAW;
       result = GenerateErrorMessage.getAs(400, errorMessage, outputType);
     }
 
