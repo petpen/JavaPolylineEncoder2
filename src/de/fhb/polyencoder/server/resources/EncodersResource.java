@@ -54,8 +54,10 @@ public class EncodersResource {
   public String post(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @FormParam(POSTDATA) String data) {
     String result = "";
 
-    boolean isInputValid = EncodersController.isValidTyp(typ) & InputType.test(typ) != InputType.KMZ;
+    boolean isInputValid = EncodersController.isValidTyp(typ) && InputType.test(typ) != InputType.KMZ;
     boolean isOutputValid = EncodersController.isOutputValid(format);
+
+    OutputType outputType = isOutputValid ? OutputType.test(format) : OutputType.RAW;
 
     if (isInputValid && isOutputValid) {
 
@@ -64,9 +66,10 @@ public class EncodersResource {
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }
+    } else if (InputType.test(typ) == InputType.KMZ) {
+      result = GenerateErrorMessage.getAs(400, "KMZ isn't supported for this method.", outputType);
     } else {
       String errorMessage = EncodersController.getErrorMsg(isInputValid, isOutputValid);
-      OutputType outputType = isOutputValid ? OutputType.test(format) : OutputType.RAW;
       result = GenerateErrorMessage.getAs(400, errorMessage, outputType);
     }
 

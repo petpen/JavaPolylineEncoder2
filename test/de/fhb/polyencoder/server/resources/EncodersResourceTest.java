@@ -2,11 +2,15 @@ package de.fhb.polyencoder.server.resources;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+
 import javax.ws.rs.core.MediaType;
 
 import org.junit.*;
 
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.multipart.FormDataBodyPart;
+import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import com.sun.jersey.test.framework.spi.container.TestContainerFactory;
@@ -104,6 +108,18 @@ public class EncodersResourceTest extends JerseyTest {
 
 
   @Test
+  public void testGetWrongInputAndOutput() {
+    String responseMsg = webResource.path("xxx/raw").get(String.class);
+    assertEquals("Return wrong input", "400\n No inputformat specified or not supported.", responseMsg);
+    responseMsg = webResource.path("gpx/xxx").get(String.class);
+    assertEquals("Return wrong input", "400\n Wrong outputformat specified or not supported.", responseMsg);
+    responseMsg = webResource.path("xxx/xxx").get(String.class);
+    assertEquals("Return wrong input", "400\n No inputformat specified or not supported. Wrong outputformat specified or not supported.", responseMsg);
+  }
+
+
+
+  @Test
   public void testPostNoLinkNoCoords() {
     String responseMsg = webResource.path("gpx/raw").post(String.class);
     assertEquals("Return with empty link", "400\nNo data found.", responseMsg);
@@ -153,5 +169,74 @@ public class EncodersResourceTest extends JerseyTest {
     String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
     assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
     assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
+  }
+
+
+
+  @Test
+  public void testPostGpxXml() {
+    WebResource webRes = webResource.path("gpx/xml").queryParam("coords", DEFAULT_COORDS_GPX);
+    String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
+    assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
+    assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
+  }
+
+
+
+  @Test
+  public void testPostGpxRaw() {
+    WebResource webRes = webResource.path("gpx/raw").queryParam("coords", DEFAULT_COORDS_GPX);
+    String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
+    assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
+    assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
+  }
+
+
+
+  @Test
+  public void testPostKmzJson() {
+    WebResource webRes = webResource.path("kmz/json");
+    String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
+    assertTrue("Should include encoded points information", responseMsg.indexOf("KMZ isn't supported for this method.") >= 0);
+  }
+
+
+
+  @Test
+  public void testPostMultiNoFile() {
+    FormDataMultiPart form = new FormDataMultiPart();
+    form.bodyPart(new FormDataBodyPart("", ""));
+    WebResource webRes = webResource.path("gpx/raw");
+    String responseMsg = webRes.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(String.class, form);
+    assertEquals("Should 'no data found'", "400\nNo data found.", responseMsg);
+  }
+
+
+
+  @Test
+  public void testPostMultiWrongFile() {
+    FormDataMultiPart form = new FormDataMultiPart();
+    FormDataBodyPart fdp = new FormDataBodyPart("fileData", new ByteArrayInputStream("".getBytes()), MediaType.APPLICATION_OCTET_STREAM_TYPE);
+    form.bodyPart(fdp);
+    WebResource webRes = webResource.path("gpx/raw");
+    String responseMsg = webRes.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(String.class, form);
+    assertEquals("Should 'no tracks found'", "400\nNo tracks found.", responseMsg);
+  }
+
+
+
+  @Test
+  public void testPostMultiWrongInputAndOutput() {
+    FormDataMultiPart form = new FormDataMultiPart();
+    form.bodyPart(new FormDataBodyPart("", ""));
+    WebResource webRes = webResource.path("xxx/raw");
+    String responseMsg = webRes.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(String.class, form);
+    assertEquals("Should return error", "400\n No inputformat specified or not supported.", responseMsg);
+    webRes = webResource.path("gpx/xxx");
+    responseMsg = webRes.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(String.class, form);
+    assertEquals("Return wrong input", "400\n Wrong outputformat specified or not supported.", responseMsg);
+    webRes = webResource.path("xxx/xxx");
+    responseMsg = webRes.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(String.class, form);
+    assertEquals("Return wrong input", "400\n No inputformat specified or not supported. Wrong outputformat specified or not supported.", responseMsg);
   }
 }
