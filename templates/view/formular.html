@@ -1,26 +1,56 @@
 <!DOCTYPE html>
 <html>
-	<head></head>
+	<head>
+	<title>JavaPolylineEncoder</title>
+	<style type="text/css">
+	<!--
+	#container {
+		margin: 20px auto 0 auto;
+		width: 900px;
+	}
+	form {
+		display: block;
+		width: 300px;
+		height: 200px;
+		float: left;
+		overflow: hidden;
+	}
+	-->
+	</style>
+	</head>
 	<body>
+	<div id="container">
+		<h1>JavaPolylineEncoder</h1>
 		<form method="post" action="/encoder/gpx/html">
-			<p>GPX to google map(html)</p>
+			<h2>GPX to google map(html)</h2>
 			<textarea name="coords"></textarea ><br>
 			<input type="submit">
 		</form>
 		<form method="post" action="/encoder/gpx/json">
-			<p>GPX to JSON</p>
+			<h2>GPX to JSON</h2>
 			<textarea name="coords"></textarea ><br>
 			<input type="submit">
 		</form>
+		<form method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
+			<h2>GPX-Datei to google map(html)</h2>
+			<input name="fileData" type="file" size="20"><br>
+			<input type="submit">
+		</form>
 		<form method="post" action="/encoder/gpx/json"  enctype="multipart/form-data">
-			<p>GPX-Datei to JSON</p>
-			<input name="fileData" type="file" size="50"><br>
+			<h2>GPX-Datei to JSON</h2>
+			<input name="fileData" type="file" size="20"><br>
+			<input type="submit">
+		</form>
+		<form method="post" action="/encoder/kmz/html"  enctype="multipart/form-data">
+			<h2>KMZ-Datei to google map(html)</h2>
+			<input name="fileData" type="file" size="20"><br>
 			<input type="submit">
 		</form>
 		<form method="post" action="/encoder/kmz/json"  enctype="multipart/form-data">
-			<p>KMZ-Datei to JSON</p>
-			<input name="fileData" type="file" size="50"><br>
+			<h2>KMZ-Datei to JSON</h2>
+			<input name="fileData" type="file" size="20"><br>
 			<input type="submit">
 		</form>
+	</div>
 	</body>
 </html>
