@@ -91,7 +91,7 @@ public class EncodersResource {
       }
 
       if (!fileName.equals("")) {
-        result = EncodersController.encodeData(fileName, typ, format);
+        result = EncodersController.encodeFile(fileName, typ, format);
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }

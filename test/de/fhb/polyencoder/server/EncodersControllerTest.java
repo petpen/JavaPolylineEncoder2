@@ -74,12 +74,4 @@ public class EncodersControllerTest {
   public void testIsInvalidLink() {
     assertFalse("should be invalid link", EncodersController.isValidLink(""));
   }
-
-
-
-  @Test
-  public void testParseData() {
-    List<Track> trks = EncodersController.parseData(DEFAULT_COORDS_GPX, "gpx");
-    assertEquals("expect 3 track points", 3, trks.get(0).size());
-  }
 }

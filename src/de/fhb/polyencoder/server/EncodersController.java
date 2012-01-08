@@ -28,9 +28,24 @@ public class EncodersController {
 
 
 
+  public static String encodeFile(String path, String typ, String format) {
+    List<Track> tracks = parseFile(path, typ);
+
+    return encode(tracks, format);
+  }
+
+
+
   public static String encodeData(String data, String typ, String format) {
-    String result = "";
     List<Track> tracks = parseData(data, typ);
+
+    return encode(tracks, format);
+  }
+
+
+
+  private static String encode(List<Track> tracks, String format) {
+    String result = "";
 
     if (tracks.size() > 0) {
       PolylineEncoder polylineEncoder = new PolylineEncoder();
@@ -67,7 +82,22 @@ public class EncodersController {
 
 
 
-  public static List<Track> parseData(String coords, String typ) {
+  private static List<Track> parseFile(String path, String typ) {
+    StringToTrackParser trackParser;
+
+    trackParser = ParserFactory.buildParser(InputType.test(typ));
+    if (trackParser != null) {
+      trackParser.parseFile(path);
+    } else {
+      return new ArrayList<Track>();
+    }
+
+    return trackParser.getTracks();
+  }
+
+
+
+  private static List<Track> parseData(String coords, String typ) {
     StringToTrackParser trackParser;
 
     trackParser = ParserFactory.buildParser(InputType.test(typ));
