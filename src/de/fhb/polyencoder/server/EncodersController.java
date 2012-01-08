@@ -54,21 +54,21 @@ public class EncodersController {
       map.putAll(new GeographicBounds(tracks.get(0)).getCenter());
       map.put("pointCount", String.valueOf(tracks.get(0).size()));
       map.put("createdDate", String.valueOf(new Date().getTime()));
+      map.put("statusCode", "200");
+      map.put("statusMessage", "");
 
       switch (OutputType.test(format)) {
         case HTML:
           result = GenerateHtml.getHtml(map);
           break;
         case JSON:
-          map.put("statusCode", "200");
-          map.put("statusMessage", "");
           result = GenerateJson.getJson(map);
           break;
         case XML:
-          result = GenerateErrorMessage.getAs(200, "Output as XML.", OutputType.XML);
+          result = GenerateXml.getXml(map); 
           break;
         case RAW:
-          result = GenerateErrorMessage.getAs(200, "Output as Raw.", OutputType.RAW);
+          result = GenerateRaw.getRaw(map);
           break;
         default:
           result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
