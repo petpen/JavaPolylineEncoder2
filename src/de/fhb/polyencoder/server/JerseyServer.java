@@ -21,18 +21,18 @@ public class JerseyServer {
 
 
   public void startServer() throws IOException {
-    System.out.println("Starte Jersey...");
+    System.out.println("Run Jersey...");
     threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
     System.out.println("Run Server on: " + baseUri);
-    System.out.println("Jersey gestartet WADL erreichbar unter /application.wadl\n" + "Drücke Enter zum stoppen des Servers...");
+    System.out.println("Jersey started. WADL available under /application.wadl\n" + "Push 'Return' to terminate Server...");
   }
 
 
 
   public void stopServer() {
-    System.out.println("Stoppe Jersey...");
+    System.out.println("Terminate Jersey...");
     threadSelector.stopEndpoint();
-    System.out.println("Jersey gestoppt");
+    System.out.println("Jersey terminated");
   }
   
   
