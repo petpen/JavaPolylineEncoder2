@@ -18,15 +18,11 @@
 				map.setUIToDefault();
 				map.setMapType(G_NORMAL_MAP);
 
-				var encodedPolyline = new GPolyline.fromEncoded({
-					color: "#ff3333",
-					weight: 3,
-					points: "{encodedPoints}",
-					levels: "{encodedLevels}",
-					zoomFactor: 32,
-					numLevels: 4
-				});
-			map.addOverlay(encodedPolyline);
+				var encodedPolyline = new Array()
+				{tracks}
+				for(var i=0;i<encodedPolyline.length()) {
+					map.addOverlay(encodedPolyline[i])
+				}
 			}
 		}
 	</script>

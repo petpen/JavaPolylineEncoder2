@@ -65,7 +65,7 @@ public class EncodersController {
           result = GenerateJson.getJson(map);
           break;
         case XML:
-          result = GenerateXml.getXml(map); 
+          result = GenerateXml.getXml(map);
           break;
         case RAW:
           result = GenerateRaw.getRaw(map);

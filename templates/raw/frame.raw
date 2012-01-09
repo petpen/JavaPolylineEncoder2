@@ -6,6 +6,4 @@
 {minLat},{maxLat}
 {minLng}, {maxLng}
 {minAlt}, {maxAlt}
-{encodedPoints}
-{pointCount}
-{encodedLevels}
+{tracks}

@@ -1,0 +1,5 @@
+    {
+      "encoded": "{encodedPoints}",
+      "count": {pointCount},
+      "levels": "{encodedLevels}"
+    },

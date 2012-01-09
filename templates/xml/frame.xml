@@ -1,0 +1,11 @@
+<polylineencoder>
+  <status code="{statusCode}">{statusMessage}</status>
+{tracks}
+  <bounds>
+    <lat min="{minLat}" max="{maxLat}"/>
+    <lng min="{minLng}" max="{maxLng}"/>
+    <alt min="{minAlt}" max="{maxAlt}"/>
+  </bounds>
+  <center lat="{centerLat}" lng="{centerLng}"/>
+  <created timestamp="{createdDate}"/>
+</polylineencoder>

@@ -1,0 +1,4 @@
+  <points count="{pointCount}">
+    <encoded>{encodedPoints}</encoded>
+    <levels>{encodedLevels}</levels>
+  </points>
