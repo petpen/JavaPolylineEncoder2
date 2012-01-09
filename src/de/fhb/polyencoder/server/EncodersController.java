@@ -46,32 +46,25 @@ public class EncodersController {
 
   private static String encode(List<Track> tracks, String format) {
     String result = "";
+    HashMap<String, String> map;
 
     if (tracks.size() > 0) {
       PolylineEncoder polylineEncoder = new PolylineEncoder();
-      HashMap<String, String> map = polylineEncoder.dpEncode(tracks.get(0));
-      map.putAll(new GeographicBounds(tracks.get(0)).getMinMaxBounds());
+      map = new GeographicBounds(tracks.get(0)).getMinMaxBounds();
       map.putAll(new GeographicBounds(tracks.get(0)).getCenter());
       map.put("pointCount", String.valueOf(tracks.get(0).size()));
       map.put("createdDate", String.valueOf(new Date().getTime()));
       map.put("statusCode", "200");
       map.put("statusMessage", "");
 
-      switch (OutputType.test(format)) {
-        case HTML:
-          result = GenerateHtml.getHtml(map);
-          break;
-        case JSON:
-          result = GenerateJson.getJson(map);
-          break;
-        case XML:
-          result = GenerateXml.getXml(map);
-          break;
-        case RAW:
-          result = GenerateRaw.getRaw(map);
-          break;
-        default:
-          result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
+      ViewGenerator vg = ViewFactory.buildViewGenerator(map, OutputType.test(format));
+      if (vg != null) {
+        for (int i=0;i<tracks.size();i++) {
+          vg.addTrack(polylineEncoder.dpEncode(tracks.get(i)));
+        }
+        result = vg.getView();
+      } else {
+        result = GenerateErrorMessage.getAs(400, "Outputformat not supported.");
       }
     } else {
       result = GenerateErrorMessage.getAs(400, "No tracks found.");
