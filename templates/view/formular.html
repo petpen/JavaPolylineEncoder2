@@ -22,13 +22,13 @@
 		}
 		
 		#main {
-			width: 750px;
-			margin: 1em auto;
+			width: 450px;
+			margin: 0 auto;
 		}
 		
 		h1 {
 			text-align: center;
-			font-size: 2.5em;
+			font-size: 1.2em;
 		}
 		
 		h2 {
@@ -40,17 +40,10 @@
 		}
 		
 		form {
-			border-bottom: 0.1em dotted #ccc;
 			clear: both;
 			font-size: 0.8em;
-			margin: 0 0 3em;
-			padding: 1em 1em 3em;
-		}
-		
-		form:last-child {
-			border-bottom: none;
-			margin: 0 0 0;
-			padding: 1em 1em 1em;
+			margin: 0;
+			padding: 0.3em 1em;
 		}
 		
 		label {
@@ -96,33 +89,36 @@
 		
 
 		.format_selector {
+			border: 0.1em solid #ccc;
+			border-top: none;
 			background-color: #ffa;
-			border-bottom: 0.1em solid #ccc;
-			margin: 0 0 1em;
+			font-size: 0.9em;
+			margin: 0 0 0.5em;
 			padding: 0.5em;
 		}
 		
 		.format_selector label {
 			display: inline;
+			font-size: 0.9em;
 			padding-right: 0.5em;
 		}
 		
 		.format_selector select {
+			font-size: 0.9em;
 			width: 6em;
 		}
 		
 		.format_selector p {
-			font-size: 1.1em;
 			margin: 0 0 1em;
 			text-align: center;
 		}
 
 		.format_selector .format_left_side {
-			padding-left: 12em;
+			padding-left: 4em;
 		}
 
 		.format_selector .format_right_side {
-			padding-left: 1em;
+			padding-left: 2em;
 		}
 		
 		.col {
@@ -172,9 +168,6 @@
 			}
 
 			function updateForm(formID, inputType, outputType) {
-				var titleField = $(formID).getElementsByTagName("h2")[0];
-				titleField.innerHTML = inputType + ' to ' + outputType;
-				
 				var link = baseUrl.replace("{input}",inputType.toLowerCase());
 					link = link.replace("{output}",outputType.toLowerCase());
 				
@@ -199,8 +192,6 @@
 	</head>
 	<body onload="initTypes(); updateForms();">
 		<div id="main">
-			<h1>Java Polyline Encoder</h1>
-			
 			<div class="format_selector">
 				<p>Please choose a format to import from and export to.</p>
 
@@ -224,21 +215,18 @@
 			</div>
 
 			<form id="form_link" method="get" action="/encoder/gpx/html">
-				<h2>GPX to HTML (Maps)</h2>
 				<label for="link">Link</label>
 				<input id="link" class="text" type="text" name="link"/>
 				<input class="button" type="submit" value="Submit"/>
 			</form>
 			
 			<form id="form_file"  method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
-				<h2>GPX to HTML (Maps)</h2>
 				<label for="file">File</label>
 				<input id="file" name="fileData" type="file" size="20"/>
 				<input class="button" type="submit" value="Submit"/>
 			</form>
 			
 			<form id="form_data" method="post" action="/encoder/gpx/html">
-				<h2>GPX to HTML (Maps)</h2>
 				<label for="data">Data</label>
 				<textarea id="data" name="coords"></textarea>
 				<input class="button" type="submit" value="Submit"/>
