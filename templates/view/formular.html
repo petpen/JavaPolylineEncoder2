@@ -1,69 +1,124 @@
-<!DOCTYPE html>
-<html>
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
-	<title>JavaPolylineEncoder</title>
-	<style type="text/css">
-	<!--
-	#container {
-		margin: 20px auto 0 auto;
-		width: 900px;
-	}
-	form {
-		display: block;
-		width: 300px;
-		height: 200px;
-		float: left;
-		overflow: hidden;
-	}
-	-->
-	</style>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+		<title>JavaPolylineEncoder</title>
+
+		<style type="text/css">
+		<!--
+		* {
+			font-size: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		
+		body {
+			background-color: #f1f1f1;
+			color: #333;
+			font-family: Verdana;
+			width: 100%;
+		}
+		
+		#main {
+			width: 750px;
+			margin: 1em auto;
+		}
+		
+		h1 {
+			font-size: 2.5em;
+		}
+		
+		h2 {
+			font-size: 1.1em;
+		}
+		
+		h1, h2 {
+			margin: 0 0 0.5em;
+		}
+
+		.hint {
+			background-color: #DDD;
+			border-bottom: 0.1em solid #CCC;
+			font-size: 1.1em;
+			margin: 0 0 0.5em;
+			padding: 0.1em 0.5em;
+		}
+		
+		form {
+			font-size: 0.8em;
+			margin: 0 1em 1em 0;
+			padding: 1em;
+		}
+		
+		label {
+			cursor: pointer;
+			display: block;
+		}
+		
+		input {
+			border: 0.1em solid #ccc;
+			display: block;
+		}
+		
+		input.text {
+			width: 100%;
+			padding: 0.5em;
+		}
+		
+		textarea {
+			border: 0.1em solid #ccc;
+			height: 15em;
+			padding: 0.5em;
+			width: 100%;
+		}
+		
+		input.button {
+			float: right;
+			margin: 0.5em 0 0;
+			padding: 0.2em 0.3em;
+		}
+		
+		input.button:hover {
+			background-color: #999;
+			color: #fff;
+			cursor: pointer;
+		}
+		
+		.format {
+			clear: both;
+		}
+		-->
+		</style>
 	</head>
 	<body>
-	<div id="container">
-		<h1>JavaPolylineEncoder</h1>
-		<form method="get" action="/encoder/gpx/html">
-			<h2>GPX to google map(html)</h2>
-			Link: <input type="text" name="link"><br>
-			<input type="submit">
-		</form>
-		<form method="get" action="/encoder/gpx/json">
-			<h2>GPX to JSON</h2>
-			Link: <input type="text" name="link"><br>
-			<input type="submit">
-		</form>
-
-		<form method="post" action="/encoder/gpx/html">
-			<h2>GPX to google map(html)</h2>
-			<textarea name="coords"></textarea ><br>
-			<input type="submit">
-		</form>
-		<form method="post" action="/encoder/gpx/json">
-			<h2>GPX to JSON</h2>
-			<textarea name="coords"></textarea ><br>
-			<input type="submit">
-		</form>
-
-		<form method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
-			<h2>GPX-Datei to google map(html)</h2>
-			<input name="fileData" type="file" size="20"><br>
-			<input type="submit">
-		</form>
-		<form method="post" action="/encoder/gpx/json"  enctype="multipart/form-data">
-			<h2>GPX-Datei to JSON</h2>
-			<input name="fileData" type="file" size="20"><br>
-			<input type="submit">
-		</form>
-
-		<form method="post" action="/encoder/kmz/html"  enctype="multipart/form-data">
-			<h2>KMZ-Datei to google map(html)</h2>
-			<input name="fileData" type="file" size="20"><br>
-			<input type="submit">
-		</form>
-		<form method="post" action="/encoder/kmz/json"  enctype="multipart/form-data">
-			<h2>KMZ-Datei to JSON</h2>
-			<input name="fileData" type="file" size="20"><br>
-			<input type="submit">
-		</form>
-	</div>
+		<div id="main">
+			<h1>JavaPolylineEncoder</h1>
+			
+			<div class="format">
+				<div class="hint">Please choose a format to import and export from.</div>
+				<form method="get" action="/encoder/gpx/html">
+					<h2>GPX to HTML (Maps)</h2>
+					<label>Link</label>
+					<input class="text" type="text" name="link"/>
+					<input class="button" type="submit" value="Submit"/>
+				</form>
+				
+				<form method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
+					<h2>GPX to HTML (Maps)</h2>
+					<label>File</label>
+					<input name="fileData" type="file" size="20"/>
+					<input class="button" type="submit" value="Submit"/>
+				</form>
+				
+				<form method="post" action="/encoder/gpx/html">
+					<h2>GPX to HTML (Maps)</h2>
+					<label>Data</label>
+					<textarea name="coords"></textarea>
+					<input class="button" type="submit" value="Submit"/>
+				</form>
+			</div>
+		</div>
 	</body>
 </html>
