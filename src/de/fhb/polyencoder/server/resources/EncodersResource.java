@@ -1,5 +1,7 @@
 package de.fhb.polyencoder.server.resources;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
 
@@ -13,6 +15,7 @@ import de.fhb.polyencoder.server.EncodersController;
 import de.fhb.polyencoder.server.InputType;
 import de.fhb.polyencoder.server.OutputType;
 import de.fhb.polyencoder.server.view.GenerateErrorMessage;
+import de.n00b.downloader.Downloader;
 
 @Path("/encoder/{" + EncodersResource.INPUT + "}/{" + EncodersResource.OUTPUT + "}")
 public class EncodersResource {
@@ -27,6 +30,7 @@ public class EncodersResource {
   @GET
   public String get(@PathParam(INPUT) String typ, @PathParam(OUTPUT) String format, @QueryParam(LINK) String link) {
     String result = "";
+    String errorMsg = "";
 
     boolean isInputValid = EncodersController.isValidTyp(typ);
     boolean isOutputValid = EncodersController.isOutputValid(format);
@@ -35,9 +39,31 @@ public class EncodersResource {
       if (!EncodersController.isValidLink(link)) {
         result = GenerateErrorMessage.getAs(400, "Invalid link.", OutputType.test(format));
       } else {
-        // TODO load data from link, need interface to stub download
-        String data = "";
-        result = EncodersController.encodeData(data, typ, format);
+        String fileName = String.format("%s/%s.%s", "temp", (new Date()).getTime(), typ.toLowerCase());
+        FileOutputStream fos;
+        try {
+          fos = new FileOutputStream(fileName);
+          try {
+            Downloader.downloadFile(link, fos);
+            System.out.println("geladen");
+          } catch (IllegalStateException e) {
+            errorMsg = "No file found.";
+          }
+          fos.close();
+          System.out.println("closed");
+        } catch (IOException e) {
+          fileName = "";
+          errorMsg = "Internal error can't write file.";
+        }
+        if (errorMsg.equals("")) {
+          System.out.println("encodeFile");
+          result = EncodersController.encodeFile(fileName, typ, format);
+        } else {
+          result = GenerateErrorMessage.getAs(400, errorMsg);
+        }
+        if (!fileName.equals("")) {
+          Util.deleteFile(fileName);
+        }
       }
     } else {
       String errorMessage = EncodersController.getErrorMsg(isInputValid, isOutputValid);

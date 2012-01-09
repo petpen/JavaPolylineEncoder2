@@ -21,7 +21,7 @@ import de.fhb.polyencoder.Util;
 public class EncodersResourceTest extends JerseyTest {
 
   public static final String PACKAGE_NAME = "de.fhb.polyencoder.server.resources";
-  private static final String DEFAULT_VALID_LINK = "http://www.google.de/robots.txt";
+  private static final String DEFAULT_VALID_LINK = "https://raw.github.com/petpen/JavaPolylineEncoder2/master/testfiles/gpx/threeWaypoints_GPX_1.0.gpx";
   private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/gpx/threeWaypoints_GPX_1.0.gpx");
   private static final String DEFAULT_COORDS_GPX_ENCODED_POINTS = "_qo]_qo]}oR~ugCaaf@~bmA";
   private static final String DEFAULT_COORDS_GPX_ENCODED_LEVELS = "PLP";
@@ -43,13 +43,15 @@ public class EncodersResourceTest extends JerseyTest {
 
 
 
-  // @Test
-  // public void testGetGpxValidLink() {
-  // WebResource webRes = webResource.path("gpx/bar").queryParam("link",
-  // DEFAULT_VALID_LINK);
-  // String responseMsg = webRes.get(String.class);
-  // assertEquals("Should return <p>Invalid link.</p>", responseMsg);
-  // }
+  @Test
+  public void testGetGpxValidLink() {
+    WebResource webRes = webResource.path("gpx/raw").queryParam("link", DEFAULT_VALID_LINK);
+    String responseMsg = webRes.get(String.class);
+    assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
+    assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
+  }
+
+
 
   @Test
   public void testGetGpxWithOutLink() {
