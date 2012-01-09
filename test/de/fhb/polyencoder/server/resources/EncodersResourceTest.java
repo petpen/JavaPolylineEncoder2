@@ -22,6 +22,7 @@ public class EncodersResourceTest extends JerseyTest {
 
   public static final String PACKAGE_NAME = "de.fhb.polyencoder.server.resources";
   private static final String DEFAULT_VALID_LINK = "https://raw.github.com/petpen/JavaPolylineEncoder2/master/testfiles/gpx/threeWaypoints_GPX_1.0.gpx";
+  private static final String DEFAULT_VALID_404LINK = "https://raw.github.com/petpen/JavaPolylineEncoder2/master/testfiles/gpx/threeWaypoints_GP_1.0.gpx";
   private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/gpx/threeWaypoints_GPX_1.0.gpx");
   private static final String DEFAULT_COORDS_GPX_ENCODED_POINTS = "_qo]_qo]}oR~ugCaaf@~bmA";
   private static final String DEFAULT_COORDS_GPX_ENCODED_LEVELS = "PLP";
@@ -49,6 +50,15 @@ public class EncodersResourceTest extends JerseyTest {
     String responseMsg = webRes.get(String.class);
     assertTrue("Should include encoded points information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_POINTS) >= 0);
     assertTrue("Should include encoded levels information", responseMsg.indexOf(DEFAULT_COORDS_GPX_ENCODED_LEVELS) >= 0);
+  }
+
+
+
+  @Test
+  public void testGetGpxValid404Link() {
+    WebResource webRes = webResource.path("gpx/raw").queryParam("link", DEFAULT_VALID_404LINK);
+    String responseMsg = webRes.get(String.class);
+    assertEquals("Should return 'No file found'", "400\nNo file found.", responseMsg);
   }
 
 
