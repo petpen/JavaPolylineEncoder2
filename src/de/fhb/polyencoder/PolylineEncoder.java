@@ -247,50 +247,6 @@ public class PolylineEncoder {
 
 
 
-  public static HashMap<String, String> createEncodings(ArrayList<GeographicLocation> points, int level, int step) {
-    StringBuffer encodedPoints = new StringBuffer();
-    StringBuffer encodedLevels = new StringBuffer();
-  
-    int counter = 0;
-  
-    int listSize = points.size();
-  
-    int plat = 0, plng = 0;
-    int late5, lnge5, dlat, dlng;
-  
-    for (int i = 0; i < listSize; i += step) {
-      try {
-        late5 = GeographicCoordinate.toInt(points.get(i).lat(), GeographicCoordinate.LATITUDE);
-        lnge5 = GeographicCoordinate.toInt(points.get(i).lng(), GeographicCoordinate.LONGITUDE);
-
-        dlat = late5 - plat;
-        dlng = lnge5 - plng;
-
-        encodedPoints.append(encodeSignedNumber(dlat));
-        encodedPoints.append(encodeSignedNumber(dlng));
-        encodedLevels.append(encodeNumber(level));
-
-        plat = late5;
-        plng = lnge5;
-
-        counter++;
-      } catch (CoordinateOutOfRangeException e) {
-        System.out.println(e.getMessage());
-      }
-    }
-  
-    System.out.println("listSize: " + listSize + " step: " + step + " counter: " + counter);
-  
-    HashMap<String, String> resultMap = new HashMap<String, String>();
-    resultMap.put("encodedPoints", encodedPoints.toString());
-    resultMap.put("encodedPointsLiteral", encodeBackslash(encodedPoints.toString()));
-    resultMap.put("encodedLevels", encodedLevels.toString());
-  
-    return resultMap;
-  }
-
-
-
   public static String createEncodings(ArrayList<GeographicLocation> points, double[] dists) {
     StringBuffer encodedPoints = new StringBuffer();
   
