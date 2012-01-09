@@ -59,7 +59,7 @@ public class EncodersController {
 
       ViewGenerator vg = ViewFactory.buildViewGenerator(map, OutputType.test(format));
       if (vg != null) {
-        for (int i=0;i<tracks.size();i++) {
+        for (int i = 0; i < tracks.size(); i++) {
           vg.addTrack(polylineEncoder.dpEncode(tracks.get(i)));
         }
         result = vg.getView();
