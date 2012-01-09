@@ -23,6 +23,7 @@ public class JerseyServer {
   public void startServer() throws IOException {
     System.out.println("Starte Jersey...");
     threadSelector = GrizzlyWebContainerFactory.create(baseUri, initParams);
+    System.out.println("Run Server on: " + baseUri);
     System.out.println("Jersey gestartet WADL erreichbar unter /application.wadl\n" + "Drücke Enter zum stoppen des Servers...");
   }
 
