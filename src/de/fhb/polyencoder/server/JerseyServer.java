@@ -34,4 +34,9 @@ public class JerseyServer {
     threadSelector.stopEndpoint();
     System.out.println("Jersey gestoppt");
   }
+  
+  
+  public boolean isRunnig() {
+    return threadSelector.isRunning();
+  }
 }
