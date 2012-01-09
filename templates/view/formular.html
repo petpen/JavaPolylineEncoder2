@@ -27,6 +27,7 @@
 		}
 		
 		h1 {
+			text-align: center;
 			font-size: 2.5em;
 		}
 		
@@ -37,24 +38,25 @@
 		h1, h2 {
 			margin: 0 0 0.5em;
 		}
-
-		.hint {
-			background-color: #DDD;
-			border-bottom: 0.1em solid #CCC;
-			font-size: 1.1em;
-			margin: 0 0 0.5em;
-			padding: 0.1em 0.5em;
-		}
 		
 		form {
+			border-bottom: 0.1em dotted #ccc;
+			clear: both;
 			font-size: 0.8em;
-			margin: 0 1em 1em 0;
-			padding: 1em;
+			margin: 0 0 3em;
+			padding: 1em 1em 3em;
+		}
+		
+		form:last-child {
+			border-bottom: none;
+			margin: 0 0 0;
+			padding: 1em 1em 1em;
 		}
 		
 		label {
 			cursor: pointer;
 			display: block;
+			padding: 0.3em 0.1em;
 		}
 		
 		input {
@@ -69,15 +71,21 @@
 		
 		textarea {
 			border: 0.1em solid #ccc;
+			font-size: 0.9em;
+			line-height: 1.5em;
 			height: 15em;
 			padding: 0.5em;
 			width: 100%;
 		}
 		
+		select {
+			cursor: pointer;
+		}
+		
 		input.button {
-			float: right;
-			margin: 0.5em 0 0;
-			padding: 0.2em 0.3em;
+			background-color: #fff;
+			margin: 1em 0 0;
+			padding: 0.2em 1em;
 		}
 		
 		input.button:hover {
@@ -86,7 +94,39 @@
 			cursor: pointer;
 		}
 		
-		.format {
+
+		.format_selector {
+			background-color: #ffa;
+			border-bottom: 0.1em solid #ccc;
+			margin: 0 0 1em;
+			padding: 0.5em;
+		}
+		
+		.format_selector label {
+			display: inline;
+			padding-right: 0.5em;
+		}
+		
+		.format_selector p {
+			font-size: 1.1em;
+			margin: 0 0 1em;
+			text-align: center;
+		}
+
+		.format_selector .format_left_side {
+			padding-left: 15em;
+		}
+
+		.format_selector .format_right_side {
+			padding-left: 3em;
+		}
+		
+		.col {
+			width: 50%;
+			float: left;
+		}
+		
+		.clear {
 			clear: both;
 		}
 		-->
@@ -94,31 +134,51 @@
 	</head>
 	<body>
 		<div id="main">
-			<h1>JavaPolylineEncoder</h1>
+			<h1>Java Polyline Encoder</h1>
 			
-			<div class="format">
-				<div class="hint">Please choose a format to import and export from.</div>
-				<form method="get" action="/encoder/gpx/html">
-					<h2>GPX to HTML (Maps)</h2>
-					<label>Link</label>
-					<input class="text" type="text" name="link"/>
-					<input class="button" type="submit" value="Submit"/>
-				</form>
-				
-				<form method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
-					<h2>GPX to HTML (Maps)</h2>
-					<label>File</label>
-					<input name="fileData" type="file" size="20"/>
-					<input class="button" type="submit" value="Submit"/>
-				</form>
-				
-				<form method="post" action="/encoder/gpx/html">
-					<h2>GPX to HTML (Maps)</h2>
-					<label>Data</label>
-					<textarea name="coords"></textarea>
-					<input class="button" type="submit" value="Submit"/>
-				</form>
+			<div class="format_selector">
+				<p>Please choose a format to import from and export to.</p>
+
+				<div>
+					<div class="col">
+						<div class="format_left_side">
+							<label for="format_in">From</label>
+							<select id="format_in" name="format_in" size="1">
+							</select>
+						</div>
+					</div>
+					<div class="col">
+						<div class="format_right_side">
+							<label for="format_out">To</label>
+							<select id="format_out" name="format_out" size="1">
+							</select>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
 			</div>
+
+
+			<form method="get" action="/encoder/gpx/html">
+				<h2>GPX to HTML (Maps)</h2>
+				<label for="link">Link</label>
+				<input id="link" class="text" type="text" name="link"/>
+				<input class="button" type="submit" value="Submit"/>
+			</form>
+			
+			<form method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
+				<h2>GPX to HTML (Maps)</h2>
+				<label for="file">File</label>
+				<input id="file" name="fileData" type="file" size="20"/>
+				<input class="button" type="submit" value="Submit"/>
+			</form>
+			
+			<form method="post" action="/encoder/gpx/html">
+				<h2>GPX to HTML (Maps)</h2>
+				<label for="data">Data</label>
+				<textarea id="data" name="coords"></textarea>
+				<input class="button" type="submit" value="Submit"/>
+			</form>
 		</div>
 	</body>
 </html>
