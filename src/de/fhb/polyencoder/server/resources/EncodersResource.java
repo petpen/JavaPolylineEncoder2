@@ -95,6 +95,7 @@ public class EncodersResource {
 
       if (!fileName.equals("")) {
         result = EncodersController.encodeFile(fileName, typ, format);
+        Util.deleteFile(fileName);
       } else {
         result = GenerateErrorMessage.getAs(400, "No data found.");
       }
