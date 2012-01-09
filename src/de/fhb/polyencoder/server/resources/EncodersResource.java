@@ -45,18 +45,15 @@ public class EncodersResource {
           fos = new FileOutputStream(fileName);
           try {
             Downloader.downloadFile(link, fos);
-            System.out.println("geladen");
           } catch (IllegalStateException e) {
             errorMsg = "No file found.";
           }
           fos.close();
-          System.out.println("closed");
         } catch (IOException e) {
           fileName = "";
           errorMsg = "Internal error can't write file.";
         }
         if (errorMsg.equals("")) {
-          System.out.println("encodeFile");
           result = EncodersController.encodeFile(fileName, typ, format);
         } else {
           result = GenerateErrorMessage.getAs(400, errorMsg);
