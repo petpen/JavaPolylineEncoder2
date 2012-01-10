@@ -76,7 +76,6 @@ public class EncodersController {
       PolylineEncoder polylineEncoder = new PolylineEncoder();
       map = new GeographicBounds(tracks.get(0)).getMinMaxBounds();
       map.putAll(new GeographicBounds(tracks.get(0)).getCenter());
-      map.put("pointCount", String.valueOf(tracks.get(0).size()));
       map.put("createdDate", String.valueOf(new Date().getTime()));
       map.put("statusCode", "200");
       map.put("statusMessage", "");
@@ -84,7 +83,10 @@ public class EncodersController {
       ViewGenerator vg = ViewFactory.buildViewGenerator(map, format);
       if (vg != null) {
         for (int i = 0; i < tracks.size(); i++) {
-          vg.addTrack(polylineEncoder.dpEncode(tracks.get(i)));
+          map.clear();
+          map.put("pointCount", String.valueOf(tracks.get(i).size()));
+          map.putAll(polylineEncoder.dpEncode(tracks.get(i)));
+          vg.addTrack(map);
         }
         result = vg.getView();
       } else {
