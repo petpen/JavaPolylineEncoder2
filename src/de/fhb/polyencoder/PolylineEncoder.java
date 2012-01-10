@@ -332,7 +332,7 @@ public class PolylineEncoder {
    * @see <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html">Potential encoding pitfalls</a>
    */
   public static String encodeBackslash(String s) {
-    return s.replaceAll("\\\\", "\\\\\\\\");
+    return s.replace("\\", "\\\\");
   }
 
 
