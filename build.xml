@@ -30,13 +30,13 @@
 		<delete dir="${inst.dir}" />
 		<delete dir="${cob.rep}" />
 	</target>
-	
+
 	<target name="clean_after" description="Remove files that have been created while testing and are unnecessary">
 		<delete dir="${temp.dir}">
 			<exclude name="README.md"/>
 		</delete>
 	</target>
-	
+
 	<target name="init" description="Prepare needed directories">
 		<mkdir dir="${classes.dir}" />
 		<mkdir dir="${classes.dir}" />
@@ -48,7 +48,7 @@
 		<mkdir dir="${cob.rep.html}" />
 		<mkdir dir="${cob.rep.xml}" />
 	</target>
-	
+
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
 			<classpath refid="junit.classpath" />
@@ -57,16 +57,22 @@
 			<classpath refid="junit.classpath" />
 		</javac>
 	</target>
-	
+
+	<target name="compileonly" depends="init">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
+			<classpath refid="junit.classpath" />
+		</javac>
+	</target>
+
 	<target name="test" depends="compile">
 		 <junit>
 		 	<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobdata}" />
 		 	<classpath location="${inst.dir}" />
 		 	<classpath location="${classes.dir}" />
 			<classpath refid="junit.classpath" />
-		 	
+
 		 	<formatter type="brief" usefile="false" />
-			
+
 		 	<formatter type="xml" />
 		 	<batchtest fork="yes" todir="${reports.xml.dir}">
 				<fileset dir="${test.dir}">
@@ -81,7 +87,7 @@
 			<report format="frames" todir="${reports.html.dir}" />
 		</junitreport>
 	</target>
-	
+
 	<taskdef classpathref="junit.classpath" resource="tasks.properties" />
 	
 	<target name="cob-instr" depends="compile">
@@ -98,24 +104,24 @@
 		<cobertura-report format="html" datafile="${cobdata}" destdir="${cob.rep.html}" srcdir="${src.dir}" />
 		<cobertura-report format="xml" datafile="${cobdata}" destdir="${cob.rep.xml}" srcdir="${src.dir}" />
 	</target>
-	
+
 	<target name="check" depends="clean, cob-rep, clean_after" description="Clean and create cobertura reports">
 	</target>
-	
-	<target name="jar" description="Build the distribution .jar file" depends="compile">
+
+	<target name="jar" description="Build the distribution .jar file" depends="compileonly">
 		<copy todir="${target.dir}">
 			<fileset dir="${classes.dir}">
 				<include name="*/**" />
 				<exclude name="*/*.md" />
 			</fileset>
 		</copy>
-		
+
 		<copy todir="${build.dir}/libs">
 			<fileset dir="${lib.dir}/main">
 				<include name="*" />
 			</fileset>
 		</copy>
-		
+
 		<mkdir dir="${build.dir}/temp" />
 		<copy todir="${build.dir}/templates">
 			<fileset dir="templates">
@@ -131,7 +137,7 @@
 				<attribute name="Class-Path" value=". libs/asm-3.0.jar libs/asm-tree-3.0.jar libs/commons-codec-1.5.jar libs/downloader-1.0.jar libs/grizzly-framework-1.9.36.jar libs/grizzly-http-1.9.36.jar libs/grizzly-http-servlet-1.9.36.jar libs/grizzly-portunif-1.9.36.jar libs/grizzly-rcm-1.9.36.jar libs/grizzly-servlet-webserver-1.9.36.jar libs/grizzly-utils-1.9.36.jar libs/jakarta-oro-2.0.8.jar libs/jaxb-2.1.9.jar libs/jersey-bundle-1.9.1.jar libs/jersey-multipart-1.9.1.jar libs/jsr311-api-1.1.1.jar libs/log4j-1.2.9.jar libs/mimepull-1.8.jar"/>
 			</manifest>
 		</jar>
-		
+
 		<delete dir="${target.dir}"/>
 	</target>
 </project>
