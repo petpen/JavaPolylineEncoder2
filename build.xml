@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Java Polyline Encoder Server" default="check" basedir=".">
-    <description>Java Polyline Encoder Server can encode different input formats to different output formats</description>
-	
+	<description>Java Polyline Encoder Server can encode different input formats to different output formats</description>
+
 	<property file="build.properties" />
-	
-	<path id="junit.classpath">
+
+	<path id="classpath">
 		<fileset dir="${lib.dir}">
 			<include name="main/*.jar" />
 			<include name="unittests/*.jar" />
 		</fileset>
 	</path>
-	
+
 	<target name="clean" description="Remove all files created by the build/test process.">
 		<delete dir="${classes.dir}">
 			<exclude name="README.md"/>
@@ -51,16 +51,16 @@
 
 	<target name="compile" depends="init">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
-			<classpath refid="junit.classpath" />
+			<classpath refid="classpath" />
 		</javac>
 		<javac srcdir="${test.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
-			<classpath refid="junit.classpath" />
+			<classpath refid="classpath" />
 		</javac>
 	</target>
 
 	<target name="compileonly" depends="init">
 		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
-			<classpath refid="junit.classpath" />
+			<classpath refid="classpath" />
 		</javac>
 	</target>
 
@@ -69,7 +69,7 @@
 		 	<sysproperty key="net.sourceforge.cobertura.datafile" file="${cobdata}" />
 		 	<classpath location="${inst.dir}" />
 		 	<classpath location="${classes.dir}" />
-			<classpath refid="junit.classpath" />
+			<classpath refid="classpath" />
 
 		 	<formatter type="brief" usefile="false" />
 
@@ -88,8 +88,8 @@
 		</junitreport>
 	</target>
 
-	<taskdef classpathref="junit.classpath" resource="tasks.properties" />
-	
+	<taskdef classpathref="classpath" resource="tasks.properties" />
+
 	<target name="cob-instr" depends="compile">
 		<cobertura-instrument todir="${inst.dir}" datafile="${cobdata}">
 		    <fileset dir="${classes.dir}">
@@ -129,12 +129,26 @@
 			</fileset>
 		</copy>
 
+		<pathconvert property="libs" pathsep=" ">
+			<mapper>
+				<chainedmapper>
+				<flattenmapper />
+				<globmapper from="*" to="lib/*" />
+				</chainedmapper>
+			</mapper>
+			<path>
+				<fileset dir="${lib.dir}">
+					<include name="main/*.jar" />
+				</fileset>
+			</path>
+		</pathconvert>
+
 		<jar destfile="${build.dir}/PolylineEncoderServer.jar">
 			<fileset dir="${target.dir}"/>
 			<manifest>
 				<attribute name="Manifest-Version" value="1.0" />
 				<attribute name="Main-Class" value="de.fhb.polyencoder.JavaPolylineEncoder2"/>
-				<attribute name="Class-Path" value=". libs/asm-3.0.jar libs/asm-tree-3.0.jar libs/commons-codec-1.5.jar libs/downloader-1.0.jar libs/grizzly-framework-1.9.36.jar libs/grizzly-http-1.9.36.jar libs/grizzly-http-servlet-1.9.36.jar libs/grizzly-portunif-1.9.36.jar libs/grizzly-rcm-1.9.36.jar libs/grizzly-servlet-webserver-1.9.36.jar libs/grizzly-utils-1.9.36.jar libs/jakarta-oro-2.0.8.jar libs/jaxb-2.1.9.jar libs/jersey-bundle-1.9.1.jar libs/jersey-multipart-1.9.1.jar libs/jsr311-api-1.1.1.jar libs/log4j-1.2.9.jar libs/mimepull-1.8.jar"/>
+				<attribute name="Class-Path" value=". ${libs}"/>
 			</manifest>
 		</jar>
 
