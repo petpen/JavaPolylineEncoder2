@@ -48,6 +48,9 @@ The default port will be 9998
 
     java -jar PolylineEncoderServer.jar
 
+You can test the Java Polyline Encoder right away in your browser with a dynamic formular (requires activated JavaScript).
+
+    http://localhost:9998/
 
 Testing
 ===
@@ -91,6 +94,17 @@ Output
 - [JSON](http://www.json.org/)
 - XML
 - RAW
+
+### Input Format Description
+
+#### RAW
+
+A line represents a single track. A sequence of point must be defined in the following form:
+
+    latitude_1,longitude_1,altitude_1;...;latitude_n,longitude_n,altitude_n
+
+If the altitude is missing it will be replaced with `0.0`
+
 
 ### Output Format Description 
 
