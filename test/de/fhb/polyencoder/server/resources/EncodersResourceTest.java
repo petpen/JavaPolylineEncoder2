@@ -18,6 +18,10 @@ import com.sun.jersey.test.framework.spi.container.grizzly.web.GrizzlyWebTestCon
 
 import de.fhb.polyencoder.Util;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class EncodersResourceTest extends JerseyTest {
 
   public static final String PACKAGE_NAME = "de.fhb.polyencoder.server.resources";

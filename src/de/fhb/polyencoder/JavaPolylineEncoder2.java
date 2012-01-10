@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import de.fhb.polyencoder.server.JerseyServer;
 
+/**
+ * @author Martin Bormeister
+ * @author Peter Pensold
+ * 
+ */
 public class JavaPolylineEncoder2 {
 
   /**

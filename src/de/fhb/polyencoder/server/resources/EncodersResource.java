@@ -11,6 +11,10 @@ import de.fhb.polyencoder.server.EncodersController;
 import de.fhb.polyencoder.server.InputType;
 import de.fhb.polyencoder.server.OutputType;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 @Path("/encoder/{" + EncodersResource.INPUT + "}/{" + EncodersResource.OUTPUT + "}")
 public class EncodersResource {
   protected static final String INPUT = "typ";
@@ -30,13 +34,13 @@ public class EncodersResource {
 
     boolean isAcceptedInput = EncodersController.isAcceptedInput(in);
     boolean isAcceptedOutput = EncodersController.isAcceptedOutput(out);
-    
+
     if (isAcceptedInput && isAcceptedOutput) {
       result = EncodersController.encodeFromLink(in, out, link);
     } else {
       result = EncodersController.createErrorMessage(isAcceptedInput, isAcceptedOutput, out);
     }
-    
+
     return result;
   }
 
@@ -50,7 +54,7 @@ public class EncodersResource {
     OutputType out = OutputType.test(format);
     InputType in = InputType.test(typ);
 
-    boolean isAcceptedInput = EncodersController.isAcceptedInput(in, new InputType[] {InputType.KMZ});
+    boolean isAcceptedInput = EncodersController.isAcceptedInput(in, new InputType[] { InputType.KMZ });
     boolean isAcceptedOutput = EncodersController.isAcceptedOutput(out);
 
     if (isAcceptedInput && isAcceptedOutput) {
