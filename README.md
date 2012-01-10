@@ -15,6 +15,7 @@ Requirements
 - [Apache Ant](http://ant.apache.org/) (min 1.7.1)
 - Java (min 1.6.0_20) 
 - Java Compiler javac (min 1.6.0_20)
+- git (optional for installation)
 
 We tested the Server on the following systems:
 
