@@ -22,6 +22,52 @@ We tested the Server on the following systems:
 - Mac OS X 10.6.8
 - Windows 7 Professional x64
 
+Installation
+===
+
+**Description is for Unix only!**
+
+Clone the current version or simply download the zip
+
+    git clone https://github.com/petpen/JavaPolylineEncoder2.git
+
+If you are in the directory cloned/downloaded directory start the ant builder for building the jar file
+
+    ant jar
+
+Move into the build directory. All needed files will be stored there
+
+    cd build
+
+
+Usage
+===
+
+Start the server from the build directory or from every other directory where you store the files.
+The default port will be 9998
+
+    java -jar PolylineEncoderServer.jar
+
+
+Testing
+===
+
+JUnit
+---
+
+If you want to start the [JUnit](http://www.junit.org/) tests you have to tell ant to use the check branch.
+He will also be selected if no parameter is given.
+
+    ant check
+
+The test reports can be found in `reports` the cobertura report is stored in `cob-rep`
+
+Testfiles
+---
+
+Various testfiles can be found inside the folder `testfiles` and its subdirectories.
+The file `testfiles/readFile.test` is only needed for junit tests.
+
 Supported Formats
 ===
 
@@ -45,7 +91,6 @@ Output
 - [JSON](http://www.json.org/)
 - XML
 - RAW
-
 
 ### Output Format Description 
 
@@ -88,7 +133,6 @@ This produces the following data:
 
 #### HTML
 
-##### Example
     [...]
     
     encodedPolylines.push(new GPolyline.fromEncoded({
@@ -104,7 +148,6 @@ This produces the following data:
 
 #### JSON
 
-##### Example
     [...]
     
     {
@@ -144,6 +187,23 @@ This produces the following data:
 
 #### RAW
 
+#### Positions of information
+
+    statusCode
+    statusMessage
+    createdDate
+    
+    centerLat, centerLng
+    minLat,maxLat
+    minLng, maxLng
+    minAlt, maxAlt
+    encodedPoints [Track n]
+    pointCount [Track n]
+    encodedLevels [Track n]
+    [...]
+
+`Track n` means the nth track. Any track will be directly underneath the other one. No empty lines
+
 ##### Example
 
     200
@@ -160,8 +220,6 @@ This produces the following data:
 
 #### XML
 
-##### Example
-
     <polylineencoder>
       <status code="200"></status>
       <points count="17">
@@ -177,49 +235,3 @@ This produces the following data:
       <center lat="51.501445145653555" lng="-0.12338849607747945"/>
       <created timestamp="1326235699756"/>
     </polylineencoder>
-
-Installation
-===
-
-**Description is for Unix only!**
-
-Clone the current version or simply download the zip
-
-    git clone https://github.com/petpen/JavaPolylineEncoder2.git
-
-If you are in the directory cloned/downloaded directory start the ant builder for building the jar file
-
-    ant jar
-
-Move into the build directory. All needed files will be stored there
-
-    cd build
-
-
-Usage
-===
-
-Start the server from the build directory or from every other directory where you store the files.
-The default port will be 9998
-
-    java -jar PolylineEncoderServer.jar
-
-
-Notes
-===
-
-Testing
----
-
-If you want to start the [JUnit](http://www.junit.org/) tests you have to tell ant to use the check branch.
-He will also be selected if no parameter is given.
-
-    ant check
-
-The test reports can be found in `reports` the cobertura report is stored in `cob-rep`
-
-Testfiles
----
-
-Various testfiles can be found inside the folder `testfiles` and its subdirectories.
-The file `testfiles/readFile.test` is only needed for junit tests.
