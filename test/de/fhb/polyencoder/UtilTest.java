@@ -66,4 +66,25 @@ public class UtilTest {
   public void testCreateCenterMaxMinFlipped() {
     assertTrue("Center must be 5", 5 == Util.createCenter(20, -10));
   }
+
+
+
+  @Test
+  public void testIsString() {
+    assertTrue("String should be a String", Util.isStringNotEmpty("Test"));
+  }
+
+
+
+  @Test
+  public void testIsEmptyString() {
+    assertFalse("empty string should act as empty", Util.isStringNotEmpty(""));
+  }
+
+
+
+  @Test
+  public void testIsNotString() {
+    assertFalse("null should act as empty", Util.isStringNotEmpty(null));
+  }
 }

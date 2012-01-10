@@ -215,4 +215,10 @@ public class Util {
     
     return valid;
   }
+
+
+
+  public static boolean isStringNotEmpty(String s) {
+    return (s != null && s.length() > 0);
+  }
 }

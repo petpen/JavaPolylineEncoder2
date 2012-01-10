@@ -5,13 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import de.fhb.polyencoder.Util;
-
 public class EncodersControllerTest {
-  private static final String DEFAULT_COORDS_GPX = Util.readFile("testfiles/gpx/threeWaypoints_GPX_1.0.gpx");
-
-
-
   @Test
   public void testIsValidTyp() {
     assertTrue("gpx should be valid input typ", EncodersController.isAcceptedInput(InputType.test("gpx")));
@@ -42,34 +36,5 @@ public class EncodersControllerTest {
   @Test
   public void testIsInvalidFormat() {
     assertFalse("bar should be invalid output format", EncodersController.isAcceptedOutput(OutputType.test("bar")));
-  }
-
-
-
-  @Test
-  public void testIsValidData() {
-    assertTrue("gpx data should be valid data", EncodersController.hasValidData(DEFAULT_COORDS_GPX));
-  }
-
-
-
-  @Test
-  public void testIsInvalidData() {
-    assertFalse("empty should be invalid data", EncodersController.hasValidData(""));
-    assertFalse("null should be invalid data", EncodersController.hasValidData(null));
-  }
-
-
-
-  @Test
-  public void testIsValidLink() {
-    assertTrue("should be valid link", EncodersController.isValidLink("http://google.de/robots.txt"));
-  }
-
-
-
-  @Test
-  public void testIsInvalidLink() {
-    assertFalse("should be invalid link", EncodersController.isValidLink(""));
   }
 }

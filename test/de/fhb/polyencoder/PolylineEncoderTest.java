@@ -8,10 +8,6 @@ import org.junit.*;
  * @author Peter Pensold
  */
 public class PolylineEncoderTest {
-  private static PolylineEncoder encoder;
-
-
-
   @Test
   public void testEncodeFalseBackslash() {
     String in = "\n";
@@ -107,12 +103,5 @@ public class PolylineEncoderTest {
     String in = "Te\\\nst";
     String out = "Te\\\\\nst";
     assertEquals("Should be two backslashes and a linewrap after encoding.", out, PolylineEncoder.encodeBackslash(in));
-  }
-
-
-
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {
-    encoder = new PolylineEncoder();
   }
 }

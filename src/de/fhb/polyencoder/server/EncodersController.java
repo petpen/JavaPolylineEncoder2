@@ -128,20 +128,7 @@ public class EncodersController {
   }
 
 
-
-  public static boolean hasValidData(String data) {
-    return (data != null && data.length() > 0);
-  }
-
-
-
-  public static boolean isValidLink(String link) {
-    // TODO This has to be checked later for a valid url
-    return (link != null && link.length() > 0);
-  }
-
-
-
+  
   public static String getErrorMsg(boolean isInputValid, boolean isOutputValid) {
     String errorMessage = "";
     if (isInputValid == false) {
@@ -168,7 +155,7 @@ public class EncodersController {
     String result = "";
     String errorMsg = "";
     
-    if (isValidLink(link)) {
+    if (Util.isStringNotEmpty(link)) {
       String fileName = Util.createTempFileName(in.toString().toLowerCase());
       
       try {
@@ -201,7 +188,7 @@ public class EncodersController {
   public static String encodeFromData(InputType in, OutputType out, String data) {
     String result = "";
     
-    if (EncodersController.hasValidData(data)) {
+    if (Util.isStringNotEmpty(data)) {
       result = encodeData(data, in, out);
     } else {
       result = GenerateErrorMessage.getAs(400, "No data found.", out);
