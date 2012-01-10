@@ -209,7 +209,7 @@ public class EncodersResourceTest extends JerseyTest {
   public void testPostKmzJson() {
     WebResource webRes = webResource.path("kmz/json");
     String responseMsg = webRes.type(MediaType.APPLICATION_FORM_URLENCODED_TYPE).post(String.class);
-    assertTrue("Should include encoded points information", responseMsg.indexOf("KMZ isn't supported for this method.") >= 0);
+    assertTrue("KMZ should not be suported for POST Data, because it's binary.", responseMsg.indexOf("No inputformat specified or not supported.") >= 0);
   }
 
 

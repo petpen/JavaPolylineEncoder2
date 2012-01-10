@@ -2,11 +2,9 @@ package de.fhb.polyencoder.server;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
 
 import org.junit.*;
 
-import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.Util;
 
 public class EncodersControllerTest {
@@ -16,34 +14,34 @@ public class EncodersControllerTest {
 
   @Test
   public void testIsValidTyp() {
-    assertTrue("gpx should be valid input typ", EncodersController.isValidTyp("gpx"));
-    assertTrue("kml should be valid input typ", EncodersController.isValidTyp("kmz"));
-    assertTrue("kmz should be valid input typ", EncodersController.isValidTyp("kml"));
-    assertTrue("raw should be valid input typ", EncodersController.isValidTyp("raw"));
+    assertTrue("gpx should be valid input typ", EncodersController.isAcceptedInput(InputType.test("gpx")));
+    assertTrue("kml should be valid input typ", EncodersController.isAcceptedInput(InputType.test("kml")));
+    assertTrue("kmz should be valid input typ", EncodersController.isAcceptedInput(InputType.test("kmz")));
+    assertTrue("raw should be valid input typ", EncodersController.isAcceptedInput(InputType.test("raw")));
   }
 
 
 
   @Test
   public void testIsValidFormat() {
-    assertTrue("gpx should be valid output format", EncodersController.isOutputValid("html"));
-    assertTrue("kml should be valid output format", EncodersController.isOutputValid("json"));
-    assertTrue("kmz should be valid output format", EncodersController.isOutputValid("xml"));
-    assertTrue("raw should be valid output format", EncodersController.isOutputValid("raw"));
+    assertTrue("html should be valid output format", EncodersController.isAcceptedOutput(OutputType.test("html")));
+    assertTrue("json should be valid output format", EncodersController.isAcceptedOutput(OutputType.test("json")));
+    assertTrue("raw should be valid output format", EncodersController.isAcceptedOutput(OutputType.test("raw")));
+    assertTrue("xml should be valid output format", EncodersController.isAcceptedOutput(OutputType.test("xml")));
   }
 
 
 
   @Test
   public void testIsInvalidTyp() {
-    assertFalse("foo should be invalid input typ", EncodersController.isValidTyp("foo"));
+    assertFalse("foo should be invalid input typ", EncodersController.isAcceptedInput(InputType.test("foo")));
   }
 
 
 
   @Test
   public void testIsInvalidFormat() {
-    assertFalse("bar should be invalid output format", EncodersController.isOutputValid("bar"));
+    assertFalse("bar should be invalid output format", EncodersController.isAcceptedOutput(OutputType.test("bar")));
   }
 
 

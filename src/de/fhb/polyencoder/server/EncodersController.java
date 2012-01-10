@@ -1,12 +1,18 @@
 package de.fhb.polyencoder.server;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import de.fhb.polyencoder.PolylineEncoder;
 import de.fhb.polyencoder.Track;
+import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.geo.GeographicBounds;
 import de.fhb.polyencoder.parser.ParserFactory;
 import de.fhb.polyencoder.parser.StringToTrackParser;
@@ -14,21 +20,39 @@ import de.fhb.polyencoder.server.view.*;
 
 public class EncodersController {
 
-  public static boolean isValidTyp(String typ) {
-    InputType input = InputType.test(typ);
-    return (input != InputType.NOSUPPORT);
+  public static boolean isAcceptedInput(InputType in) {
+    return isAcceptedInput(in, new InputType[] {InputType.NOSUPPORT});
+  }
+  
+
+
+  public static boolean isAcceptedInput(InputType in, InputType[] excludes) {
+    Set<InputType> list = new TreeSet<InputType>();
+    list.addAll(Arrays.asList(excludes));
+    list.add(InputType.NOSUPPORT);
+    
+    return Util.isValidEnum(in, list);
   }
 
 
 
-  public static boolean isOutputValid(String format) {
-    OutputType input = OutputType.test(format);
-    return (input != OutputType.NOSUPPORT);
+  public static boolean isAcceptedOutput(OutputType out) {
+    return isAcceptedOutput(out, new OutputType[] { OutputType.NOSUPPORT});
   }
 
 
 
-  public static String encodeFile(String path, String typ, String format) {
+  public static boolean isAcceptedOutput(OutputType out, OutputType[] excludes) {
+    Set<OutputType> list = new TreeSet<OutputType>();
+    list.addAll(Arrays.asList(excludes));
+    list.add(OutputType.NOSUPPORT);
+    
+    return Util.isValidEnum(out, list);
+  }
+
+
+
+  public static String encodeFile(String path, InputType typ, OutputType format) {
     List<Track> tracks = parseFile(path, typ);
 
     return encode(tracks, format);
@@ -36,7 +60,7 @@ public class EncodersController {
 
 
 
-  public static String encodeData(String data, String typ, String format) {
+  public static String encodeData(String data, InputType typ, OutputType format) {
     List<Track> tracks = parseData(data, typ);
 
     return encode(tracks, format);
@@ -44,7 +68,7 @@ public class EncodersController {
 
 
 
-  private static String encode(List<Track> tracks, String format) {
+  private static String encode(List<Track> tracks, OutputType format) {
     String result = "";
     HashMap<String, String> map;
 
@@ -57,7 +81,7 @@ public class EncodersController {
       map.put("statusCode", "200");
       map.put("statusMessage", "");
 
-      ViewGenerator vg = ViewFactory.buildViewGenerator(map, OutputType.test(format));
+      ViewGenerator vg = ViewFactory.buildViewGenerator(map, format);
       if (vg != null) {
         for (int i = 0; i < tracks.size(); i++) {
           vg.addTrack(polylineEncoder.dpEncode(tracks.get(i)));
@@ -75,10 +99,10 @@ public class EncodersController {
 
 
 
-  private static List<Track> parseFile(String path, String typ) {
+  private static List<Track> parseFile(String path, InputType typ) {
     StringToTrackParser trackParser;
 
-    trackParser = ParserFactory.buildParser(InputType.test(typ));
+    trackParser = ParserFactory.buildParser(typ);
     if (trackParser != null) {
       trackParser.parseFile(path);
     } else {
@@ -90,10 +114,10 @@ public class EncodersController {
 
 
 
-  private static List<Track> parseData(String coords, String typ) {
+  private static List<Track> parseData(String coords, InputType typ) {
     StringToTrackParser trackParser;
 
-    trackParser = ParserFactory.buildParser(InputType.test(typ));
+    trackParser = ParserFactory.buildParser(typ);
     if (trackParser != null) {
       trackParser.parse(coords);
     } else {
@@ -127,5 +151,85 @@ public class EncodersController {
       errorMessage += " Wrong outputformat specified or not supported.";
     }
     return errorMessage;
+  }
+
+
+
+  public static String createErrorMessage(boolean isAcceptedInput, boolean isAcceptedOutput, OutputType out) {
+    String errorMessage = getErrorMsg(isAcceptedInput, isAcceptedOutput);
+    out = isAcceptedOutput ? out : OutputType.RAW;
+
+    return GenerateErrorMessage.getAs(400, errorMessage, out);
+  }
+
+
+
+  public static String encodeFromLink(InputType in, OutputType out, String link) {
+    String result = "";
+    String errorMsg = "";
+    
+    if (isValidLink(link)) {
+      String fileName = Util.createTempFileName(in.toString().toLowerCase());
+      
+      try {
+        Util.downloadFile(link, fileName);
+      } catch (IllegalStateException e) {
+        errorMsg = "No file found.";
+      } catch (IOException e) {
+        errorMsg = "Internal error can't write file.";
+        fileName = "";
+      }
+      
+      if(errorMsg.isEmpty()) {
+        result = encodeFile(fileName, in, out);
+      } else {
+        result = GenerateErrorMessage.getAs(400, errorMsg, out);
+      }
+      
+      if(fileName.length() > 0) {
+        Util.deleteFile(fileName);
+      }
+    } else {
+      result = GenerateErrorMessage.getAs(400, "Invalid link.", out);
+    }
+    
+    return result;
+  }
+
+
+
+  public static String encodeFromData(InputType in, OutputType out, String data) {
+    String result = "";
+    
+    if (EncodersController.hasValidData(data)) {
+      result = encodeData(data, in, out);
+    } else {
+      result = GenerateErrorMessage.getAs(400, "No data found.", out);
+    }
+    
+    return result;
+  }
+
+
+
+  public static String encodeFromFile(InputType in, OutputType out, InputStream dataStream) {
+    String result = "";
+    
+    String fileName = Util.createTempFileName(in.toString().toLowerCase());
+    
+    try {
+      Util.writeInputStreamToFile(dataStream, fileName);
+    } catch (Exception e) {
+      fileName = "";
+    }
+
+    if (fileName.isEmpty()) {
+      result = GenerateErrorMessage.getAs(400, "No data found.", out);
+    } else {
+      result = encodeFile(fileName, in, out);
+      Util.deleteFile(fileName);
+    }
+    
+    return result;
   }
 }

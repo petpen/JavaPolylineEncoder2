@@ -12,12 +12,15 @@ import java.io.StringReader;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
+
+import de.n00b.downloader.Downloader;
 
 /**
  * Collection of useful functions.
@@ -183,5 +186,33 @@ public class Util {
     }
 
     return doc;
+  }
+
+
+
+  public static void downloadFile(String link, String fileName) throws IllegalStateException, IOException {
+    FileOutputStream fos;
+    fos = new FileOutputStream(fileName);
+    Downloader.downloadFile(link, fos);
+    fos.close();
+  }
+
+
+
+  public static String createTempFileName(String fileType) {
+    return String.format("%s/%s.%s", "temp", (new Date()).getTime(), fileType.toLowerCase());
+  }
+
+
+
+  public static <T> boolean isValidEnum(T check, Set<T> excludes) {
+    boolean valid = true;
+    
+    for(T e: excludes) {
+      if(e == check)
+        valid = false;
+    }
+    
+    return valid;
   }
 }
