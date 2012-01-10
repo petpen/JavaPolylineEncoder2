@@ -6,6 +6,10 @@ import org.junit.*;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.test.framework.JerseyTest;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class FormularResourceTest extends JerseyTest {
 
   WebResource webResource;

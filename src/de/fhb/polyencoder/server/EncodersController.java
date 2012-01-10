@@ -18,6 +18,10 @@ import de.fhb.polyencoder.parser.ParserFactory;
 import de.fhb.polyencoder.parser.StringToTrackParser;
 import de.fhb.polyencoder.server.view.*;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class EncodersController {
 
   public static boolean isAcceptedInput(InputType in) {

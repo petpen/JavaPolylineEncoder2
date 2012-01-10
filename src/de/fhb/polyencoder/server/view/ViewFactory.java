@@ -4,6 +4,10 @@ import java.util.HashMap;
 
 import de.fhb.polyencoder.server.OutputType;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class ViewFactory {
   public static ViewGenerator buildViewGenerator(HashMap<String, String> map, OutputType format) {
     switch (format) {

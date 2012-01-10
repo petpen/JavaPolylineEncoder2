@@ -6,6 +6,10 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class JerseyServerTest {
 
   private JerseyServer server;

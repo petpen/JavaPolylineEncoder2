@@ -5,6 +5,10 @@ import java.util.HashMap;
 import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.server.OutputType;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public abstract class ViewGenerator {
 
   protected String frame;
@@ -25,7 +29,7 @@ public abstract class ViewGenerator {
   public void addTrack(HashMap<String, String> map) {
     String track = getTrackTemplate();
     track = Util.replaceMarker(track, map);
-    tracks.append(track+"\n");
+    tracks.append(track + "\n");
   }
 
 
@@ -40,12 +44,12 @@ public abstract class ViewGenerator {
 
 
   private String getFrameTemplate() {
-    return Util.readFile("templates/"+outputTyp+"/frame."+outputTyp);
+    return Util.readFile("templates/" + outputTyp + "/frame." + outputTyp);
   }
 
 
 
   private String getTrackTemplate() {
-    return Util.readFile("templates/"+outputTyp+"/track."+outputTyp);
+    return Util.readFile("templates/" + outputTyp + "/track." + outputTyp);
   }
 }

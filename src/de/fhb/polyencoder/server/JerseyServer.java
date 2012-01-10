@@ -7,6 +7,10 @@ import java.util.Map;
 import com.sun.grizzly.http.SelectorThread;
 import com.sun.jersey.api.container.grizzly.GrizzlyWebContainerFactory;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class JerseyServer {
   private SelectorThread threadSelector;
   private final String baseUri = "http://localhost:9998/";
@@ -34,8 +38,9 @@ public class JerseyServer {
     threadSelector.stopEndpoint();
     System.out.println("Jersey terminated");
   }
-  
-  
+
+
+
   public boolean isRunnig() {
     return threadSelector.isRunning();
   }

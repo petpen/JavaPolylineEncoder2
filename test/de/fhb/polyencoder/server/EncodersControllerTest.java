@@ -2,9 +2,12 @@ package de.fhb.polyencoder.server;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.*;
 
+/**
+ * @author Martin Bormeister
+ * 
+ */
 public class EncodersControllerTest {
   @Test
   public void testIsValidTyp() {
