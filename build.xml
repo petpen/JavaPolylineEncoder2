@@ -6,7 +6,8 @@
 	
 	<path id="junit.classpath">
 		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
+			<include name="main/*.jar" />
+			<include name="unittests/*.jar" />
 		</fileset>
 	</path>
 	
@@ -47,10 +48,10 @@
 	</target>
 	
 	<target name="compile" depends="init">
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
 			<classpath refid="junit.classpath" />
 		</javac>
-		<javac srcdir="${test.dir}" destdir="${classes.dir}" debug="yes">
+		<javac srcdir="${test.dir}" destdir="${classes.dir}" debug="yes" includeantruntime="false">
 			<classpath refid="junit.classpath" />
 		</javac>
 	</target>
@@ -80,21 +81,48 @@
 	</target>
 	
 	<taskdef classpathref="junit.classpath" resource="tasks.properties" />
-		<target name="cob-instr" depends="compile">
-			<cobertura-instrument todir="${inst.dir}" datafile="${cobdata}">
-			    <fileset dir="${classes.dir}">
-			        <include name="**/*.class" />
-			        <exclude name="**/*Test.class" />
-			        <exclude name="**/*Suite.class" />
-			    </fileset>
-			</cobertura-instrument>
-		</target>
+	
+	<target name="cob-instr" depends="compile">
+		<cobertura-instrument todir="${inst.dir}" datafile="${cobdata}">
+		    <fileset dir="${classes.dir}">
+		        <include name="**/*.class" />
+		        <exclude name="**/*Test.class" />
+		        <exclude name="**/*Suite.class" />
+		    </fileset>
+		</cobertura-instrument>
+	</target>
 
-		<target name="cob-rep" depends="cob-instr, test" description="erzeugt Cobertura Reports">
-			<cobertura-report format="html" datafile="${cobdata}" destdir="${cob.rep.html}" srcdir="${src.dir}" />
-			<cobertura-report format="xml" datafile="${cobdata}" destdir="${cob.rep.xml}" srcdir="${src.dir}" />
-		</target>
+	<target name="cob-rep" depends="cob-instr, test" description="erzeugt Cobertura Reports">
+		<cobertura-report format="html" datafile="${cobdata}" destdir="${cob.rep.html}" srcdir="${src.dir}" />
+		<cobertura-report format="xml" datafile="${cobdata}" destdir="${cob.rep.xml}" srcdir="${src.dir}" />
+	</target>
+	
+	<target name="check" depends="clean, cob-rep, clean_after" description="Clean and create cobertura reports">
+	</target>
+	
+	<target name="jar" description="Build the distribution .jar file" depends="compile">
+		<copy todir="${basedir}/target/">
+			<fileset dir="${classes.dir}">
+				<include name="*/**" />
+				<exclude name="*/*.md" />
+			</fileset>
+		</copy>
+
+		<jar destfile="PolylineEncoderServer.jar">
+			<fileset dir="target"/>
+			<restrict>
+				<name name="**/*"/>
+				<archives>
+					<zips>
+						<fileset dir="lib/main" includes="**/*.jar"/>
+					</zips>
+				</archives>
+			</restrict>
+			<manifest>
+				<attribute name="Main-Class" value="de.fhb.polyencoder.JavaPolylineEncoder2"/>
+			</manifest>
+		</jar>
 		
-		<target name="check" depends="clean, cob-rep, clean_after" description="Aufräumen und Cobertura Reports erstellen">
-		</target>
+		<delete dir="target"/>
+	</target>
 </project>
