@@ -148,7 +148,7 @@ public class Util {
    * @return the replaced content of the text
    */
   public static String replaceMarker(String text, String marker, String replace) {
-    return text.replaceAll("\\{" + marker + "\\}",replace);
+    return text.replaceAll("\\{" + marker + "\\}", protectBackslashes(replace));
   }
 
 
@@ -186,6 +186,23 @@ public class Util {
     }
 
     return doc;
+  }
+
+
+
+  /**
+   * Replaces all backslashes inside a String with two backslashes. It uses a regular
+   * expression.
+   * 
+   * @param s
+   *          String that may have double backslashes
+   * 
+   * @return the String with all double backslashes replaced
+   * 
+   * @see <a href="http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html">Potential encoding pitfalls</a>
+   */
+  public static String protectBackslashes(String s) {
+    return s.replace("\\", "\\\\");
   }
 
 

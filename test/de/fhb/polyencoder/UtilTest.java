@@ -13,8 +13,17 @@ public class UtilTest {
     String text = "Hi {name}";
     String marker = "name";
     String replace = "User";
-
     assertEquals("The new String must be \"Hi User\"", "Hi User", Util.replaceMarker(text, marker, replace));
+  }
+
+
+
+  @Test
+  public void testReplaceMarkerOneBackslash() {
+    String text = "Hi {name}";
+    String marker = "name";
+    String replace = "\\User";
+    assertEquals("The new String must be \"Hi User\"", "Hi \\User", Util.replaceMarker(text, marker, replace));
   }
 
 
@@ -86,5 +95,104 @@ public class UtilTest {
   @Test
   public void testIsNotString() {
     assertFalse("null should act as empty", Util.isStringNotEmpty(null));
+  }
+
+
+
+  @Test
+  public void testEncodeFalseBackslash() {
+    String in = "\n";
+    String out = "\n";
+    assertEquals("A backslash which acts as an control character should not be encoded.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeOneBackslashOnly() {
+    String in = "\\";
+    String out = "\\\\";
+    assertEquals("One backslash must be encoded to two backslashes.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeOneBackslashOnBeginning() {
+    String in = "\\Test";
+    String out = "\\\\Test";
+    assertEquals("One backslash must be encoded to two backslashes.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeOneBackslashOnEnd() {
+    String in = "Test\\";
+    String out = "Test\\\\";
+    assertEquals("One backslash must be encoded to two backslashes.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeOneBackslashMiddle() {
+    String in = "Te\\st";
+    String out = "Te\\\\st";
+    assertEquals("One backslash must be encoded to two backslashes.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeTwoBackslashes() {
+    String in = "\\\\";
+    String out = "\\\\\\\\";
+    assertEquals("Should be four backslashes after encoding.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeTwoBackslashesOnBeginning() {
+    String in = "\\\\Test";
+    String out = "\\\\\\\\Test";
+    assertEquals("Should be four backslashes after encoding.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeTwoBackslashesOnEnd() {
+    String in = "Test\\\\";
+    String out = "Test\\\\\\\\";
+    assertEquals("Should be four backslashes after encoding.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeTwoBackslashesMiddle() {
+    String in = "Te\\\\st";
+    String out = "Te\\\\\\\\st";
+    assertEquals("Should be four backslashes after encoding.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeTwoBackslashesDiverted() {
+    String in = "Te\\st\\";
+    String out = "Te\\\\st\\\\";
+    assertEquals("Should be four backslashes after encoding.", out, Util.protectBackslashes(in));
+  }
+
+
+
+  @Test
+  public void testEncodeBackslashesUneven() {
+    String in = "Te\\\nst";
+    String out = "Te\\\\\nst";
+    assertEquals("Should be two backslashes and a linewrap after encoding.", out, Util.protectBackslashes(in));
   }
 }
