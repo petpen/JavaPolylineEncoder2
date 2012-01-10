@@ -133,7 +133,6 @@ This produces the following data:
 
 #### HTML
 
-##### Example
     [...]
     
     encodedPolylines.push(new GPolyline.fromEncoded({
@@ -149,7 +148,6 @@ This produces the following data:
 
 #### JSON
 
-##### Example
     [...]
     
     {
@@ -199,9 +197,9 @@ This produces the following data:
     minLat,maxLat
     minLng, maxLng
     minAlt, maxAlt
-    encodedPoints `Track n`
-    pointCount `Track n`
-    encodedLevels `Track n`
+    encodedPoints [Track n]
+    pointCount [Track n]
+    encodedLevels [Track n]
     [...]
 
 `Track n` means the nth track. Any track will be directly underneath the other one. No empty lines
@@ -221,8 +219,6 @@ This produces the following data:
     PD?A?DBEF@?P
 
 #### XML
-
-##### Example
 
     <polylineencoder>
       <status code="200"></status>
