@@ -98,10 +98,10 @@ The first part of the output will be a status code with a small message. This wi
 
 #### Status Codes 
 
-- 200
+- **200**
   - OK
   
-- 400
+- **400**
   - No file found
   - Invalid link
   - No inputformat specified or not supported.
@@ -187,7 +187,7 @@ This produces the following data:
 
 #### RAW
 
-#### Positions of information
+###### Positions of information
 
     statusCode
     statusMessage
@@ -204,7 +204,7 @@ This produces the following data:
 
 `Track n` means the nth track. Any track will be directly underneath the other one. No empty lines
 
-##### Example
+###### Example
 
     200
     
