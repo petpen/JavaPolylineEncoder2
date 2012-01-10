@@ -19,22 +19,12 @@ public class GenerateErrorMessage {
 
   
   private static String getTemplate(OutputType out) {
-    String fileName = "";
-    
-    switch (out) {
-      case HTML:
-        fileName = "html/error.html";
-        break;
-      case JSON:
-        fileName = "json/error.json";
-        break;
-      case XML:
-        fileName = "xml/error.xml";
-        break;
-      default:
-        fileName = "raw/error.raw";
+    if(out == OutputType.NOSUPPORT) {
+      out = OutputType.RAW;
     }
 
-    return Util.readFile("templates/" + fileName);
+    String fileName = String.format("templates/%1$s/error.%1$s",out.toString().toLowerCase());
+    
+    return Util.readFile(fileName);
   }
 }
