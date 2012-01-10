@@ -25,6 +25,11 @@ We tested the Server on the following systems:
 Supported Formats
 ===
 
+Tracks
+---
+The encoder is able to process multiple tracks, routes and waypoints in one file.
+The output will be looped in the track section if there are more encoded tracks in the result.
+
 Input
 ---
 
@@ -36,39 +41,144 @@ Input
 Output
 ---
 
-- HTML (a Google Map with all tracks included via JavaScrip)
+- HTML (a Google Map with all tracks included via JavaScript)
 - [JSON](http://www.json.org/)
 - XML
 - RAW
 
 
-### Format Descriptions 
+### Output Format Description 
+
+The first part of the output will be a status code with a small message. This will not happen if the result is a Google map.
+
+#### Status Codes 
+
+- 200
+  - OK
+  
+- 400
+  - No file found
+  - Invalid link
+  - No inputformat specified or not supported.
+  - No outputformat specified or not supported.
+  - No inputformat specified or not supported. Wrong outputformat specified or not supported.
+  - No data found
+  - No tracks found.
+
+#### Sample Outputs
+
+All sample outputs are based on `testfiles/kml/singleTrack.kml`. This track shows a track from the Westminster Abbey to the London Eye.
+
+This produces the following data:
+
+- Encoded points `epiyHnzW}AIH_DBIIc@?]yBEU[b@yc@g@AqCa@sH{@`
+- Encoded zoom levels `PD?A?DBEF@?P`
+- Number of points `17`
+- Bounds
+  - Min latitude `51.4997138231825`
+  - Max latitude `51.50317646812461`
+  - Min longitude `-0.1272722324704489`
+  - Max longitude `-0.11950475968451`
+  - Min altitude `0.0`
+  - Max altitude `0.0`
+- Center
+  - Latitude `51.501445145653555`
+  - Longitude `-0.12338849607747945`
+- Creation Date (time in milliseconds) `1326234539831`
 
 #### HTML
 
 ##### Example
-
-    code here
+    [...]
+    
+    encodedPolylines.push(new GPolyline.fromEncoded({
+        color: "#ff3333",
+        weight: 3,
+        points: "epiyHnzW}AIH_DBIIc@?]yBEU[b@yc@g@AqCa@sH{@",
+        levels: "PD?A?DBEF@?P",
+        zoomFactor: 2,
+        numLevels: 18
+    }));
+    
+    [...]
 
 #### JSON
 
 ##### Example
-
-    code here
+    [...]
+    
+    {
+      "status": {
+        "code": 200,
+        "message": ""
+      },
+      "points": [
+        {
+          "encoded": "epiyHnzW}AIH_DBIIc@?]yBEU[b@yc@g@AqCa@sH{@",
+          "count": 17,
+          "levels": "PD?A?DBEF@?P"
+        }
+      ],
+      "bounds": {
+        "lat": {
+          "min": 51.4997138231825,
+          "max": 51.50317646812461
+        },
+        "lng": {
+          "min": -0.1272722324704489,
+          "max": -0.11950475968451
+        },
+        "alt": {
+          "min": 0.0,
+          "max": 0.0
+        },
+        "center": {
+          "lat": 51.501445145653555,
+          "lng": -0.12338849607747945
+        }
+      },
+      "created": 1326234539831
+    }
+    [...]
+    
 
 #### RAW
 
 ##### Example
 
-    code here
+    200
+    
+    1326235079164
+    
+    51.501445145653555, -0.12338849607747945
+    51.4997138231825,51.50317646812461
+    -0.1272722324704489, -0.11950475968451
+    0.0, 0.0
+    epiyHnzW}AIH_DBIIc@?]yBEU[b@yc@g@AqCa@sH{@
+    17
+    PD?A?DBEF@?P
 
 #### XML
 
 ##### Example
 
-    code here
+    <polylineencoder>
+      <status code="200"></status>
+      <points count="17">
+        <encoded>epiyHnzW}AIH_DBIIc@?]yBEU[b@yc@g@AqCa@sH{@</encoded>
+        <levels>PD?A?DBEF@?P</levels>
+      </points>
+      <bounds>
+        <lat min="51.4997138231825" max="51.50317646812461"/>
+    
+        <lng min="-0.1272722324704489" max="-0.11950475968451"/>
+        <alt min="0.0" max="0.0"/>
+      </bounds>
+      <center lat="51.501445145653555" lng="-0.12338849607747945"/>
+      <created timestamp="1326235699756"/>
+    </polylineencoder>
 
-Install
+Installation
 ===
 
 **Description is for Unix only!**
@@ -77,7 +187,7 @@ Clone the current version or simply download the zip
 
     git clone https://github.com/petpen/JavaPolylineEncoder2.git
 
-Then simply start the ant builder for building the jar file
+If you are in the directory cloned/downloaded directory start the ant builder for building the jar file
 
     ant jar
 
