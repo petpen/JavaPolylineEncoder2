@@ -6,6 +6,8 @@
 bin/*
 .settings/*
 
+build/*
+
 classes/*
 !classes/README.md
 
