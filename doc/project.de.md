@@ -78,7 +78,8 @@ Folgende Dinge haben uns im Projekt Nerven geraubt.
 Marc McClure [beschrieb bereits](http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html),
 dass es Probleme geben könnte mit Backslahes und deren Kodierung. Dieses Problem habe wir auch gelöst.
 Jedoch gab es Anfangs noch Schwierigkeiten zwischen Jersey, der Markerreplace Methode und der Backslashreplace Methode.
-Dies Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten.
+Die Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten.
+
 Mittlerweile funktioniert die Ausgabe und das Encodieren korrekt.
 
 ### Ant Jar Erstellung
@@ -95,7 +96,9 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 ### Jersey
 
-`@Martin bitte ergänzen`
+Die Verwendung von Jersey war nicht weiter schwer, jedoch musste zur Nutzung ersteinmal eine Reihe von Bibliotheken geladen werden.
+Zusätzlich benötigte die Verwendung von `multipart/form-data` noch weitere Bibliotheken.
+Durch die Suche von immer weiteren Bibliotheken wurde der Arbeitsfluss etwas gebremst.
 
 
 Architektur / Design
@@ -128,7 +131,6 @@ Ergebnis
 ---
 
 ### Erledigt
-
 ###### Parser
 - Erstellung von Parsern nach Eingabeformaten
 - Parser können sowohl Dateien als auch Daten (via String) verarbeiten. Außer KMZ, da dies ein Binärformat ist.
@@ -146,6 +148,8 @@ Ergebnis
 ###### Server
 - Umsetzung aller genannten Ausgabeformate: `HTML, JSON, RAW, XML`
 - Umsetzung von Fehlerbehandlungen. Der Nutzer wird benachrichtigt (siehe [README.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/README.md) > Supported Formats > Status Codes)
+- Ausgabe aller enkodierten Tracks bei allen Rückgabeformaten
+- Dynamisches Formular
 
 ### Einschränkungen
 ###### Ausgabe / Parsen
@@ -164,4 +168,7 @@ Bis auf den oben beschriebenen Backslash Bug bei der Browserausgabe.
 
 ### Neue Ziele
 - Properties Datei für Serverkonfiguration
-- HTML Ausgabe der Polyline mit Version 3 der Google Maps Api 
+- HTML Ausgabe der Polyline mit Version 3 der Google Maps Api
+- Datenbank zur Verwaltung von Polylines
+- GenerateErrorMsg in die ViewFactory und ViewGenerator übernehmen
+- Einschränkungen reduzieren
