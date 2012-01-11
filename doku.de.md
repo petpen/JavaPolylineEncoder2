@@ -14,12 +14,14 @@ Teilnehmer und Aufgabenverteilung
  - Server View Generator Factory
  - Basis Eingabeformular
  - Weitere Tests
+
 ### Peter Pensold
  - Encoder Refactoring + Tests
  - Parser Factory + Tests
  - In/Output Enums
  - Dynamisches Eingabeformular
  - Testdaten Erstellung
+
 ### Alle
  - Bugfixes
  - Readme
@@ -84,11 +86,13 @@ Ergebnis
 ---
 
 ### Erledigt
+
 ###### Parser
 - Erstellung von Parsern nach Eingabeformaten
 - Parser können sowohl Dateien als auch Daten (via String) verarbeiten. Außer KMZ, da dies ein Binärformat ist.
 - Es werden mehrere Tracks innerhalb einer Datei geparst
 - Umsetzung aller genannten Eingabeformate: `GPX, KML, KMZ, URL`
+
 ###### Refactoring des Polyencoders
 - Aufteilung in mehrere Klassen
 - Logische Trennung von Encoder und Methoden, welche nicht direkt zum Encoder gehören
@@ -96,7 +100,8 @@ Ergebnis
 - Packagestruktur angepasst
 - `Util`-Klasse für häufig verwendete Methoden erstellt, welche nicht unbedingt in verschiedene Klassen gehören
   - Möglich wäre noch eine Aufteilung in `FileUtil` für Methoden welche sich nur mit Dateien beschäftigen
-### Server
+  
+###### Server
 - Umsetzung aller genannten Ausgabeformate: `HTML, JSON, RAW, XML`
 - Umsetzung von Fehlerbehandlungen. Der Nutzer wird benachrichtigt (siehe [README.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/README.md) > Supported Formats > Status Codes)
 
