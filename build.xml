@@ -15,6 +15,7 @@
 		<delete dir="${classes.dir}">
 			<exclude name="README.md"/>
 		</delete>
+		<delete dir="${classes.dir}/de" />
 		
 		<delete dir="${reports.dir}">
 			<exclude name="README.md"/>
@@ -23,12 +24,16 @@
 		<delete dir="${temp.dir}">
 			<exclude name="README.md"/>
 		</delete>
+		<delete dir="${reports.xml.dir}" />
+		<delete dir="${reports.html.dir}" />
 		
 		<delete dir="${build.dir}" />
 
 		<delete file="${cobdata}" />
 		<delete dir="${inst.dir}" />
 		<delete dir="${cob.rep}" />
+
+		<delete file="TESTS-TestSuites.xml" />
 	</target>
 
 	<target name="clean_after" description="Remove files that have been created while testing and are unnecessary">
@@ -39,7 +44,7 @@
 
 	<target name="init" description="Prepare needed directories">
 		<mkdir dir="${classes.dir}" />
-		<mkdir dir="${classes.dir}" />
+
 		<mkdir dir="${reports.dir}" />
 		<mkdir dir="${reports.xml.dir}" />
 		<mkdir dir="${reports.html.dir}" />
