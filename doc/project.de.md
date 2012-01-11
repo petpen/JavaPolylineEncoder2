@@ -5,7 +5,6 @@ Inhalt
 ---
  - Ziele
  - Teilnehmer mit Aufgabenverteilung
- - Nice to Have
  - Probleme
  - Architektur / Design
  - Quelltext Stil
@@ -27,6 +26,11 @@ Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 - Programmiersprache `Java`
 - Testframework `JUnit`
 - Server Framework `Java Jersey`
+
+## Nice to Have
+
+- Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
+- Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
 
 ***
 
@@ -50,14 +54,6 @@ Teilnehmer mit Aufgabenverteilung
  - Bugfixes
  - Readme
  - Ant Tasks
-
-***
-
-Nice to Have
----
-
-- Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
-- Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
 
 ***
 
