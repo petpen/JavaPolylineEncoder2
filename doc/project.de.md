@@ -11,10 +11,10 @@ Inhalt
  
 ***
 
-1 Projektbeschreibung
+1. Projektbeschreibung
 ---
 
-### Ziel
+### 1.1. Ziel
 
 Der frühere Polylineencoder soll überarbeitet werden. Dazu müssen allgemeinere Methoden ausgegliedert werden.
 Außerdem sollen Tests für eigene Methoden geschrieben werden.
@@ -22,18 +22,18 @@ Außerdem sollen Tests für eigene Methoden geschrieben werden.
 Der Jersey RESTful Server soll mindestens `GPX`-Dateien akzeptieren und `JSON, RAW` als Antwort liefern.
 Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
  
-### Technologien
+### 1.2. Technologien
 
 - Programmiersprache `Java`
 - Testframework `JUnit`
 - Server Framework `Java Jersey`
 
-### Nice to Have
+### 1.3. Nice to Have
 
 - Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
 - Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
 
-### Teilnehmer mit Aufgabenverteilung
+### 1.4. Teilnehmer mit Aufgabenverteilung
 
 ###### Martin Bormeister
  - Server + Tests
@@ -55,12 +55,12 @@ Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 
 ***
 
-2 Probleme während der Entwicklung
+2. Probleme während der Entwicklung
 ---
 
 Folgende Dinge haben uns im Projekt die Nerven geraubt.
 
-### Backslash Bug
+### 2.1. Backslash Bug
 
 Marc McClure [beschrieb bereits](http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html),
 dass es Probleme mit Backslahes und deren Kodierung geben könnte. Dieses Problem haben wir auch gelöst.
@@ -68,7 +68,7 @@ Jedoch gab es Anfangs noch Schwierigkeiten zwischen Jersey, der Markerreplace Me
 Die Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten.
 Mittlerweile funktioniert die Ausgabe und das Encodieren korrekt.
 
-### Ant Jar Erstellung
+### 2.2. Ant Jar Erstellung
 
 Wir wollten zunächst eine ausführbare Jar-Datei mit eingebetteten Bibliotheken erstellen. Das funktionierte auch am Anfang.
 Jedoch konnte dann das Startformular nicht angezeigt werden. Jersey vermisste Informationen, welche in einigen Manifest-Dateien
@@ -80,13 +80,13 @@ Also mussten wir uns mit einer anderen Lösung zufrieden geben:
 Wir kopierten den Hauptbibliothekenordner `lib/main` und teilten Ant mit, dass die Manifest Datei den Klassenpfad anhand der Bibliotheken zusammenbauen soll.
 Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` nach dem erzeugen der Jar Datei. 
 
-### Jersey
+### 2.3. Jersey
 
 `@Martin bitte ergänzen`
 
 ***
 
-3 Architektur / Design
+3. Architektur / Design
 ---
 
 - Logische Strukturierung durch Packages
@@ -97,7 +97,7 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 ***
 
-4 Quelltext Stil
+4. Quelltext Stil
 ---
 
 Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige kleine optische Unterstützungen sind:
@@ -114,10 +114,10 @@ Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2
 
 ***
 
-5 Ergebnis
+5. Ergebnis
 ---
 
-### Erledigt
+### 5.1. Erledigt
 
 ###### Parser
 - Erstellung von Parsern nach Eingabeformaten
@@ -138,7 +138,7 @@ Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2
 - Umsetzung von Fehlerbehandlungen. Der Nutzer wird benachrichtigt (siehe [README.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/README.md) > Supported Formats > Status Codes)
 - Umsetzung eines Formulares zur Eingabe von Daten, Dateien und Links
 
-### Einschränkungen
+### 5.2. Einschränkungen
 ###### Ausgabe / Parsen
 Es werden nur die nötigsten Attribute für einen Track geparst, daher wird auf zusätzliche Attribute (Bsp. Name des Tracks) kein Wert gelegt.
 
@@ -156,6 +156,6 @@ Das liegt daran, dass der ursprüngliche Algorithmus nicht von uns stammt. Er wu
 Während manueller Tets waren aber keine Abweichungen gegenüber des Originalalgorithmus zu erkennen.
 Bis auf den oben beschriebenen Backslash Bug bei der Browserausgabe.
 
-### Neue Ziele
+### 5.3. Neue Ziele
 - Properties Datei für Serverkonfiguration
 - HTML Ausgabe der Polyline mit Version 3 der Google Maps Api 
