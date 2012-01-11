@@ -13,7 +13,7 @@ Teilnehmer und Aufgabenverteilung
 
 ### Martin Bormeister
  - Server + Tests
- - Server View Generator Factory
+ - Server ViewGenerator Factory
  - Basis Eingabeformular
  - Weitere Tests
 
@@ -53,6 +53,7 @@ Nice to Have
  - KML
  - KMZ (komprimierte KML)
  - URL (linkt auf Datei, die automatisch geparst wird)
+ - RAW
 
 ### Zusätzliche Ausgabeformate
  - HTML (mit Google Map)
@@ -76,9 +77,9 @@ Folgende Dinge haben uns im Projekt Nerven geraubt.
 ### Backslash Bug
 
 Marc McClure [beschrieb bereits](http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html),
-dass es Probleme geben könnte mit Backslahes und deren Kodierung. Dieses Problem habe wir auch gelöst.
+dass es Probleme mit Backslahes und deren Kodierung geben könnte. Dieses Problem haben wir auch gelöst.
 Jedoch gab es Anfangs noch Schwierigkeiten zwischen Jersey, der Markerreplace Methode und der Backslashreplace Methode.
-Dies Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten.
+Die Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten.
 Mittlerweile funktioniert die Ausgabe und das Encodieren korrekt.
 
 ### Ant Jar Erstellung
@@ -90,7 +91,7 @@ Daher versuchten wir die Manifest Dateien mithilfe von Ant zusammenzufügen. Die
 
 Also mussten wir uns mit einer anderen Lösung zufrieden geben:
 
-Wir kopierten den Hauptbibliothekenordner und teilten Ant mit, dass die Manifest Datei den Klassenpfad anhand der Bibliotheken zusammenbauen soll.
+Wir kopierten den Hauptbibliothekenordner `lib/main` und teilten Ant mit, dass die Manifest Datei den Klassenpfad anhand der Bibliotheken zusammenbauen soll.
 Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` nach dem erzeugen der Jar Datei. 
 
 ### Jersey
@@ -114,7 +115,7 @@ Quelltext Stil
 Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige kleine optische Unterstützungen sind:
 
 - Die Komplexität in Cobertura sollte nie den Wert `3` überschreiten.
-- Drei freie Zeilen zwischen den Methoden: Dadurch kann man sofort den Anfang einer Methode erkennen.
+- Drei freie Zeilen zwischen den Methoden. Dadurch kann man sofort den Anfang einer Methode erkennen.
 - Damit der Lesefluss nicht unterbrochen wird, werden auch zu lange Zeilen nicht unterbrochen. Lediglich bei JavDoc.
 - Multiplikationen und Divisionen angelehnt an Mathematik:
   Wenn etwas multipliziert oder dividiert wird, dann werden keine Leerzeichen gesetzt. Bei Addition und Subtraktion schon.
@@ -131,9 +132,9 @@ Ergebnis
 
 ###### Parser
 - Erstellung von Parsern nach Eingabeformaten
-- Parser können sowohl Dateien als auch Daten (via String) verarbeiten. Außer KMZ, da dies ein Binärformat ist.
+- Parser können sowohl Dateien (via Dateinamen) als auch Daten (via String) verarbeiten. Außer KMZ, da dies ein Binärformat ist.
 - Es werden mehrere Tracks innerhalb einer Datei geparst
-- Umsetzung aller genannten Eingabeformate: `GPX, KML, KMZ, URL`
+- Umsetzung aller genannten Eingabeformate: `GPX, KML, KMZ, URL, RAW`
 
 ###### Refactoring des Polyencoders
 - Aufteilung in mehrere Klassen
@@ -141,25 +142,29 @@ Ergebnis
 - Umbenennung von einigen Klassen
 - Packagestruktur angepasst
 - `Util`-Klasse für häufig verwendete Methoden erstellt, welche nicht unbedingt in verschiedene Klassen gehören
-  - Möglich wäre noch eine Aufteilung in `FileUtil` für Methoden welche sich nur mit Dateien beschäftigen
+  - Möglich wäre noch eine Aufteilung in `FileUtil` für Methoden welche sich nur mit Dateien beschäftigen und dann Erzeugung eines Packages `util`.
   
 ###### Server
 - Umsetzung aller genannten Ausgabeformate: `HTML, JSON, RAW, XML`
 - Umsetzung von Fehlerbehandlungen. Der Nutzer wird benachrichtigt (siehe [README.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/README.md) > Supported Formats > Status Codes)
+- Umsetzung eines Formulares zur Eingabe von Daten, Dateien und Links
 
 ### Einschränkungen
 ###### Ausgabe / Parsen
 Es werden nur die nötigsten Attribute für einen Track geparst, daher wird auf zusätzliche Attribute (Bsp. Name des Tracks) kein Wert gelegt.
 
+Waypoints in GPX Dateien werden als Track erkannt.
+Das bedeutet, dass der erste Waypoint in einer Datei der Startpunkt des Tracks sein wird und der letzte Waypoint entsprechend der letzte Trackpoint.
+
 ###### Bounds
 Die Bounds beziehen sich nur auf den ersten Track.
-Die Bounds funktionieren korrekt, solange die Polyline die Erde nicht umrundet. Das hängt mit der Berechnung zusammen.
+Die Bounds funktionieren korrekt, solange die Polyline nicht die Erde umrundet. Das hängt mit der Berechnung zusammen.
 Diese sucht nur die größten und die kleinsten Zahlen der Koordinaten für Longitude, Latitude und Altitude innerhalb des Tracks heraus. 
  
 ###### Encoder
 Es wurden bei den JUnit Tests nicht alle Methoden getestet.
-Das liegt daran, dass der ursprüngliche Algorithmus nicht von uns stammt.
-Er wurde entsprechend an Java angepasst. Während manueller Tets waren aber keine Abweichungen gegenüber des Originalalgorithmus zu erkennen.
+Das liegt daran, dass der ursprüngliche Algorithmus nicht von uns stammt. Er wurde entsprechend an Java angepasst.
+Während manueller Tets waren aber keine Abweichungen gegenüber des Originalalgorithmus zu erkennen.
 Bis auf den oben beschriebenen Backslash Bug bei der Browserausgabe.
 
 ### Neue Ziele
