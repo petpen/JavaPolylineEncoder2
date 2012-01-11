@@ -11,7 +11,7 @@ Inhalt
  
 ***
 
-1. Projektbeschreibung
+1 Projektbeschreibung
 ---
 
 ### 1.1. Ziel
@@ -55,7 +55,7 @@ Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 
 ***
 
-2. Probleme während der Entwicklung
+2 Probleme während der Entwicklung
 ---
 
 Folgende Dinge haben uns im Projekt die Nerven geraubt.
@@ -86,7 +86,7 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 ***
 
-3. Architektur / Design
+3 Architektur / Design
 ---
 
 - Logische Strukturierung durch Packages
@@ -97,7 +97,7 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 ***
 
-4. Quelltext Stil
+4 Quelltext Stil
 ---
 
 Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige kleine optische Unterstützungen sind:
@@ -114,7 +114,7 @@ Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2
 
 ***
 
-5. Ergebnis
+5 Ergebnis
 ---
 
 ### 5.1. Erledigt
