@@ -1,11 +1,4 @@
-Dokumentation zu Projekt
-===
-
-
-Projektname
----
-
-- Java Polyline Encoder mit RESTful Webservice
+Dokumentation zu Java Polyline Encoder mit RESTful Webservice
 
 
 Teilnehmer und Aufgabenverteilung
@@ -33,32 +26,18 @@ Teilnehmer und Aufgabenverteilung
 Ziele
 ---
 
-### Encoder
- - Refactoring
- - Tests
+Der frühere Polylineencoder soll überarbeitet werden. Dazu müssen allgemeinere Methoden ausgegliedert werden.
+Außerdem sollen Tests für eigene Methoden geschrieben werden.
 
-### Server
-###### Eingabeformate
- - GPX
-
-###### Ausgabeformate
- - JSON (kodierte Punkte, [Name, Beschreibung])
- - RAW (reine kodierte Daten)
+Der Jersey RESTful Server soll mindestens `GPX`-Dateien akzeptieren und `JSON, RAW` als Antwort liefern.
+Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 
 
 Nice to Have
 ---
 
-### Zusätzliche Eingabeformate
- - KML
- - KMZ (komprimierte KML)
- - URL (linkt auf Datei, die automatisch geparst wird)
- - RAW
-
-### Zusätzliche Ausgabeformate
- - HTML (mit Google Map)
- - RAW
- - XML
+- Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
+- Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
 
 
 Technologien
@@ -72,7 +51,7 @@ Technologien
 Probleme
 ---
 
-Folgende Dinge haben uns im Projekt Nerven geraubt.
+Folgende Dinge haben uns im Projekt die Nerven geraubt.
 
 ### Backslash Bug
 
