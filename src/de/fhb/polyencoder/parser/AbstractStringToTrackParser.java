@@ -10,6 +10,10 @@ import de.fhb.polyencoder.TrackSeparator;
 import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.geo.GeographicLocation;
 
+/**
+ * @author Peter Pensold
+ * @version 1
+ */
 public abstract class AbstractStringToTrackParser {
   protected List<Track> tracks = new ArrayList<Track>();
 

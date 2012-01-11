@@ -8,7 +8,7 @@ import de.fhb.polyencoder.Util;
 
 /**
  * @author Peter Pensold
- * @version 0.5
+ * @version 1
  */
 public class GeographicBounds {
   private double maxLat = 0.0;

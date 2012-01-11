@@ -9,6 +9,10 @@ import java.util.zip.ZipInputStream;
 
 import de.fhb.polyencoder.Util;
 
+/**
+ * @author Peter Pensold
+ * @version 1
+ */
 public class KmzParser extends AbstractStringToTrackParser  implements StringToTrackParser {
   public final static String DEFAULT_KML_NAME = "doc.kml";
   private final static String TEMP_FOLDER = "temp";
@@ -33,6 +37,8 @@ public class KmzParser extends AbstractStringToTrackParser  implements StringToT
    * 
    * @param data
    *          Filename of the KMZ file on the server
+   * 
+   * @see {@link KmlParser}
    */
   public void parseFile(String fileName) {
     String kmlFileName = unzipMainKMLFromKMZ(fileName);

@@ -8,6 +8,10 @@ import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.Util;
 import de.fhb.polyencoder.geo.GeographicLocation;
 
+/**
+ * @author Peter Pensold
+ * @version 1
+ */
 public class GpxParser extends AbstractStringToTrackParser implements StringToTrackParser {
   
   protected static String TAG_ROOT = "gpx";

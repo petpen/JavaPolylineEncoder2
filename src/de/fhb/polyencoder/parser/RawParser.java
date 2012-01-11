@@ -6,6 +6,10 @@ import de.fhb.polyencoder.PointArrayPositions;
 import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.TrackSeparator;
 
+/**
+ * @author Peter Pensold
+ * @version 1
+ */
 public class RawParser extends AbstractStringToTrackParser  implements StringToTrackParser {
 
   /**

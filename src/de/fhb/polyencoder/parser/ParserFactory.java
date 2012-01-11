@@ -2,6 +2,10 @@ package de.fhb.polyencoder.parser;
 
 import de.fhb.polyencoder.server.InputType;
 
+/**
+ * @author Peter Pensold
+ * @version 1
+ */
 public class ParserFactory {
   public static StringToTrackParser buildParser(InputType type) {
     switch (type) {
