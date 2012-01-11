@@ -82,7 +82,7 @@ public class EncodersController {
       map.putAll(new GeographicBounds(tracks.get(0)).getCenter());
       map.put("createdDate", String.valueOf(new Date().getTime()));
       map.put("statusCode", "200");
-      map.put("statusMessage", "");
+      map.put("statusMessage", "OK");
 
       ViewGenerator vg = ViewFactory.buildViewGenerator(map, format);
       if (vg != null) {

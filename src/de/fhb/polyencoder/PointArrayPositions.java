@@ -8,7 +8,7 @@ package de.fhb.polyencoder;
  * which position inside this array.
  * 
  * @author Peter Pensold
- * @version 0.5
+ * @version 1
  * @see PolylineEncoder#parseStringToTrack(String, TrackSeparator,
  *      PointArrayPositions)
  */

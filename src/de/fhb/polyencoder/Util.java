@@ -25,9 +25,10 @@ import de.n00b.downloader.Downloader;
 /**
  * Collection of useful functions.
  * 
- * @author Mark Rambow (markrambow[at]gmail[dot]com)
+ * @author Martin Bormeister
  * @author Peter Pensold
- * @version 0.5
+ * @author Mark Rambow (markrambow[at]gmail[dot]com)
+ * @version 1
  * 
  */
 public class Util {

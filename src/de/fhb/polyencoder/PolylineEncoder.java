@@ -15,7 +15,7 @@ import de.fhb.polyencoder.geo.GeographicLocation;
  *  
  * @author Mark Rambow (markrambow[at]gmail[dot]com)
  * @author Peter Pensold
- * @version 0.5
+ * @version 1
  */
 public class PolylineEncoder {
   private boolean forceEndpoints;

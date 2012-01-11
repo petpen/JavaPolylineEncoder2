@@ -6,6 +6,8 @@ Tracks
 The encoder is able to process multiple tracks, routes and waypoints in one file.
 The output will be looped in the track section if there are more encoded tracks in the result.
 
+A sample output can be found in [doc/sample_output.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/doc/sample_output.md).
+
 Input
 ---
 
@@ -36,13 +38,15 @@ If the altitude is missing it will be replaced with `0.0`
 ### Output Format Description 
 
 The first part of the output will be a status code with a small message. This will not happen if the result is a Google map.
+The rest of the output is depending on the specified output format.
+For a sample output read [doc/sample_output.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/doc/sample_output.md).
 
 #### Status Codes 
 
-- **200**
+###### 200
   - OK
-  
-- **400**
+
+###### 400
   - No file found
   - Invalid link
   - No inputformat specified or not supported.

@@ -3,7 +3,7 @@ package de.fhb.polyencoder.geo;
 /**
  * 
  * @author Peter Pensold
- * @version 0.5
+ * @version 1
  */
 public enum GeographicCoordinate {
   LATITUDE, LONGITUDE, ALTITUDE;

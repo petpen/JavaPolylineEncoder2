@@ -8,6 +8,10 @@ import de.fhb.polyencoder.Track;
 import de.fhb.polyencoder.TrackSeparator;
 import de.fhb.polyencoder.Util;
 
+/**
+ * @author Peter Pensold
+ * @version 1
+ */
 public class KmlParser extends AbstractStringToTrackParser implements StringToTrackParser {
 
   protected static String TAG_DATA = "coordinates";

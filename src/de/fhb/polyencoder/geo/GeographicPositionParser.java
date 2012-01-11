@@ -13,7 +13,7 @@ import de.fhb.polyencoder.parser.AbstractStringToTrackParser;
  * 
  * @author Mark Rambow (markrambow[at]gmail[dot]com)
  * @author Peter Pensold
- * @version 0.5
+ * @version 1
  */
 public class GeographicPositionParser {
 
