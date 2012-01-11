@@ -1,7 +1,7 @@
 <polylineencoder>
   <status code="{statusCode}">{statusMessage}</status>
   <points count="{pointCount}">
-    <encoded>{encodedPoints}</encoded>
+    <encoded>{encodedPointsLiteral}</encoded>
     <levels>{encodedLevels}</levels>
   </points>
   <bounds>

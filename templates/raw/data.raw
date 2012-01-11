@@ -6,6 +6,6 @@
 {minLat},{maxLat}
 {minLng}, {maxLng}
 {minAlt}, {maxAlt}
-{encodedPoints}
+{encodedPointsLiteral}
 {pointCount}
 {encodedLevels}
