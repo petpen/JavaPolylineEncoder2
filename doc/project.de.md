@@ -34,7 +34,8 @@ Teilnehmer und Aufgabenverteilung
  - Bugfixes
  - Readme
  - Ant Tasks
-
+ 
+ ***
 
 Ziele
 ---
@@ -45,6 +46,7 @@ Außerdem sollen Tests für eigene Methoden geschrieben werden.
 Der Jersey RESTful Server soll mindestens `GPX`-Dateien akzeptieren und `JSON, RAW` als Antwort liefern.
 Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 
+***
 
 Nice to Have
 ---
@@ -52,6 +54,7 @@ Nice to Have
 - Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
 - Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
 
+***
 
 Technologien
 ---
@@ -60,6 +63,7 @@ Technologien
 - Testframework `JUnit`
 - Server Framework `Java Jersey`
 
+***
 
 Probleme
 ---
@@ -90,6 +94,7 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 `@Martin bitte ergänzen`
 
+***
 
 Architektur / Design
 ---
@@ -100,6 +105,7 @@ Architektur / Design
 - Trennung von Texten, die nicht in Java geschrieben sind und sonst umständlich im Quelltext verankert werden müssten. Beispielsweise das Formular `templates/view/formular.html`
 - Relevante Testabdeckung
 
+***
 
 Quelltext Stil
 ---
@@ -116,6 +122,7 @@ Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige 
 
 Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2/blob/master/doc/style.xml) und kann beispielsweise in Eclipse importiert werden.
 
+***
 
 Ergebnis
 ---
