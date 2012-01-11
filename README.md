@@ -54,7 +54,7 @@ You can test the Java Polyline Encoder right away in your browser with a dynamic
     http://localhost:9998/
 		
 You don't have to use only the from. Make your own or send requests over GET with the file link, POST the coords as urlencoded or POST a file as multipart/form-data.
-The URL is always http://localhost:9998/encoder/<input>/<output>. For GET use the param `link` and for POST it is `coords` respectively `fileData`.
+The URL is always `http://localhost:9998/encoder/<input>/<output>`. For GET use the param `link` and for POST it is `coords` respectively `fileData`.
 
 Testing
 ===
