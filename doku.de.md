@@ -6,11 +6,24 @@ Projektname
 
 - Java Polyline Encoder mit RESTful Webservice
 
-Teilnehmer
+Teilnehmer und Aufgabenverteilung
 ---
 
 - Martin Bormeister
+ - Server + Tests
+ - Server View Generator Factory
+ - Basis Eingabeformular
+ - Weitere Tests
 - Peter Pensold
+ - Encoder Refactoring + Tests
+ - Parser Factory + Tests
+ - In/Output Enums
+ - Dynamisches Eingabeformular
+ - Testdaten Erstellung
+- Alle
+ - Bugfixes
+ - Readme
+ - Ant Tasks
 
 Ziele
 ---
@@ -80,6 +93,7 @@ Ergebnis
    - Möglich wäre noch eine Aufteilung in `FileUtil` für Methoden welche sich nur mit Dateien beschäftigen
 - Umsetzung aller genannten Eingabeformate: `GPX, KML, KMZ, URL`
 - Umsetzung aller genannten Ausgabeformate: `HTML, JSON, RAW, XML`
+- Umsetzung von Fehlerbehandlungen. Der Nutzer wird benachrichtigt (siehe [README.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/README.md) > Supported Formats > Status Codes)
 
 ### Einschränkungen
 - Ausgabe / Parsen
