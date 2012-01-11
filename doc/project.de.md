@@ -27,7 +27,7 @@ Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 - Testframework `JUnit`
 - Server Framework `Java Jersey`
 
-## Nice to Have
+### Nice to Have
 
 - Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
 - Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
