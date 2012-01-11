@@ -49,6 +49,11 @@ Technologien
 Probleme
 ---
 
+###### Backslash Bug
+
+###### Ant Jar Erstellung
+
+###### Jersey
 
 Architektur
 ---
@@ -61,10 +66,11 @@ Design
 Ergebnis
 ---
 
-### Done
+### Erledigt
 - Parser
  - Erstellung von Parsern nach Eingabeformaten
  - Parser können sowohl Dateien als auch Daten (via String) verarbeiten. Außer KMZ, da dies ein Binärformat ist.
+ - Es werden mehrere Tracks innerhalb einer Datei geparst
 - Refactoring des Polyencoders
  - Aufteilung in mehrere Klassen
  - Logische Trennung von Encoder und Methoden, welche nicht direkt zum Encoder gehören
@@ -75,4 +81,7 @@ Ergebnis
 - Umsetzung aller genannten Eingabeformate: `GPX, KML, KMZ, URL`
 - Umsetzung aller genannten Ausgabeformate: `HTML, JSON, RAW, XML`
 
-### Missing
+### Einschränkungen
+- Ausgabe / Parsen
+ - Es werden nur die nötigsten Attribute für einen Track geparst, daher wird auf zusätzliche Attribute (Bsp. Name des Tracks) kein Wert gelegt
+ - Die Bounds beziehen sich nur auf den ersten Track
