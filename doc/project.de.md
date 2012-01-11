@@ -110,7 +110,7 @@ Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige 
 - Multiplikationen und Divisionen angelehnt an Mathematik:
   Wenn etwas multipliziert oder dividiert wird, dann werden keine Leerzeichen gesetzt. Bei Addition und Subtraktion schon.
   Dadurch sind Punkt und Strichrechnungen einfacher zu unterscheiden. Leider lässt sich diese Regel nicht in Checkstyle einpflegen.
-  Beispiel: `a*b` statt `a * b` oder `a/c` statt `a / c`. Kombination von Punkt und Strichrechnung: `(START + index)/var`
+  - Beispiel: `a*b` statt `a * b` oder `a/c` statt `a / c`. Kombination von Punkt und Strichrechnung: `(START + index)/var`
 
 Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2/blob/master/doc/style.xml) und kann beispielsweise in Eclipse importiert werden.
 
