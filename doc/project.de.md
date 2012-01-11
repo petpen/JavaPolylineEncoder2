@@ -95,6 +95,17 @@ Architektur
 Design
 ---
 
+Quelltext Stil
+---
+
+Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige kleine optische Unterstützungen sind:
+
+- Die Komplexität in Cobertura sollte nie den Wert `3` überschreiten.
+- Drei freie Zeilen zwischen den Methoden: Dadurch kann man sofort den Anfang einer Methode erkennen.
+- Multiplikationen und Divisionen angelehnt an Mathematik:
+  Wenn etwas multipliziert oder dividiert wird, dann werden keine Leerzeichen gesetzt. Bei Addition und Subtraktion schon.
+  Dadurch sind Punkt und Strichrechnungen einfacher zu unterscheiden. Leider lässt sich diese Regel nicht in Checkstyle einpflegen.
+  Beispiel: `a*b` statt `a * b` oder `a/c` statt `a / c`. Kombination von Punkt und Strichrechnung: `(START + index)/var`
 
 Ergebnis
 ---
