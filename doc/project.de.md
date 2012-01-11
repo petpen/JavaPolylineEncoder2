@@ -78,7 +78,8 @@ Folgende Dinge haben uns im Projekt Nerven geraubt.
 Marc McClure [beschrieb bereits](http://facstaff.unca.edu/mcmcclur/GoogleMaps/EncodePolyline/pitfalls.html),
 dass es Probleme geben könnte mit Backslahes und deren Kodierung. Dieses Problem habe wir auch gelöst.
 Jedoch gab es Anfangs noch Schwierigkeiten zwischen Jersey, der Markerreplace Methode und der Backslashreplace Methode.
-Dies Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten. 
+Dies Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten.
+Mittlerweile funktioniert die Ausgabe und das Encodieren korrekt.
 
 ### Ant Jar Erstellung
 
