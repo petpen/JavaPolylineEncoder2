@@ -1,5 +1,18 @@
 Dokumentation zu Java Polyline Encoder mit RESTful Webservice
+===
 
+Inhalt
+---
+ - Teilnehmer und Aufgabenverteilung
+ - Ziele
+ - Nice to Have
+ - Technologien
+ - Probleme
+ - Architektur / Design
+ - Quelltext Stil
+ - Ergebnis
+ 
+ ***
 
 Teilnehmer und Aufgabenverteilung
 ---
