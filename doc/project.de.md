@@ -158,4 +158,5 @@ Bis auf den oben beschriebenen Backslash Bug bei der Browserausgabe.
 
 ### 5.3. Neue Ziele
 - Properties Datei für Serverkonfiguration
+- Konsolen Statusausgabe, wenn zum Beispiel ein Track geparsed wird, von wem er kam und wann er kam.
 - HTML Ausgabe der Polyline mit Version 3 der Google Maps Api 
