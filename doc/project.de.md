@@ -3,17 +3,18 @@ Dokumentation zu Java Polyline Encoder mit RESTful Webservice
 
 Inhalt
 ---
- - Ziele
- - Teilnehmer mit Aufgabenverteilung
- - Probleme
- - Architektur / Design
- - Quelltext Stil
- - Ergebnis
+1. Projektbeschreibung
+2. Probleme während der Entwicklung
+3. Architektur / Design
+4. Quelltext Stil
+5. Ergebnis
  
 ***
 
-Ziele
+1 Projektbeschreibung
 ---
+
+### Ziel
 
 Der frühere Polylineencoder soll überarbeitet werden. Dazu müssen allgemeinere Methoden ausgegliedert werden.
 Außerdem sollen Tests für eigene Methoden geschrieben werden.
@@ -32,32 +33,29 @@ Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 - Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
 - Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
 
-***
+### Teilnehmer mit Aufgabenverteilung
 
-Teilnehmer mit Aufgabenverteilung
----
-
-### Martin Bormeister
+###### Martin Bormeister
  - Server + Tests
  - Server ViewGenerator Factory
  - Basis Eingabeformular
  - Weitere Tests
 
-### Peter Pensold
+###### Peter Pensold
  - Encoder Refactoring + Tests
  - Parser Factory + Tests
  - In/Output Enums
  - Dynamisches Eingabeformular
  - Testdaten Erstellung
 
-### Alle
+###### Gemeinsam
  - Bugfixes
  - Readme
  - Ant Tasks
 
 ***
 
-Probleme
+2 Probleme während der Entwicklung
 ---
 
 Folgende Dinge haben uns im Projekt die Nerven geraubt.
@@ -88,7 +86,7 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 ***
 
-Architektur / Design
+3 Architektur / Design
 ---
 
 - Logische Strukturierung durch Packages
@@ -99,7 +97,7 @@ Architektur / Design
 
 ***
 
-Quelltext Stil
+4 Quelltext Stil
 ---
 
 Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige kleine optische Unterstützungen sind:
@@ -116,7 +114,7 @@ Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2
 
 ***
 
-Ergebnis
+5 Ergebnis
 ---
 
 ### Erledigt
