@@ -38,12 +38,10 @@ Ziele
  - Tests
 
 ### Server
-
-
-### Eingabeformate
+###### Eingabeformate
  - GPX
 
-### Ausgabeformate
+###### Ausgabeformate
  - JSON (kodierte Punkte, [Name, Beschreibung])
  - RAW (reine kodierte Daten)
 
@@ -77,7 +75,9 @@ Folgende Dinge haben uns im Projekt Nerven geraubt.
 
 ### Backslash Bug
 
-
+Marc McClure beschrieb bereits, dass es Probleme geben könnte mit Backslahes und deren Kodierung. Dieses Problem habe wir auch gelöst.
+Jedoch gab es Anfangs noch Schwierigkeiten zwischen Jersey, der Markerreplace Methode und der Backslashreplace Methode.
+Dies Tests schlugen auch nicht fehl. Daher war es ein Rätsel wo wir suchen mussten. 
 
 ### Ant Jar Erstellung
 
