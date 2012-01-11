@@ -58,15 +58,19 @@ Nice to Have
 Technologien
 ---
 
+- Programmiersprache `Java`
+- Testframework `JUnit`
+- Server Framework `Java Jersey`
+
 
 Probleme
 ---
 
-###### Backslash Bug
+### Backslash Bug
 
-###### Ant Jar Erstellung
+### Ant Jar Erstellung
 
-###### Jersey
+### Jersey
 
 Architektur
 ---
@@ -97,5 +101,19 @@ Ergebnis
 
 ### Einschränkungen
 - Ausgabe / Parsen
- - Es werden nur die nötigsten Attribute für einen Track geparst, daher wird auf zusätzliche Attribute (Bsp. Name des Tracks) kein Wert gelegt
- - Die Bounds beziehen sich nur auf den ersten Track
+ - Es werden nur die nötigsten Attribute für einen Track geparst, daher wird auf zusätzliche Attribute (Bsp. Name des Tracks) kein Wert gelegt.
+ - Die Bounds beziehen sich nur auf den ersten Track.
+
+- Bounds
+ - Die Bounds funktionieren korrekt, solange die Polyline die Erde nicht umrundet. Das hängt mit der Berechnung zusammen.
+   Diese sucht nur die größten und die kleinsten Zahlen der Koordinaten für Longitude, Latitude und Altitude innerhalb des Tracks heraus. 
+ 
+- Encoder
+ - Es wurden bei den JUnit Tests nicht alle Methoden getestet.
+   Das liegt daran, dass der ursprüngliche Algorithmus nicht von uns stammt.
+   Er wurde entsprechend an Java angepasst. Während manueller Tets waren aber keine Abweichungen gegenüber des Originalalgorithmus zu erkennen.
+   Bis auf den oben beschriebenen Backslash Bug bei der Browserausgabe.
+
+### Neue Ziele
+- Properties Datei für Serverkonfiguration
+- HTML Ausgabe der Polyline mit Version 3 der Google Maps Api 
