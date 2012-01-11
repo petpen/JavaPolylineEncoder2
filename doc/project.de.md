@@ -1,10 +1,12 @@
 Dokumentation zu Projekt
 ===
 
+
 Projektname
 ---
 
 - Java Polyline Encoder mit RESTful Webservice
+
 
 Teilnehmer und Aufgabenverteilung
 ---
@@ -27,6 +29,7 @@ Teilnehmer und Aufgabenverteilung
  - Readme
  - Ant Tasks
 
+
 Ziele
 ---
 
@@ -44,6 +47,7 @@ Ziele
  - JSON (kodierte Punkte, [Name, Beschreibung])
  - RAW (reine kodierte Daten)
 
+
 Nice to Have
 ---
 
@@ -56,6 +60,7 @@ Nice to Have
  - HTML (mit Google Map)
  - RAW
  - XML
+
 
 Technologien
 ---
@@ -88,12 +93,18 @@ Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` na
 
 ### Jersey
 
-Architektur
----
+`@Martin bitte ergänzen`
 
 
-Design
+Architektur / Design
 ---
+
+- Logische Strukturierung durch Packages
+- Anwendung des Factory-Patterns für Parser und für ViewGenerator. Dadurch lassen sich weitere Parser und Ausgaben zügig ergänzen.
+- Enums für Ein- und Ausgabeformate erleichtern die Abfrage innerhalb von Mehrfachverzweigungen.
+- Trennung von Texten, die nicht in Java geschrieben sind und sonst umständlich im Quelltext verankert werden müssten. Beispielsweise das Formular `templates/view/formular.html`
+- Relevante Testabdeckung
+
 
 Quelltext Stil
 ---
@@ -102,10 +113,14 @@ Wir haben versucht den Quelltext so leserlich wie möglich zu gestalten. Einige 
 
 - Die Komplexität in Cobertura sollte nie den Wert `3` überschreiten.
 - Drei freie Zeilen zwischen den Methoden: Dadurch kann man sofort den Anfang einer Methode erkennen.
+- Damit der Lesefluss nicht unterbrochen wird, werden auch zu lange Zeilen nicht unterbrochen. Lediglich bei JavDoc.
 - Multiplikationen und Divisionen angelehnt an Mathematik:
   Wenn etwas multipliziert oder dividiert wird, dann werden keine Leerzeichen gesetzt. Bei Addition und Subtraktion schon.
   Dadurch sind Punkt und Strichrechnungen einfacher zu unterscheiden. Leider lässt sich diese Regel nicht in Checkstyle einpflegen.
   Beispiel: `a*b` statt `a * b` oder `a/c` statt `a / c`. Kombination von Punkt und Strichrechnung: `(START + index)/var`
+
+Der Stil steht in [doc/style.xml](https://github.com/petpen/JavaPolylineEncoder2/blob/master/doc/style.xml) und kann beispielsweise in Eclipse importiert werden.
+
 
 Ergebnis
 ---
