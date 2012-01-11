@@ -3,18 +3,34 @@ Dokumentation zu Java Polyline Encoder mit RESTful Webservice
 
 Inhalt
 ---
- - Teilnehmer und Aufgabenverteilung
  - Ziele
+ - Teilnehmer mit Aufgabenverteilung
  - Nice to Have
- - Technologien
  - Probleme
  - Architektur / Design
  - Quelltext Stil
  - Ergebnis
  
- ***
+***
 
-Teilnehmer und Aufgabenverteilung
+Ziele
+---
+
+Der frühere Polylineencoder soll überarbeitet werden. Dazu müssen allgemeinere Methoden ausgegliedert werden.
+Außerdem sollen Tests für eigene Methoden geschrieben werden.
+
+Der Jersey RESTful Server soll mindestens `GPX`-Dateien akzeptieren und `JSON, RAW` als Antwort liefern.
+Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
+ 
+### Technologien
+
+- Programmiersprache `Java`
+- Testframework `JUnit`
+- Server Framework `Java Jersey`
+
+***
+
+Teilnehmer mit Aufgabenverteilung
 ---
 
 ### Martin Bormeister
@@ -34,17 +50,6 @@ Teilnehmer und Aufgabenverteilung
  - Bugfixes
  - Readme
  - Ant Tasks
- 
- ***
-
-Ziele
----
-
-Der frühere Polylineencoder soll überarbeitet werden. Dazu müssen allgemeinere Methoden ausgegliedert werden.
-Außerdem sollen Tests für eigene Methoden geschrieben werden.
-
-Der Jersey RESTful Server soll mindestens `GPX`-Dateien akzeptieren und `JSON, RAW` als Antwort liefern.
-Fehler sollen entsprechend abgefangen werden und dem Nutzer mitgeteilt werden.
 
 ***
 
@@ -53,15 +58,6 @@ Nice to Have
 
 - Zusätzliche Eingabeformate: `KML`, `KMZ` (komprimierte KML), `URL` (linkt auf Datei, die automatisch geparst wird), `RAW`
 - Zusätzliche Ausgabeformate: `HTML` (mit Google Map), `RAW`, `XML`
-
-***
-
-Technologien
----
-
-- Programmiersprache `Java`
-- Testframework `JUnit`
-- Server Framework `Java Jersey`
 
 ***
 
