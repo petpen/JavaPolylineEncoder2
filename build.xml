@@ -133,7 +133,7 @@
 			<mapper>
 				<chainedmapper>
 				<flattenmapper />
-				<globmapper from="*" to="lib/*" />
+				<globmapper from="*" to="libs/*" />
 				</chainedmapper>
 			</mapper>
 			<path>
