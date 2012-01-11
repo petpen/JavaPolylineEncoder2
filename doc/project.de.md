@@ -80,7 +80,9 @@ Wir wollten zunächst eine ausführbare Jar-Datei mit eingebetteten Bibliotheken
 Jedoch konnte dann das Startformular nicht angezeigt werden. Jersey vermisste Informationen, welche in einigen Manifest-Dateien
 innerhalb der Bibliotheken standen, die aber nicht mitkopiert wurden.
 Daher versuchten wir die Manifest Dateien mithilfe von Ant zusammenzufügen. Dies gelang auch, jedoch waren noch nicht alle Informationen vorhanden.
+
 Also mussten wir uns mit einer anderen Lösung zufrieden geben:
+
 Wir kopierten den Hauptbibliothekenordner und teilten Ant mit, dass die Manifest Datei den Klassenpfad anhand der Bibliotheken zusammenbauen soll.
 Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` nach dem erzeugen der Jar Datei. 
 
