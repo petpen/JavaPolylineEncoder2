@@ -6,6 +6,8 @@ Tracks
 The encoder is able to process multiple tracks, routes and waypoints in one file.
 The output will be looped in the track section if there are more encoded tracks in the result.
 
+A sample output can be found in [doc/sample_output.md](https://github.com/petpen/JavaPolylineEncoder2/blob/master/doc/sample_output.md).
+
 Input
 ---
 
