@@ -129,6 +129,19 @@
 		.clear {
 			clear: both;
 		}
+		
+		#forms {
+			display: none;
+		}
+		
+		#js_hint {
+			border: 0.1em solid #ccc;
+			background-color: #faa;
+			color: #444;
+			font-size: 0.9em;
+			margin: 10em 0 0;
+			padding: 0.5em;
+		}
 		-->
 		</style>
 		
@@ -162,6 +175,11 @@
 				}
 			}
 			
+			function removeHint() {
+				$("js_hint").style.display = "none";
+				$("forms").style.display = "block";
+			}
+			
 			function initTypes() {
 				fillSelect(inputID,inputTypes);
 				fillSelect(outputID,outputTypes);
@@ -188,49 +206,61 @@
 					updateForm(formIDs[i], selectedInput, selectedOutput);
 				}
 			}
+			
+			function start() {
+				removeHint();
+				initTypes();
+				updateForms();
+			}
 		</script>
 	</head>
-	<body onload="initTypes(); updateForms();">
+	<body onload="start();">
 		<div id="main">
-			<div class="format_selector">
-				<p>Please choose a format to import from and export to.</p>
-
-				<div>
-					<div class="col">
-						<div class="format_left_side">
-							<label for="format_in">From</label>
-							<select id="format_in" name="format_in" size="1" onchange="updateForms();">
-							</select>
-						</div>
-					</div>
-					<div class="col">
-						<div class="format_right_side">
-							<label for="format_out">To</label>
-							<select id="format_out" name="format_out" size="1" onchange="updateForms();">
-							</select>
-						</div>
-					</div>
-					<div class="clear"></div>
-				</div>
+			<div id="js_hint">
+				<h1>Java Polyline Encoder</h1>
+				<p>Make sure you have JavaScript activated to use this form!</p>
 			</div>
-
-			<form id="form_link" method="get" action="/encoder/gpx/html">
-				<label for="link">Link</label>
-				<input id="link" class="text" type="text" name="link"/>
-				<input class="button" type="submit" value="Submit"/>
-			</form>
-			
-			<form id="form_file"  method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
-				<label for="file">File</label>
-				<input id="file" name="fileData" type="file" size="20"/>
-				<input class="button" type="submit" value="Submit"/>
-			</form>
-			
-			<form id="form_data" method="post" action="/encoder/gpx/html">
-				<label for="data">Data</label>
-				<textarea id="data" name="coords"></textarea>
-				<input class="button" type="submit" value="Submit"/>
-			</form>
+			<div id="forms">
+				<div class="format_selector">
+					<p>Please choose a format to import from and export to.</p>
+	
+					<div>
+						<div class="col">
+							<div class="format_left_side">
+								<label for="format_in">From</label>
+								<select id="format_in" name="format_in" size="1" onchange="updateForms();">
+								</select>
+							</div>
+						</div>
+						<div class="col">
+							<div class="format_right_side">
+								<label for="format_out">To</label>
+								<select id="format_out" name="format_out" size="1" onchange="updateForms();">
+								</select>
+							</div>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+	
+				<form id="form_link" method="get" action="/encoder/gpx/html">
+					<label for="link">Link</label>
+					<input id="link" class="text" type="text" name="link"/>
+					<input class="button" type="submit" value="Submit"/>
+				</form>
+				
+				<form id="form_file"  method="post" action="/encoder/gpx/html"  enctype="multipart/form-data">
+					<label for="file">File</label>
+					<input id="file" name="fileData" type="file" size="20"/>
+					<input class="button" type="submit" value="Submit"/>
+				</form>
+				
+				<form id="form_data" method="post" action="/encoder/gpx/html">
+					<label for="data">Data</label>
+					<textarea id="data" name="coords"></textarea>
+					<input class="button" type="submit" value="Submit"/>
+				</form>
+			</div>
 		</div>
 	</body>
 </html>
