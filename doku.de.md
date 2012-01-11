@@ -68,9 +68,21 @@ Technologien
 Probleme
 ---
 
+Folgende Dinge haben uns im Projekt Nerven geraubt.
+
 ### Backslash Bug
 
+
+
 ### Ant Jar Erstellung
+
+Wir wollten zunächst eine ausführbare Jar-Datei mit eingebetteten Bibliotheken erstellen. Das funktionierte auch am Anfang.
+Jedoch konnte dann das Startformular nicht angezeigt werden. Jersey vermisste Informationen, welche in einigen Manifest-Dateien
+innerhalb der Bibliotheken standen, die aber nicht mitkopiert wurden.
+Daher versuchten wir die Manifest Dateien mithilfe von Ant zusammenzufügen. Dies gelang auch, jedoch waren noch nicht alle Informationen vorhanden.
+Also mussten wir uns mit einer anderen Lösung zufrieden geben:
+Wir kopierten den Hauptbibliothekenordner und teilten Ant mit, dass die Manifest Datei den Klassenpfad anhand der Bibliotheken zusammenbauen soll.
+Somit liegen alle benötigten Bibliotheken innerhalb des Ordners `build/libs` nach dem erzeugen der Jar Datei. 
 
 ### Jersey
 
@@ -108,9 +120,9 @@ Ergebnis
 ### Einschränkungen
 ###### Ausgabe / Parsen
 Es werden nur die nötigsten Attribute für einen Track geparst, daher wird auf zusätzliche Attribute (Bsp. Name des Tracks) kein Wert gelegt.
-Die Bounds beziehen sich nur auf den ersten Track.
 
 ###### Bounds
+Die Bounds beziehen sich nur auf den ersten Track.
 Die Bounds funktionieren korrekt, solange die Polyline die Erde nicht umrundet. Das hängt mit der Berechnung zusammen.
 Diese sucht nur die größten und die kleinsten Zahlen der Koordinaten für Longitude, Latitude und Altitude innerhalb des Tracks heraus. 
  
